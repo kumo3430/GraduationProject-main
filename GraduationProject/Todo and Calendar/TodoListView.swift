@@ -84,12 +84,6 @@ struct TodoListView: View {
                     AddTodoView()
                 }
             }
-            .onAppear() {
-//                if !hasLoadedData {
-//                    StudySpaceList()
-//                    hasLoadedData = true
-//                }
-            }
         }
     }
     
