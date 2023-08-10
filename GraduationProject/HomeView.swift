@@ -19,14 +19,14 @@ struct HomeView: View {
     @State var goal = ["Learn English"]
     @State var achievements = ["上個月任務完成度達100%"]
     @EnvironmentObject var taskStore: TaskStore
-
+    
     // Helper function to format date
     func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
         return formatter.string(from: date)
     }
-
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -43,7 +43,7 @@ struct HomeView: View {
                         }
                     }
                 }
-
+                
                 CardView {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("今日任務完成度")
@@ -63,27 +63,107 @@ struct HomeView: View {
                         }
                     }
                 }
-
+                
                 CardView {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("今日待辦事項")
                             .font(.headline)
+//                        eventList()
+                        //                        ForEach(taskStore.tasks.filter { $0.isToday }, id: \.id) { task in
+                        //                            HStack {
+                        //                                Text(task.title)
+                        //                                    .font(.subheadline)
+                        //                                    .fontWeight(.medium)
+                        //
+                        //                                Spacer()
+                        //
+                        //                                Text(formattedDate(task.nextReviewDate))
+                        //                                    .font(.caption)
+                        //                            }
+                        //                            .onAppear() {
+                        //                                print("task:\(task)")
+                        //                            }
+                        //                        }
                         
-                        ForEach(taskStore.tasks.filter { $0.isToday }, id: \.id) { task in
+                        
+                        ForEach(taskStore.tasksForDate(Date()), id: \.id) { task in
                             HStack {
-                                Text(task.title)
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
-                                
-                                Spacer()
-                                
-                                Text(formattedDate(task.nextReviewDate))
-                                    .font(.caption)
+                                //                                                       HStack(alignment: .leading){
+                                HStack{
+                                    if formattedDate(Date()) == formattedDate(task.nextReviewDate) {
+                                        Text(task.title)
+                                            .font(.subheadline)
+                                            .fontWeight(.medium)
+                                        Spacer()
+                                        Text("設定日期")
+                                            .font(.caption)
+                                    } else if formattedDate(Date()) == formattedDate(task.repetition1Count) {
+                                        Text(task.title)
+                                            .font(.subheadline)
+                                            .fontWeight(.medium)
+                                        Spacer()
+                                        Text("第一天")
+                                            .font(.caption)
+                                    } else if formattedDate(Date()) == formattedDate(task.repetition2Count) {
+                                        Text(task.title)
+                                            .font(.subheadline)
+                                            .fontWeight(.medium)
+                                        Spacer()
+                                        Text("第三天")
+                                            .font(.caption)
+                                    } else if formattedDate(Date()) == formattedDate(task.repetition3Count) {
+                                        Text(task.title)
+                                            .font(.subheadline)
+                                            .fontWeight(.medium)
+                                        Spacer()
+                                        Text("第七天")
+                                            .font(.caption)
+                                    } else if formattedDate(Date()) == formattedDate(task.repetition4Count) {
+                                        Text(task.title)
+                                            .font(.subheadline)
+                                            .fontWeight(.medium)
+                                        Spacer()
+                                        Text("第十四天")
+                                            .font(.caption)
+                                    }
+                                    else {
+                                        HStack {
+                                            Text(task.title)
+                                                .font(.subheadline)
+                                                .fontWeight(.medium)
+                                            
+                                            Spacer()
+                                            
+                                            Text(formattedDate(task.nextReviewDate))
+                                                .font(.caption)
+                                        }
+                                    }
+                                }
+                            }
+                            .onAppear() {
+                                print("task:\(task)")
                             }
                         }
+                        
+                        
+                        //                                                ForEach(taskStore.tasksForDate(Date()), id: \.id) { task in
+                        //                                                                           HStack {
+                        //                                                                               Text(task.title)
+                        //                                                                                   .font(.subheadline)
+                        //                                                                                   .fontWeight(.medium)
+                        //
+                        //                                                                               Spacer()
+                        //
+                        //                                                                               Text(formattedDate(task.nextReviewDate))
+                        //                                                                                   .font(.caption)
+                        //                                                                           }
+                        //                                                                           .onAppear() {
+                        //                                                                               print("task:\(task)")
+                        //                                                                           }
+                        //                                                                       }
                     }
                 }
-
+                
                 CardView {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("成就")
@@ -106,15 +186,17 @@ struct HomeView: View {
             .padding()
         }
     }
+   
+    
 }
 
 struct CardView<Content: View>: View {
     let content: Content
-
+    
     init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
-
+    
     var body: some View {
         VStack {
             content
