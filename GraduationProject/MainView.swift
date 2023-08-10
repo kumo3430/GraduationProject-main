@@ -11,10 +11,10 @@ struct MainView: View {
     enum ActiveView {
         case calendar, todo
     }
-
+    
     @State private var selectedTab = 0
     @State private var activeView: ActiveView = .calendar
-
+    
     var body: some View {
         TabView(selection: $selectedTab) {
             HomeView()

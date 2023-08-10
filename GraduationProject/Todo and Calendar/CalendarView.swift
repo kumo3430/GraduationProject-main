@@ -121,10 +121,57 @@ struct CalendarView: View {
                 // If there are tasks, display the task list
                 List(filteredTasks) { task in
                     VStack(alignment: .leading) {
+                        
+//                        if formattedDate(selectedDate) == formattedDate(task.nextReviewDate) {
+//                            Text(task.title)
+//                                .font(.headline)
+//                            Text("第一天")
+//                                .font(.subheadline)
+//                        } else {
+//                            Text("selectedDate:\(selectedDate)")
+//                            Text("nextReviewDate:\(task.nextReviewDate)")
+//                        }
+                        
                         if formattedDate(selectedDate) == formattedDate(task.nextReviewDate) {
                             Text(task.title)
                                 .font(.headline)
+                            Text("設定日期")
+                                .font(.subheadline)
+                        } else if formattedDate(selectedDate) == formattedDate(task.repetition1Count) {
+//                            Toggle(isOn: $ReviewChecked0) {
+//                                Text("\(task.title) - 第一天")
+//                            }
+//                            .disabled(!isToday)
+                            Text(task.title)
+                                .font(.headline)
                             Text("第一天")
+                                .font(.subheadline)
+                        }else if formattedDate(selectedDate) == formattedDate(task.repetition2Count) {
+//                            Toggle(isOn: $ReviewChecked1) {
+//                                Text("\(task.title) - 第三天")
+//                            }
+//                            .disabled(!isToday)
+                            Text(task.title)
+                                .font(.headline)
+                            Text("第三天")
+                                .font(.subheadline)
+                        }else if formattedDate(selectedDate) == formattedDate(task.repetition3Count) {
+//                            Toggle(isOn: $ReviewChecked2) {
+//                                Text("\(task.title) - 第七天")
+//                            }
+//                            .disabled(!isToday)
+                            Text(task.title)
+                                .font(.headline)
+                            Text("第七天")
+                                .font(.subheadline)
+                        }else if formattedDate(selectedDate) == formattedDate(task.repetition4Count) {
+//                            Toggle(isOn: $ReviewChecked3) {
+//                                Text("\(task.title) - 第十四天")
+//                            }
+//                            .disabled(!isToday)
+                            Text(task.title)
+                                .font(.headline)
+                            Text("第十四天")
                                 .font(.subheadline)
                         } else {
                             Text("selectedDate:\(selectedDate)")

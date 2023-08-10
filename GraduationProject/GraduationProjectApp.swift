@@ -112,6 +112,10 @@ struct YourApp: App {
                             let ReviewChecked2: Bool
                             let ReviewChecked3: Bool
                             if let startDate = convertToDate(userData.startDateTime[index]),
+                               let repetition1Count = convertToDate(userData.repetition1Count[index]),
+                               let repetition2Count = convertToDate(userData.repetition2Count[index]),
+                               let repetition3Count = convertToDate(userData.repetition3Count[index]),
+                               let repetition4Count = convertToDate(userData.repetition4Count[index]),
                                let reminderTime = convertToTime(userData.reminderTime[index]) {
                                 
                                 if (userData.repetition1Status[index] == "0" ){
@@ -135,8 +139,9 @@ struct YourApp: App {
                                     ReviewChecked3 = true
                                 }
                                 let taskId = Int(userData.todo_id[index])
-                                let task = Task(id: taskId!, title: userData.todoTitle[index], description: userData.todoIntroduction[index], nextReviewDate: startDate, nextReviewTime: reminderTime, isReviewChecked0: ReviewChecked0, isReviewChecked1: ReviewChecked1, isReviewChecked2: ReviewChecked2, isReviewChecked3: ReviewChecked3)
-                                
+//                                let task = Task(id: taskId!, title: userData.todoTitle[index], description: userData.todoIntroduction[index], nextReviewDate: startDate, nextReviewTime: reminderTime, isReviewChecked0: ReviewChecked0, isReviewChecked1: ReviewChecked1, isReviewChecked2: ReviewChecked2, isReviewChecked3: ReviewChecked3)
+//
+                                let task = Task(id: taskId!, title: userData.todoTitle[index], description: userData.todoIntroduction[index], nextReviewDate: startDate, nextReviewTime: reminderTime, repetition1Count: repetition1Count, repetition2Count: repetition2Count, repetition3Count: repetition3Count, repetition4Count: repetition4Count, isReviewChecked0: ReviewChecked0, isReviewChecked1: ReviewChecked1, isReviewChecked2: ReviewChecked2, isReviewChecked3: ReviewChecked3)
                                 DispatchQueue.main.async {
                                     taskStore.tasks.append(task)
                                     

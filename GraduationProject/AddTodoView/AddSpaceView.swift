@@ -10,15 +10,19 @@ import SwiftUI
 
 struct AddTaskView: View {
     @Environment(\.presentationMode) var presentationMode
-//    @ObservedObject var taskStore: TaskStore
-//    @StateObject var taskStore: TaskStore
+    //    @ObservedObject var taskStore: TaskStore
+    //    @StateObject var taskStore: TaskStore
     @EnvironmentObject var taskStore: TaskStore
-
+    
     @State var title = ""
     @State var description = ""
     @State var label: String = ""
     @State var nextReviewDate = Date()
     @State var nextReviewTime = Date()
+    @State var repetition1Count = Date()
+    @State var repetition2Count = Date()
+    @State var repetition3Count = Date()
+    @State var repetition4Count = Date()
     @State var messenge = ""
     @State var isError = false
     
@@ -74,15 +78,21 @@ struct AddTaskView: View {
             .listStyle(PlainListStyle())
             .navigationBarTitle("間隔學習")
             .navigationBarItems(leading:
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    Text("返回")
-                        .foregroundColor(.blue)
-                            },
-                trailing: Button("完成") { addStudySpaced() }
-                // 如果 title 為空，按鈕會被禁用，即無法點擊。
-                    .disabled(title.isEmpty)
+                                    Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Text("返回")
+                    .foregroundColor(.blue)
+            },
+                                trailing: Button("完成") { addStudySpaced() }
+                                // 如果 title 為空，按鈕會被禁用，即無法點擊。
+                .disabled(title.isEmpty)
+                .onDisappear() {
+                    repetition1Count = nextReviewDates[0]
+                    repetition2Count = nextReviewDates[1]
+                    repetition3Count = nextReviewDates[2]
+                    repetition4Count = nextReviewDates[3]
+                }
             )
         }
         
@@ -158,7 +168,8 @@ struct AddTaskView: View {
                         DispatchQueue.main.async {
                             isError = false
                             // 如果沒有錯才可以關閉視窗並且把此次東西暫存起來
-                            let task = Task(id: Int(userData.todo_id)!,title: title, description: description, nextReviewDate: nextReviewDate, nextReviewTime: nextReviewTime, isReviewChecked0: false, isReviewChecked1: false, isReviewChecked2: false, isReviewChecked3: false)
+                            //                            let task = Task(id: Int(userData.todo_id)!,title: title, description: description, nextReviewDate: nextReviewDate, nextReviewTime: nextReviewTime, isReviewChecked0: false, isReviewChecked1: false, isReviewChecked2: false, isReviewChecked3: false)isReviewChecked0isReviewChecked1isReviewChecked2isReviewChecked3repetition1Countrepetition2Countrepetition3Countrepetition4Count
+                            let task = Task(id: Int(userData.todo_id)!,title: title, description: description, nextReviewDate: nextReviewDate, nextReviewTime: nextReviewTime, repetition1Count: repetition1Count, repetition2Count: repetition2Count, repetition3Count: repetition3Count, repetition4Count: repetition4Count, isReviewChecked0: false, isReviewChecked1: false, isReviewChecked2: false, isReviewChecked3: false)
                             taskStore.tasks.append(task)
                             presentationMode.wrappedValue.dismiss()
                         }

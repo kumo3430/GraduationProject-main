@@ -14,6 +14,10 @@ struct Task: Identifiable {
     var description: String
     var nextReviewDate: Date
     var nextReviewTime: Date
+    var repetition1Count: Date
+    var repetition2Count: Date
+    var repetition3Count: Date
+    var repetition4Count: Date
     var isReviewChecked0: Bool
     var isReviewChecked1: Bool
     var isReviewChecked2: Bool

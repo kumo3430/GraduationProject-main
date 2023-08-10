@@ -29,13 +29,13 @@ struct TaskDetailView: View {
         //        var startDateTime: String
         var reminderTime: String
         var todo_id: Int
-//        var repetition1Count: String
+        //        var repetition1Count: String
         var repetition1Status: Int
-//        var repetition2Count: String
+        //        var repetition2Count: String
         var repetition2Status: Int
-//        var repetition3Count: String
+        //        var repetition3Count: String
         var repetition3Status: Int
-//        var repetition4Count: String
+        //        var repetition4Count: String
         var repetition4Status: Int
         var message: String
     }
@@ -113,15 +113,15 @@ struct TaskDetailView: View {
                         }
                     }
                 }
-//                Text(messenge)
-//                    .foregroundColor(.red)
+                //                Text(messenge)
+                //                    .foregroundColor(.red)
             }
             Text(messenge)
                 .foregroundColor(.red)
-            .navigationTitle("任務")
-            .navigationBarItems(
-                trailing: Button("完成", action: reviseStudySpaced)
-            )
+                .navigationTitle("任務")
+                .navigationBarItems(
+                    trailing: Button("完成", action: reviseStudySpaced)
+                )
         }
         .onAppear() {
             task.title = task.title
@@ -132,11 +132,11 @@ struct TaskDetailView: View {
             task.isReviewChecked2 = task.isReviewChecked2
             task.isReviewChecked3 = task.isReviewChecked3
         }
-//        .navigationBarTitle("任務")
-//        .navigationTitle("任務")
-//        .navigationBarItems(
-//            trailing: Button("完成", action: reviseStudySpaced)
-//        )
+        //        .navigationBarTitle("任務")
+        //        .navigationTitle("任務")
+        //        .navigationBarItems(
+        //            trailing: Button("完成", action: reviseStudySpaced)
+        //        )
     }
     
     func formattedDate(_ date: Date) -> String {
@@ -156,11 +156,11 @@ struct TaskDetailView: View {
         return intervals[index]
     }
     
-    func handleCompletion() {
-        // Handle the completion action here
-        task = Task(id: task.id,title: task.title, description: task.description, nextReviewDate: task.nextReviewDate, nextReviewTime: task.nextReviewTime, isReviewChecked0: task.isReviewChecked0, isReviewChecked1:  task.isReviewChecked1, isReviewChecked2: task.isReviewChecked2, isReviewChecked3:  task.isReviewChecked3 )
-        presentationMode.wrappedValue.dismiss()
-    }
+    //    func handleCompletion() {
+    //        // Handle the completion action here
+    //        task = Task(id: task.id,title: task.title, description: task.description, nextReviewDate: task.nextReviewDate, nextReviewTime: task.nextReviewTime, isReviewChecked0: task.isReviewChecked0, isReviewChecked1:  task.isReviewChecked1, isReviewChecked2: task.isReviewChecked2, isReviewChecked3:  task.isReviewChecked3 )
+    //        presentationMode.wrappedValue.dismiss()
+    //    }
     
     func reviseStudySpaced() {
         if ( task.isReviewChecked0 ) {
@@ -227,19 +227,20 @@ struct TaskDetailView: View {
                         //                        print("開始時間為：\(userData.startDateTime)")
                         print("提醒時間為：\(userData.reminderTime)")
                         print("事件編號為：\(userData.todo_id)")
-//                        print("第一次間隔重複時間為：\(userData.repetition1Count)")
+                        //                        print("第一次間隔重複時間為：\(userData.repetition1Count)")
                         print("第一次間隔重複狀態為：\(userData.repetition1Status)")
-//                        print("第二次間隔重複時間為：\(userData.repetition2Count)")
+                        //                        print("第二次間隔重複時間為：\(userData.repetition2Count)")
                         print("第二次間隔重複狀態為：\(userData.repetition2Status)")
-//                        print("第三次間隔重複時間為：\(userData.repetition3Count)")
+                        //                        print("第三次間隔重複時間為：\(userData.repetition3Count)")
                         print("第三次間隔重複狀態為：\(userData.repetition3Status)")
-//                        print("第四次間隔重複時間為：\(userData.repetition4Count)")
+                        //                        print("第四次間隔重複時間為：\(userData.repetition4Count)")
                         print("第四次間隔重複狀態為：\(userData.repetition4Status)")
                         print("reviseStudySpaced - message：\(userData.message)")
                         DispatchQueue.main.async {
                             isError = false
                             // 如果沒有錯才可以關閉視窗並且把此次東西暫存起來
-                            task = Task(id: task.id,title: task.title, description: task.description, nextReviewDate: task.nextReviewDate, nextReviewTime: task.nextReviewTime, isReviewChecked0: task.isReviewChecked0, isReviewChecked1:  task.isReviewChecked1, isReviewChecked2: task.isReviewChecked2, isReviewChecked3:  task.isReviewChecked3 )
+                            //                            task = Task(id: task.id,title: task.title, description: task.description, nextReviewDate: task.nextReviewDate, nextReviewTime: task.nextReviewTime, isReviewChecked0: task.isReviewChecked0, isReviewChecked1:  task.isReviewChecked1, isReviewChecked2: task.isReviewChecked2, isReviewChecked3:  task.isReviewChecked3 )
+                            task = Task(id: task.id,title: task.title, description: task.description, nextReviewDate: task.nextReviewDate, nextReviewTime: task.nextReviewTime,repetition1Count: task.repetition1Count,repetition2Count: task.repetition2Count,repetition3Count: task.repetition3Count,repetition4Count: task.repetition4Count, isReviewChecked0: task.isReviewChecked0, isReviewChecked1:  task.isReviewChecked1, isReviewChecked2: task.isReviewChecked2, isReviewChecked3:  task.isReviewChecked3 )
                             presentationMode.wrappedValue.dismiss()
                         }
                         print("============== verifyView ==============")
@@ -264,20 +265,20 @@ struct TaskDetailView_Previews: PreviewProvider {
     static var previews: some View {
         // 創建一個@State變數
         @State var task = Task(id: 001,
-                                      title: "英文",
-                                      description: "背L2單字",
-                                      nextReviewDate: Date(),
-                                      nextReviewTime: Date(),
-    //                                      repetition1Count: Date(),
-    //                                      repetition2Count: Date(),
-    //                                      repetition3Count: Date(),
-    //                                      repetition4Count: Date(),
-                                      isReviewChecked0: true,
-                                      isReviewChecked1: false,
-                                      isReviewChecked2: false,
-                                      isReviewChecked3: false)
+                               title: "英文",
+                               description: "背L2單字",
+                               nextReviewDate: Date(),
+                               nextReviewTime: Date(),
+                               repetition1Count: Date(),
+                               repetition2Count: Date(),
+                               repetition3Count: Date(),
+                               repetition4Count: Date(),
+                               isReviewChecked0: true,
+                               isReviewChecked1: false,
+                               isReviewChecked2: false,
+                               isReviewChecked3: false)
         
         TaskDetailView(task: $task) // 使用綁定的task
-//            .environmentObject(TaskStore())
+        //            .environmentObject(TaskStore())
     }
 }

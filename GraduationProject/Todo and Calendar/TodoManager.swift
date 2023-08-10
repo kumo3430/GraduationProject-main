@@ -17,6 +17,20 @@ enum Action: Int, Identifiable {
     case diet
 }
 
+//struct UserData: Decodable {
+//    var todo_id: [String]
+//    var userId: String?
+//    var category_id: Int
+//    var todoTitle: [String]
+//    var todoIntroduction: [String]
+//    var startDateTime: [String]
+//    var reminderTime: [String]
+//    var repetition1Status: [String?]
+//    var repetition2Status: [String?]
+//    var repetition3Status: [String?]
+//    var repetition4Status: [String?]
+//    var message: String
+//}
 struct UserData: Decodable {
     var todo_id: [String]
     var userId: String?
@@ -29,6 +43,10 @@ struct UserData: Decodable {
     var repetition2Status: [String?]
     var repetition3Status: [String?]
     var repetition4Status: [String?]
+    var repetition1Count: [String]
+    var repetition2Count: [String]
+    var repetition3Count: [String]
+    var repetition4Count: [String]
     var message: String
 }
 
@@ -41,12 +59,24 @@ class TaskStore: ObservableObject {
     // 具有一個已發佈的 tasks 屬性，該屬性存儲任務的數組
     @Published var tasks: [Task] = []
     // 根據日期返回相應的任務列表
+//    func tasksForDate(_ date: Date) -> [Task] {
+//        //        return tasks
+//        let filteredTasks = tasks.filter { task in
+//            return formattedDate(date) == formattedDate(task.nextReviewDate)
+//        }
+//        return filteredTasks
+//    }
     func tasksForDate(_ date: Date) -> [Task] {
-        //        return tasks
-        let filteredTasks = tasks.filter { task in
-            return formattedDate(date) == formattedDate(task.nextReviewDate)
-        }
-        return filteredTasks
+//        return tasks
+        let formattedSelectedDate = formattedDate(date)
+               let filteredTasks = tasks.filter { task in
+                   return formattedSelectedDate == formattedDate(task.nextReviewDate) ||
+                          formattedSelectedDate == formattedDate(task.repetition1Count) ||
+                          formattedSelectedDate == formattedDate(task.repetition2Count) ||
+                          formattedSelectedDate == formattedDate(task.repetition3Count) ||
+                            formattedSelectedDate == formattedDate(task.repetition4Count)
+               }
+               return filteredTasks
     }
     
     func formattedDate(_ date: Date) -> String {
