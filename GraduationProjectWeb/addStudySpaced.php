@@ -11,7 +11,14 @@ $uid = $_SESSION['uid'];
 $category_id = 1;
 $todoTitle = $data['title'];
 $todoIntroduction = $data['description'];
-$todoLabel= $data['label'];
+
+
+if ( $data['label'] == "") {
+    $todoLabel = "notSet";
+} else {
+    $todoLabel= $data['label'];
+}
+
 $startDateTime = $data['nextReviewDate'];
 $reminderTime = $data['nextReviewTime'];
 
