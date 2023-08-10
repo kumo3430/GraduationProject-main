@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <button type="button" class="add_button">新增</button>
+    <hr />
+    <table class="product_options_table" border="1">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr data-id="1">
+                <td>空白的Id</td>
+                <td>空白的名字</td>
+                <td>
+                    <button class="delete_button">刪除</button>
+                </td>
+            </tr> -->
+        </tbody>
+    </table>
+
+    <div style="display: none;">
+        <table>
+            <tbody>
+                <tr class="tmp">
+                    <td class="product_id">空白的Id</td>
+                    <td class="product_name"><input type="text" /></td>
+                    <td>
+                        <button class="delete_button">刪除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function findTbody() {
+            var tbody = $('.product_options_table').find('tbody');
+            // console.log(tbody);
+            return tbody;
+        }
+
+        function createRow() {
+            var row = $('.tmp')[0];
+            return $(row).clone(true, true);
+        }
+
+        function addRow(index) {
+            // findTbody()
+            var tbody = findTbody()
+            var newRow = createRow()
+            // console.log(newRow);
+            newRow.attr('data-id', index);
+            newRow.removeClass('tmp');
+            var productIdTd = newRow.find('.product_id');
+            productIdTd.html(index);
+            var productNameInput = newRow.find('.product_name > input');
+            // console.log(productNameInput);
+            var optionName = "product[Options]["+ index +"][name]"
+            productNameInput.attr("name",optionName)
+            tbody.append(newRow);
+        }
+
+        function deleteRow(data_id) {
+            // console.log("delete row");
+            var tbody = findTbody();
+            // var str = 'tr[data-id' + data_id + ']';
+            var str = 'tr[data-id="' + data_id + '"]';
+
+            var tr = tbody.find(str);
+            if (tr.length > 0) {
+                tr.remove();
+            }
+        }
+        var counterIndex = 0;
+        $(function () {
+            $(".add_button").click(function () {
+                addRow(counterIndex);
+                counterIndex += 1;
+            })
+
+            $(".delete_button").click(function () {
+                // 會去找最近的tr
+                var tr = $(this).closest('tr');
+                var data_id = tr.data('id');
+                // console.log(data_id);
+                deleteRow(data_id);
+            })
+        })
+
+    </script>
+</body>
+
+</html>
