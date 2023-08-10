@@ -59,7 +59,7 @@ struct YourApp: App {
             }
         }
         
-        let url = URL(string: "http://localhost:8888/StudySpaceList.php")!
+        let url = URL(string: "http://127.0.0.1:8888/StudySpaceList.php")!
         //        let url = URL(string: "http://10.21.1.164:8888/account/login.php")!
         //        let url = URL(string: "http://163.17.136.73:443/account/login.php")!
         var request = URLRequest(url: url)
@@ -141,7 +141,7 @@ struct YourApp: App {
                                 let taskId = Int(userData.todo_id[index])
 //                                let task = Task(id: taskId!, title: userData.todoTitle[index], description: userData.todoIntroduction[index], nextReviewDate: startDate, nextReviewTime: reminderTime, isReviewChecked0: ReviewChecked0, isReviewChecked1: ReviewChecked1, isReviewChecked2: ReviewChecked2, isReviewChecked3: ReviewChecked3)
 //
-                                let task = Task(id: taskId!, title: userData.todoTitle[index], description: userData.todoIntroduction[index], nextReviewDate: startDate, nextReviewTime: reminderTime, repetition1Count: repetition1Count, repetition2Count: repetition2Count, repetition3Count: repetition3Count, repetition4Count: repetition4Count, isReviewChecked0: ReviewChecked0, isReviewChecked1: ReviewChecked1, isReviewChecked2: ReviewChecked2, isReviewChecked3: ReviewChecked3)
+                                let task = Task(id: taskId!, title: userData.todoTitle[index], description: userData.todoIntroduction[index],label: userData.todoLabel[index], nextReviewDate: startDate, nextReviewTime: reminderTime, repetition1Count: repetition1Count, repetition2Count: repetition2Count, repetition3Count: repetition3Count, repetition4Count: repetition4Count, isReviewChecked0: ReviewChecked0, isReviewChecked1: ReviewChecked1, isReviewChecked2: ReviewChecked2, isReviewChecked3: ReviewChecked3)
                                 DispatchQueue.main.async {
                                     taskStore.tasks.append(task)
                                     

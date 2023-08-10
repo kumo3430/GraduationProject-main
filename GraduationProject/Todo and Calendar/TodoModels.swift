@@ -12,6 +12,7 @@ struct Task: Identifiable {
     var id: Int
     var title: String
     var description: String
+    var label: String
     var nextReviewDate: Date
     var nextReviewTime: Date
     var repetition1Count: Date

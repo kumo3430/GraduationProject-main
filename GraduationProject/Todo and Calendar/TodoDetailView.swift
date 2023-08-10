@@ -240,7 +240,7 @@ struct TaskDetailView: View {
                             isError = false
                             // 如果沒有錯才可以關閉視窗並且把此次東西暫存起來
                             //                            task = Task(id: task.id,title: task.title, description: task.description, nextReviewDate: task.nextReviewDate, nextReviewTime: task.nextReviewTime, isReviewChecked0: task.isReviewChecked0, isReviewChecked1:  task.isReviewChecked1, isReviewChecked2: task.isReviewChecked2, isReviewChecked3:  task.isReviewChecked3 )
-                            task = Task(id: task.id,title: task.title, description: task.description, nextReviewDate: task.nextReviewDate, nextReviewTime: task.nextReviewTime,repetition1Count: task.repetition1Count,repetition2Count: task.repetition2Count,repetition3Count: task.repetition3Count,repetition4Count: task.repetition4Count, isReviewChecked0: task.isReviewChecked0, isReviewChecked1:  task.isReviewChecked1, isReviewChecked2: task.isReviewChecked2, isReviewChecked3:  task.isReviewChecked3 )
+                            task = Task(id: task.id,title: task.title, description: task.description, label: task.label, nextReviewDate: task.nextReviewDate, nextReviewTime: task.nextReviewTime,repetition1Count: task.repetition1Count,repetition2Count: task.repetition2Count,repetition3Count: task.repetition3Count,repetition4Count: task.repetition4Count, isReviewChecked0: task.isReviewChecked0, isReviewChecked1:  task.isReviewChecked1, isReviewChecked2: task.isReviewChecked2, isReviewChecked3:  task.isReviewChecked3 )
                             presentationMode.wrappedValue.dismiss()
                         }
                         print("============== verifyView ==============")
@@ -267,6 +267,7 @@ struct TaskDetailView_Previews: PreviewProvider {
         @State var task = Task(id: 001,
                                title: "英文",
                                description: "背L2單字",
+                               label:"我是標籤",
                                nextReviewDate: Date(),
                                nextReviewTime: Date(),
                                repetition1Count: Date(),

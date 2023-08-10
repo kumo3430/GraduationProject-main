@@ -11,6 +11,7 @@ $uid = $_SESSION['uid'];
 $category_id = 1;
 $todoTitle = $data['title'];
 $todoIntroduction = $data['description'];
+$todoLabel= $data['label'];
 $startDateTime = $data['nextReviewDate'];
 $reminderTime = $data['nextReviewTime'];
 
@@ -32,18 +33,18 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$TodoSELSql = "SELECT * FROM `Todo` WHERE `uid` = '$uid' && `category_id` = '$category_id' && `todoTitle` = '$todoTitle' && `todoIntroduction` = '$todoIntroduction';";
+$TodoSELSql = "SELECT * FROM `Todo` WHERE `uid` = '$uid' && `category_id` = '$category_id' && `todoTitle` = '$todoTitle' && `todoIntroduction` = '$todoIntroduction' && `label` = '$todoLabel';";
 
 $result = $conn->query($TodoSELSql);
 if ($result->num_rows == 0) {
 
-    $TodoSql = "INSERT INTO `Todo` (`uid`, `category_id`, `todoTitle`, `todoIntroduction`, `startDateTime`, `reminderTime`) VALUES ('$uid', '$category_id','$todoTitle','$todoIntroduction','$startDateTime','$reminderTime')";
+    $TodoSql = "INSERT INTO `Todo` (`uid`, `category_id`, `todoTitle`, `todoIntroduction`, `label`, `startDateTime`, `reminderTime`) VALUES ('$uid', '$category_id','$todoTitle','$todoIntroduction','$todoLabel','$startDateTime','$reminderTime')";
 
     if ($conn->query($TodoSql) === TRUE) {
         $message = "User New Todo successfully" . '<br>';
 
         // 如果成功新增Todo 就查詢此次建立的Todo table 的 id
-        $TodoIdSql = "SELECT * FROM `Todo` WHERE `uid` = '$uid' && `category_id` = '$category_id' && `todoTitle` = '$todoTitle' && `todoIntroduction` = '$todoIntroduction';";
+        $TodoIdSql = "SELECT * FROM `Todo` WHERE `uid` = '$uid' && `category_id` = '$category_id' && `todoTitle` = '$todoTitle' && `todoIntroduction` = '$todoIntroduction'&& `label` = '$todoLabel';";
 
         $result = $conn->query($TodoIdSql);
         if ($result->num_rows > 0) {
@@ -82,6 +83,7 @@ $userData = array(
     'category_id' => $category_id,
     'todoTitle' => $todoTitle,
     'todoIntroduction' => $todoIntroduction,
+    'label' => $todoLabel,
     'startDateTime' => $startDateTime,
     'reminderTime' => $reminderTime,
     'todo_id' => $todo_id,

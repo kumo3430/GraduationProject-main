@@ -30,7 +30,7 @@ struct AddTaskView: View {
         var userId: String?
         //        var id: Int
         var category_id: Int
-        var label: String?
+        var label: String
         var todoTitle: String
         var todoIntroduction: String
         var startDateTime: String
@@ -127,29 +127,29 @@ struct AddTaskView: View {
             }
         }
         
-        let url = URL(string: "http://localhost:8888/addStudySpaced.php")!
+        let url = URL(string: "http://127.0.0.1:8888/addStudySpaced.php")!
         //        let url = URL(string: "http://10.21.1.164:8888/account/register.php")!
         var request = URLRequest(url: url)
         //        request.cachePolicy = .reloadIgnoringLocalCacheData
         request.httpMethod = "POST"
-        let body = ["title": title, "description": description, "nextReviewDate": formattedDate(nextReviewDate),"nextReviewTime": formattedTime(nextReviewTime),"First": formattedDate(nextReviewDates[0]),"third": formattedDate(nextReviewDates[1]),"seventh": formattedDate(nextReviewDates[2]),"fourteenth": formattedDate(nextReviewDates[3]) ]
-        print("addStudySpaced - body:\(body)")
+        let body = ["title": title, "description": description, "label": label, "nextReviewDate": formattedDate(nextReviewDate),"nextReviewTime": formattedTime(nextReviewTime),"First": formattedDate(nextReviewDates[0]),"third": formattedDate(nextReviewDates[1]),"seventh": formattedDate(nextReviewDates[2]),"fourteenth": formattedDate(nextReviewDates[3]) ]
+        print("AddSpacedView - body:\(body)")
         let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
         request.httpBody = jsonData
         URLSessionSingleton.shared.session.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("addStudySpaced - Connection error: \(error)")
+                print("AddSpacedView - Connection error: \(error)")
             } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                print("addStudySpaced - HTTP error: \(httpResponse.statusCode)")
+                print("AddSpacedView - HTTP error: \(httpResponse.statusCode)")
             }
             else if let data = data{
                 let decoder = JSONDecoder()
                 do {
                     //                    確認api會印出的所有內容
-                    print(String(data: data, encoding: .utf8)!)
+                    print("AddSpacedView - Data : \(String(data: data, encoding: .utf8)!)")
                     let userData = try decoder.decode(UserData.self, from: data)
                     if (userData.message == "User New StudySpaced successfully") {
-                        print("============== verifyView ==============")
+                        print("============== AddSpacedView ==============")
                         print(String(data: data, encoding: .utf8)!)
                         print("addStudySpaced - userDate:\(userData)")
                         print("使用者ID為：\(userData.userId ?? "N/A")")
@@ -157,6 +157,7 @@ struct AddTaskView: View {
                         print("事件種類為：\(userData.category_id)")
                         print("事件名稱為：\(userData.todoTitle)")
                         print("事件簡介為：\(userData.todoIntroduction)")
+                        print("事件種類為：\(userData.label)")
                         print("開始時間為：\(userData.startDateTime)")
                         print("提醒時間為：\(userData.reminderTime)")
                         print("事件編號為：\(userData.todo_id)")
@@ -168,28 +169,27 @@ struct AddTaskView: View {
                         DispatchQueue.main.async {
                             isError = false
                             // 如果沒有錯才可以關閉視窗並且把此次東西暫存起來
-                            //                            let task = Task(id: Int(userData.todo_id)!,title: title, description: description, nextReviewDate: nextReviewDate, nextReviewTime: nextReviewTime, isReviewChecked0: false, isReviewChecked1: false, isReviewChecked2: false, isReviewChecked3: false)isReviewChecked0isReviewChecked1isReviewChecked2isReviewChecked3repetition1Countrepetition2Countrepetition3Countrepetition4Count
-                            let task = Task(id: Int(userData.todo_id)!,title: title, description: description, nextReviewDate: nextReviewDate, nextReviewTime: nextReviewTime, repetition1Count: repetition1Count, repetition2Count: repetition2Count, repetition3Count: repetition3Count, repetition4Count: repetition4Count, isReviewChecked0: false, isReviewChecked1: false, isReviewChecked2: false, isReviewChecked3: false)
+                            let task = Task(id: Int(userData.todo_id)!,title: title, description: description, label: label, nextReviewDate: nextReviewDate, nextReviewTime: nextReviewTime, repetition1Count: repetition1Count, repetition2Count: repetition2Count, repetition3Count: repetition3Count, repetition4Count: repetition4Count, isReviewChecked0: false, isReviewChecked1: false, isReviewChecked2: false, isReviewChecked3: false)
                             taskStore.tasks.append(task)
                             presentationMode.wrappedValue.dismiss()
                         }
-                        print("============== verifyView ==============")
+                        print("============== AddSpacedView ==============")
                     } else if (userData.message == "The Todo is repeated") {
                         isError = true
-                        print("addStudySpaced - message：\(userData.message)")
+                        print("AddSpacedView - message：\(userData.message)")
                         messenge = "已建立過，請重新建立"
                     } else if (userData.message == "New Todo - Error: <br>Incorrect integer value: '' for column 'uid' at row 1") {
                         isError = true
-                        print("addStudySpaced - message：\(userData.message)")
+                        print("AddSpacedView - message：\(userData.message)")
                         messenge = "登入出錯 請重新登入"
                     } else  {
                         isError = true
-                        print("addStudySpaced - message：\(userData.message)")
+                        print("AddSpacedView - message：\(userData.message)")
                         messenge = "建立失敗，請重新建立"
                     }
                 } catch {
                     isError = true
-                    print("addStudySpaced - 解碼失敗：\(error)")
+                    print("AddSpacedView - 解碼失敗：\(error)")
                     messenge = "建立失敗，請重新建立"
                 }
             }

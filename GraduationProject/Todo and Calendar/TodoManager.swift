@@ -37,6 +37,7 @@ struct UserData: Decodable {
     var category_id: Int
     var todoTitle: [String]
     var todoIntroduction: [String]
+    var todoLabel: [String]
     var startDateTime: [String]
     var reminderTime: [String]
     var repetition1Status: [String?]
