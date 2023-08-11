@@ -101,5 +101,6 @@ struct SpacedView_Previews: PreviewProvider {
     static var previews: some View {
         TodoListView(ReviewChecked0: false, ReviewChecked1: false, ReviewChecked2: false, ReviewChecked3: false, switchViewAction: {})
             .environmentObject(TaskStore())
+            .environmentObject(TodoStore())
     }
 }

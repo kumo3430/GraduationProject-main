@@ -141,6 +141,7 @@ struct AddSportView: View {
                         DispatchQueue.main.async {
                             let todo = Todo(id: Int(todoData.todo_id)!,
 //                                            uid: todoData.userId!,
+                                            title: todoTitle,
                                             category_id: category_id,
                                             label: label,
                                             todoTitle: todoTitle,
@@ -148,7 +149,7 @@ struct AddSportView: View {
                                             startDateTime: startDateTime,
                                             todoStatus: todoStatus,
                                             dueDateTime: dueDateTime,
-                                            recurring_task_id: recurring_task_id,
+//                                            recurring_task_id: recurring_task_id,
                                             reminderTime: reminderTime,
                                             todoNote: todoNote)
                             todoStore.todos.append(todo)

@@ -144,6 +144,7 @@ struct AddTodoView: View {
                         DispatchQueue.main.async {
                             let todo = Todo(id: Int(todoData.todo_id)!,
 //                                            uid: todoData.userId!,
+                                            title: todoTitle,
                                             category_id: category_id,
                                             label: label,
                                             todoTitle: todoTitle,
@@ -184,5 +185,6 @@ struct AddTodoView: View {
 struct AddTodoView_Previews: PreviewProvider {
     static var previews: some View {
         AddTodoView()
+            .environmentObject(TodoStore())
     }
 }

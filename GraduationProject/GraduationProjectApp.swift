@@ -17,12 +17,6 @@ struct YourApp: App {
     
     @StateObject var taskStore = TaskStore()
     @StateObject var todoStore = TodoStore()
-//
-//    @State var ReviewChecked0: Bool
-//    @State var ReviewChecked1: Bool
-//    @State var ReviewChecked2: Bool
-//    @State var ReviewChecked3: Bool
-    
     
     var body: some Scene {
         WindowGroup {

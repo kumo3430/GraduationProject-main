@@ -17,6 +17,7 @@ struct Event: Identifiable {
 struct CalendarView: View {
     //    @ObservedObject var taskStore = TaskStore()
     @EnvironmentObject var taskStore: TaskStore
+    @EnvironmentObject var todoStore: TodoStore
     @State private var showingActionSheet = false
     @State private var action: Action? = nil
     @State var selectedDate = Date()
@@ -44,7 +45,7 @@ struct CalendarView: View {
                     Button(action: {
                         switchViewAction()  // 切換視圖
                     }) {
-//                        Image(systemName: "list.pullet")
+                        //                        Image(systemName: "list.pullet")
                         Image(systemName: "list.bullet")
                     },
                 trailing:
@@ -110,77 +111,80 @@ struct CalendarView: View {
     
     func eventList() -> some View {
         let filteredTasks = taskStore.tasksForDate(selectedDate)
-        
-        return Group {
-            if filteredTasks.isEmpty {
-                // If there are no tasks, display "今日沒有行程" message
-                Text("今日沒有行程")
-                    .font(.headline)
-                    .padding(.vertical)
-            } else {
-                // If there are tasks, display the task list
-                List(filteredTasks) { task in
-                    VStack(alignment: .leading) {
-                        
-//                        if formattedDate(selectedDate) == formattedDate(task.nextReviewDate) {
-//                            Text(task.title)
-//                                .font(.headline)
-//                            Text("第一天")
-//                                .font(.subheadline)
-//                        } else {
-//                            Text("selectedDate:\(selectedDate)")
-//                            Text("nextReviewDate:\(task.nextReviewDate)")
-//                        }
-                        
-                        if formattedDate(selectedDate) == formattedDate(task.nextReviewDate) {
-                            Text(task.title)
-                                .font(.headline)
-                            Text("設定日期")
-                                .font(.subheadline)
-                        } else if formattedDate(selectedDate) == formattedDate(task.repetition1Count) {
-//                            Toggle(isOn: $ReviewChecked0) {
-//                                Text("\(task.title) - 第一天")
-//                            }
-//                            .disabled(!isToday)
-                            Text(task.title)
-                                .font(.headline)
-                            Text("第一天")
-                                .font(.subheadline)
-                        }else if formattedDate(selectedDate) == formattedDate(task.repetition2Count) {
-//                            Toggle(isOn: $ReviewChecked1) {
-//                                Text("\(task.title) - 第三天")
-//                            }
-//                            .disabled(!isToday)
-                            Text(task.title)
-                                .font(.headline)
-                            Text("第三天")
-                                .font(.subheadline)
-                        }else if formattedDate(selectedDate) == formattedDate(task.repetition3Count) {
-//                            Toggle(isOn: $ReviewChecked2) {
-//                                Text("\(task.title) - 第七天")
-//                            }
-//                            .disabled(!isToday)
-                            Text(task.title)
-                                .font(.headline)
-                            Text("第七天")
-                                .font(.subheadline)
-                        }else if formattedDate(selectedDate) == formattedDate(task.repetition4Count) {
-//                            Toggle(isOn: $ReviewChecked3) {
-//                                Text("\(task.title) - 第十四天")
-//                            }
-//                            .disabled(!isToday)
-                            Text(task.title)
-                                .font(.headline)
-                            Text("第十四天")
-                                .font(.subheadline)
-                        } else {
-                            Text("selectedDate:\(selectedDate)")
-                            Text("nextReviewDate:\(task.nextReviewDate)")
+        let filteredTodos = todoStore.todosForDate(selectedDate)
+        print("filteredTodos\(filteredTodos)")
+        return VStack {
+            Group{
+                if filteredTasks.isEmpty {
+                    // If there are no tasks, display "今日沒有行程" message
+                    Text("今日沒有行程")
+                        .font(.headline)
+                        .padding(.vertical)
+                } else {
+                    // If there are tasks, display the task list
+                    List(filteredTasks) { task in
+                        VStack(alignment: .leading) {
+                            if formattedDate(selectedDate) == formattedDate(task.nextReviewDate) {
+                                Text(task.title)
+                                    .font(.headline)
+                                Text("設定日期")
+                                    .font(.subheadline)
+                            } else if formattedDate(selectedDate) == formattedDate(task.repetition1Count) {
+                                Text(task.title)
+                                    .font(.headline)
+                                Text("第一天")
+                                    .font(.subheadline)
+                            }else if formattedDate(selectedDate) == formattedDate(task.repetition2Count) {
+                                Text(task.title)
+                                    .font(.headline)
+                                Text("第三天")
+                                    .font(.subheadline)
+                            }else if formattedDate(selectedDate) == formattedDate(task.repetition3Count) {
+                                Text(task.title)
+                                    .font(.headline)
+                                Text("第七天")
+                                    .font(.subheadline)
+                            }else if formattedDate(selectedDate) == formattedDate(task.repetition4Count) {
+                                Text(task.title)
+                                    .font(.headline)
+                                Text("第十四天")
+                                    .font(.subheadline)
+                            } else {
+                                Text("selectedDate:\(selectedDate)")
+                                Text("nextReviewDate:\(task.nextReviewDate)")
+                            }
                         }
                     }
                 }
             }
+            
+            Group{
+                if filteredTodos.isEmpty {
+                    // If there are no tasks, display "今日沒有行程" message
+                    Text("今日沒有行程")
+                        .font(.headline)
+                        .padding(.vertical)
+                } else {
+                    // If there are tasks, display the task list
+                    List(filteredTodos) { todo in
+                        VStack(alignment: .leading) {
+                            if formattedDate(selectedDate) == formattedDate(todo.startDateTime) {
+                                Text(todo.title)
+                                    .font(.headline)
+                                Text("設定日期")
+                                    .font(.subheadline)
+                            }  else {
+                                Text("selectedDate:\(selectedDate)")
+                                Text("startDateTime:\(todo.startDateTime)")
+                            }
+                        }
+                    }
+                }
+            }
+            
+            
         }
+        
     }
     
 }
@@ -190,6 +194,7 @@ struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
         CalendarView(switchViewAction: {})
             .environmentObject(TaskStore())
+            .environmentObject(TodoStore())
     }
 }
 
