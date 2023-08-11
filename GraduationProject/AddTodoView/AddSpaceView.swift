@@ -73,6 +73,10 @@ struct AddTaskView: View {
                         }
                     }
                 }
+                if(isError) {
+                    Text(messenge)
+                        .foregroundColor(.red)
+                }
             }
             // 一個隱藏的分隔線
             .listStyle(PlainListStyle())
@@ -95,9 +99,6 @@ struct AddTaskView: View {
                 }
             )
         }
-        
-        Text(messenge)
-            .foregroundColor(.red)
     }
     
     func formattedDate(_ date: Date) -> String {

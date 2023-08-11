@@ -27,7 +27,7 @@ struct Task: Identifiable {
 
 struct Todo: Identifiable {
     var id: Int
-    var uid: String
+//    var uid: String
     var category_id: Int
     var label: String
     var todoTitle: String

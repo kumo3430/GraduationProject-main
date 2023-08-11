@@ -19,18 +19,22 @@ struct AddTodoView: View {
     @State var startDateTime: Date = Date()
     @State var todoStatus: Bool = false
     @State var dueDateTime: Date = Date()
-    @State var recurring_task_id: Int? = nil
+//    @State var recurring_task_id: Int? = nil
     @State var reminderTime: Date = Date()
     @State var todoNote: String = ""
+    @State var messenge = ""
+    @State var isError = false
 
     struct TodoData : Decodable {
         var userId: String?
-        //        var id: Int
         var category_id: Int
+        var label: String
         var todoTitle: String
         var todoIntroduction: String
         var startDateTime: String
+        var todoStatus: Int
         var reminderTime: String
+        var dueDateTime: String
         var todo_id: String
         var message: String
     }
@@ -52,6 +56,10 @@ struct AddTodoView: View {
                     DatePicker("提醒時間", selection: $reminderTime, displayedComponents: [.hourAndMinute])
                 }
                 TextField("備註", text: $todoNote)
+                if(isError) {
+                    Text(messenge)
+                        .foregroundColor(.red)
+                }
             }
             .navigationBarTitle("一般學習")
             .navigationBarItems(leading:
@@ -89,35 +97,53 @@ struct AddTodoView: View {
             }
         }
         
-        let url = URL(string: "http://localhost:8888/addTodo.php")!
+        let url = URL(string: "http://127.0.0.1:8888/addStudyGeneral.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let body = ["category_id": category_id,
+        let body = [
                     "label": label,
                     "todoTitle": todoTitle,
                     "todoIntroduction": todoIntroduction,
                     "startDateTime": formattedDate(startDateTime),
                     "todoStatus": todoStatus,
                     "dueDateTime": formattedDate(dueDateTime),
-                    "recurring_task_id": recurring_task_id ?? "",
+//                    "recurring_task_id": recurring_task_id ?? "",
                     "reminderTime": formattedTime(reminderTime),
                     "todoNote": todoNote] as [String : Any]
+        print("AddTodoView - body:\(body)")
         let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
         request.httpBody = jsonData
         URLSessionSingleton.shared.session.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("addTodo - Connection error: \(error)")
+                print("AddTodoView - Connection error: \(error)")
             } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                print("addTodo - HTTP error: \(httpResponse.statusCode)")
+                print("AddTodoView - HTTP error: \(httpResponse.statusCode)")
             }
             else if let data = data{
                 let decoder = JSONDecoder()
                 do {
+                    print("AddTodoView - Data : \(String(data: data, encoding: .utf8)!)")
                     let todoData = try decoder.decode(TodoData.self, from: data)
-                    if (todoData.message == "User New Todo successfully") {
+                    if (todoData.message == "User New StudyGeneral successfully") {
+                        print("============== AddTodoView ==============")
+                        print(String(data: data, encoding: .utf8)!)
+                        print("addStudySpaced - userDate:\(todoData)")
+                        print("使用者ID為：\(todoData.userId ?? "N/A")")
+                        print("事件id為：\(todoData.todo_id)")
+                        print("事件種類為：\(todoData.category_id)")
+                        print("事件名稱為：\(todoData.todoTitle)")
+                        print("事件簡介為：\(todoData.todoIntroduction)")
+                        print("事件種類為：\(todoData.label)")
+                        print("事件狀態為：\(todoData.todoStatus)")
+                        print("開始時間為：\(todoData.startDateTime)")
+                        print("提醒時間為：\(todoData.reminderTime)")
+                        print("截止日期為：\(todoData.dueDateTime)")
+                        print("事件編號為：\(todoData.todo_id)")
+                        print("AddTodoView - message：\(todoData.message)")
+                        isError = false
                         DispatchQueue.main.async {
                             let todo = Todo(id: Int(todoData.todo_id)!,
-                                            uid: todoData.userId!,
+//                                            uid: todoData.userId!,
                                             category_id: category_id,
                                             label: label,
                                             todoTitle: todoTitle,
@@ -125,18 +151,29 @@ struct AddTodoView: View {
                                             startDateTime: startDateTime,
                                             todoStatus: todoStatus,
                                             dueDateTime: dueDateTime,
-                                            recurring_task_id: recurring_task_id,
+//                                            recurring_task_id: recurring_task_id,
                                             reminderTime: reminderTime,
                                             todoNote: todoNote)
                             todoStore.todos.append(todo)
                             presentationMode.wrappedValue.dismiss()
                         }
+                        print("============== AddTodoView ==============")
+                    } else if (todoData.message == "The Todo is repeated") {
+                        isError = true
+                        print("AddSpacedView - message：\(todoData.message)")
+                        messenge = "已建立過，請重新建立"
+                    } else if (todoData.message == "New Todo - Error: <br>Incorrect integer value: '' for column 'uid' at row 1") {
+                        isError = true
+                        print("AddSpacedView - message：\(todoData.message)")
+                        messenge = "登入出錯 請重新登入"
                     } else {
-                        print("addTodo - message：\(todoData.message)")
-                        // handle other messages from the server
-                    }
+                        isError = true
+                        print("AddTodoView - message：\(todoData.message)")
+                        messenge = "建立失敗，請重新建立"                    }
                 } catch {
-                    print("addTodo - 解碼失敗：\(error)")
+                    isError = true
+                    print("AddTodoView - 解碼失敗：\(error)")
+                    messenge = "建立失敗，請重新建立"
                 }
             }
         }

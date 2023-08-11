@@ -140,7 +140,7 @@ struct AddSportView: View {
                     if (todoData.message == "User New Todo successfully") {
                         DispatchQueue.main.async {
                             let todo = Todo(id: Int(todoData.todo_id)!,
-                                            uid: todoData.userId!,
+//                                            uid: todoData.userId!,
                                             category_id: category_id,
                                             label: label,
                                             todoTitle: todoTitle,
