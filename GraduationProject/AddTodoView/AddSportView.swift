@@ -25,8 +25,23 @@ struct AddSportView: View {
     @State var sportType: String = ""
     @State private var sportValue: Float = 0.0
     @State private var sportUnit: String = "次"
+    @State private var showSportPicker = false
+    @State private var selectedSport = "跑步" // 預設值
 
-    let sportUnits = ["小時", "次"]
+    let sports = [
+      "跑步", "單車騎行", "散步", "游泳", "爬樓梯", "健身",
+      "瑜伽", "舞蹈", "滑板", "溜冰", "滑雪", "跳繩",
+      "高爾夫", "網球", "籃球", "足球", "排球", "棒球",
+      "曲棍球", "壁球", "羽毛球", "舉重", "壁球", "劍道",
+      "拳擊", "柔道", "跆拳道", "柔術", "舞劍", "團體健身課程"
+    ]
+
+    @State private var isRecurring = false
+    @State private var selectedFrequency = 1
+    @State private var recurringOption = 1
+    @State private var recurringEndDate = Date()
+
+    let sportUnits = ["小時", "次", "卡路里"]
 
     struct TodoData: Decodable {
         var userId: String?
@@ -42,29 +57,91 @@ struct AddSportView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("標題").textCase(nil)) {
-                    TextField("輸入標題", text: $todoTitle)
+                Section {
+                    TextField("標題", text: $todoTitle)
+                    TextField("內容", text: $todoIntroduction)
                 }
-                Section(header: Text("內容").textCase(nil)) {
-                    TextField("輸入內容", text: $todoIntroduction)
+                Section {
+                        HStack {
+                            Image(systemName: "tag.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit) // 保持圖示的原始寬高比
+                                .foregroundColor(.white) // 圖示顏色設為白色
+                                .padding(6) // 確保有足夠的空間顯示外框和背景色
+                                .background(Color.yellow) // 設定背景顏色
+                                .clipShape(RoundedRectangle(cornerRadius: 8)) // 設定方形的邊框，並稍微圓角
+                                .frame(width: 30, height: 30) // 這裡的尺寸是示例，您可以根據需要調整
+                            TextField("標籤", text: $label)
+                        }
+                    }
+                Section {
+                    HStack {
+                        Image(systemName: "calendar")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.white)
+                            .padding(6)
+                            .background(Color.red)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .frame(width: 30, height: 30)
+                        DatePicker("選擇時間", selection: $startDateTime, displayedComponents: [.date])
+                    }
+                    HStack {
+                        Image(systemName: "bell.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.white)
+                            .padding(6)
+                            .background(Color.purple)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .frame(width: 30, height: 30)
+                        DatePicker("提醒時間", selection: $reminderTime, displayedComponents: [.hourAndMinute])
+                    }
                 }
-                Section(header: Text("標籤").textCase(nil)) {
-                    TextField("標籤", text: $label)
-                }
-                Section(header: Text("開始時間").textCase(nil)) {
-                    DatePicker("選擇時間", selection: $startDateTime, displayedComponents: [.date])
-                    DatePicker("提醒時間", selection: $reminderTime, displayedComponents: [.hourAndMinute])
-                }
-                Section(header: Text("運動設定").textCase(nil)) {
-                    TextField("輸入運動類型", text: $sportType)
-                    
+                Section {
+                    HStack {
+                        Image(systemName: "figure.walk.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.white)
+                            .padding(6)
+                            .background(Color.blue)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .frame(width: 30, height: 30)
+                        
+                        Text("運動類型")
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            self.showSportPicker.toggle()
+                        }) {
+                            HStack {
+                                Text(selectedSport)
+                                    .foregroundColor(.black)
+
+                            }
+                        }
+                        .buttonStyle(.bordered)
+                    }
+
+                    if showSportPicker {
+                        Picker("運動類型", selection: $selectedSport) {
+                            ForEach(sports, id: \.self) { sport in
+                                Text(sport).tag(sport)
+                            }
+                        }
+                        .pickerStyle(WheelPickerStyle())
+                    }
+
+
                     HStack {
                         TextField("輸入數值", value: $sportValue, formatter: NumberFormatter())
                             .keyboardType(.decimalPad)
                             .frame(width: 100, alignment: .leading)
-                        
+
                         Spacer()
-                        
+
                         Picker("選擇單位", selection: $sportUnit) {
                             ForEach(sportUnits, id: \.self) {
                                 Text($0)
@@ -72,6 +149,39 @@ struct AddSportView: View {
                         }
                         .pickerStyle(SegmentedPickerStyle())
                         .frame(width: 150, alignment: .trailing)
+                    }
+                }
+
+                Section {
+                    Toggle(isOn: $isRecurring) {
+                        HStack {
+                            Image(systemName: "arrow.clockwise")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.white)
+                                .padding(6)
+                                .background(Color.gray)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .frame(width: 30, height: 30)
+                            Text("重複")
+                        }
+                    }
+
+                    if isRecurring {
+                        Picker("重複頻率", selection: $selectedFrequency) {
+                            Text("每日").tag(1)
+                            Text("每週").tag(2)
+                            Text("每月").tag(3)
+                        }
+
+                        Picker("結束重複", selection: $recurringOption) {
+                            Text("一直重複").tag(1)
+                            Text("選擇結束日期").tag(2)
+                        }
+
+                        if recurringOption == 2 {
+                            DatePicker("結束重複日期", selection: $recurringEndDate, displayedComponents: [.date])
+                        }
                     }
                 }
                 TextField("備註", text: $todoNote)

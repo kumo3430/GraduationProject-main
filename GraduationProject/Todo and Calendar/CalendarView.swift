@@ -78,13 +78,13 @@ struct CalendarView: View {
             .fullScreenCover(item: $action) { item in
                 switch item {
                 case .generalLearning:
-                    AddTodoView()
+                    AddStudyView()
                 case .spacedLearning:
                     AddTaskView()
                 case .sport:
                     AddSportView()
                 default:
-                    AddTodoView()
+                    AddStudyView()
                 }
             }
             .onAppear() {
@@ -112,79 +112,59 @@ struct CalendarView: View {
     func eventList() -> some View {
         let filteredTasks = taskStore.tasksForDate(selectedDate)
         let filteredTodos = todoStore.todosForDate(selectedDate)
-        print("filteredTodos\(filteredTodos)")
-        return VStack {
-            Group{
-                if filteredTasks.isEmpty {
-                    // If there are no tasks, display "今日沒有行程" message
-                    Text("今日沒有行程")
-                        .font(.headline)
-                        .padding(.vertical)
-                } else {
-                    // If there are tasks, display the task list
-                    List(filteredTasks) { task in
-                        VStack(alignment: .leading) {
-                            if formattedDate(selectedDate) == formattedDate(task.nextReviewDate) {
-                                Text(task.title)
-                                    .font(.headline)
-                                Text("設定日期")
-                                    .font(.subheadline)
-                            } else if formattedDate(selectedDate) == formattedDate(task.repetition1Count) {
-                                Text(task.title)
-                                    .font(.headline)
-                                Text("第一天")
-                                    .font(.subheadline)
-                            }else if formattedDate(selectedDate) == formattedDate(task.repetition2Count) {
-                                Text(task.title)
-                                    .font(.headline)
-                                Text("第三天")
-                                    .font(.subheadline)
-                            }else if formattedDate(selectedDate) == formattedDate(task.repetition3Count) {
-                                Text(task.title)
-                                    .font(.headline)
-                                Text("第七天")
-                                    .font(.subheadline)
-                            }else if formattedDate(selectedDate) == formattedDate(task.repetition4Count) {
-                                Text(task.title)
-                                    .font(.headline)
-                                Text("第十四天")
-                                    .font(.subheadline)
-                            } else {
-                                Text("selectedDate:\(selectedDate)")
-                                Text("nextReviewDate:\(task.nextReviewDate)")
-                            }
-                        }
+
+        return List {
+            Text("間隔學習法")
+                .font(.caption)
+            ForEach(filteredTasks) { task in
+                VStack(alignment: .leading) {
+                    if formattedDate(selectedDate) == formattedDate(task.nextReviewDate) {
+                        Text(task.title)
+                            .font(.headline)
+                        Text("設定日期")
+                            .font(.subheadline)
+                    } else if formattedDate(selectedDate) == formattedDate(task.repetition1Count) {
+                        Text(task.title)
+                            .font(.headline)
+                        Text("第一天")
+                            .font(.subheadline)
+                    }else if formattedDate(selectedDate) == formattedDate(task.repetition2Count) {
+                        Text(task.title)
+                            .font(.headline)
+                        Text("第三天")
+                            .font(.subheadline)
+                    }else if formattedDate(selectedDate) == formattedDate(task.repetition3Count) {
+                        Text(task.title)
+                            .font(.headline)
+                        Text("第七天")
+                            .font(.subheadline)
+                    }else if formattedDate(selectedDate) == formattedDate(task.repetition4Count) {
+                        Text(task.title)
+                            .font(.headline)
+                        Text("第十四天")
+                            .font(.subheadline)
+                    } else {
+                        Text("selectedDate:\(selectedDate)")
+                        Text("nextReviewDate:\(task.nextReviewDate)")
                     }
                 }
             }
-            
-            Group{
-                if filteredTodos.isEmpty {
-                    // If there are no tasks, display "今日沒有行程" message
-                    Text("今日沒有行程")
-                        .font(.headline)
-                        .padding(.vertical)
-                } else {
-                    // If there are tasks, display the task list
-                    List(filteredTodos) { todo in
-                        VStack(alignment: .leading) {
-                            if formattedDate(selectedDate) == formattedDate(todo.startDateTime) {
-                                Text(todo.title)
-                                    .font(.headline)
-                                Text("設定日期")
-                                    .font(.subheadline)
-                            }  else {
-                                Text("selectedDate:\(selectedDate)")
-                                Text("startDateTime:\(todo.startDateTime)")
-                            }
-                        }
+            Text("一般學習")
+                .font(.caption)
+            ForEach(filteredTodos) { todo in
+                VStack(alignment: .leading) {
+                    if formattedDate(selectedDate) == formattedDate(todo.startDateTime) {
+                        Text(todo.title)
+                            .font(.headline)
+                        Text("一般學習：設定日期")
+                            .font(.subheadline)
+                    }  else {
+                        Text("selectedDate:\(selectedDate)")
+                        Text("startDateTime:\(todo.startDateTime)")
                     }
                 }
             }
-            
-            
         }
-        
     }
     
 }

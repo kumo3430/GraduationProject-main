@@ -16,7 +16,7 @@ struct FireAuth {
     private init() { }
     
     func signinWithGoogle(presenting: UIViewController, completion: @escaping(Error?) -> Void) {
-        // 獲取Google的clientID：首先，透過FirebaseApp.app()?.options.clientID獲取Firebase項目的clientID，用於Google Sign-In
+        // 獲取ㄈGoogle的clientID：首先，透過FirebaseApp.app()?.options.clientID獲取Firebase項目的clientID，用於Google Sign-In
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         
         // Create Google Sign In configuration object.

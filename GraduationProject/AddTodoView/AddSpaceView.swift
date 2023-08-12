@@ -53,20 +53,49 @@ struct AddTaskView: View {
         NavigationView {
             Form {
                 // 此部分為欄位上面小小的字
-                Section(header: Text("標題").textCase(nil)) {
-                    TextField("輸入標題", text: $title)
+                Section {
+                    TextField("標題", text: $title)
+                    TextField("內容", text: $description)
                 }
-                Section(header: Text("內容").textCase(nil)) {
-                    TextField("輸入內容", text: $description)
+                Section {
+                        HStack {
+                            Image(systemName: "tag.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit) // 保持圖示的原始寬高比
+                                .foregroundColor(.white) // 圖示顏色設為白色
+                                .padding(6) // 確保有足夠的空間顯示外框和背景色
+                                .background(Color.yellow) // 設定背景顏色
+                                .clipShape(RoundedRectangle(cornerRadius: 8)) // 設定方形的邊框，並稍微圓角
+                                .frame(width: 30, height: 30) // 這裡的尺寸是示例，您可以根據需要調整
+                            TextField("標籤", text: $label)
+                        }
+                    }
+                Section {
+                    HStack {
+                        Image(systemName: "calendar")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.white)
+                            .padding(6)
+                            .background(Color.red)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .frame(width: 30, height: 30)
+                        DatePicker("選擇時間", selection: $nextReviewDate, displayedComponents: [.date])
+                    }
+                    HStack {
+                        Image(systemName: "bell.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.white)
+                            .padding(6)
+                            .background(Color.purple)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .frame(width: 30, height: 30)
+                        DatePicker("提醒時間", selection: $nextReviewTime, displayedComponents: [.hourAndMinute])
+                    }
                 }
-                Section(header: Text("標籤").textCase(nil)) {
-                    TextField("標籤", text: $label)
-                }
-                Section(header: Text("開始時間").textCase(nil)) {
-                    DatePicker("選擇時間", selection: $nextReviewDate, displayedComponents: [.date])
-                    DatePicker("提醒時間", selection: $nextReviewTime, displayedComponents: [.hourAndMinute])
-                }
-                Section(header: Text("間隔學習法日程表")) {
+
+                Section {
                     ForEach(0..<4) { index in
                         HStack {
                             Text("第\(formattedInterval(index))天： \(formattedDate(nextReviewDates[index]))")

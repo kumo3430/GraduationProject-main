@@ -13,6 +13,7 @@ struct TodoGeneralDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var title = ""
     @State var description = ""
+    @State var label = ""
     @State var startDateTime = Date()
     @State var todoStatus:Int = 0
     @State var messenge = ""
@@ -33,21 +34,31 @@ struct TodoGeneralDetailView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("標題")) {
+                Section {
                     TextField("輸入標題", text: $todo.title)
                         .onChange(of: todo.title) { newValue in
                             todo.title = newValue
                             print("New title : \(todo.title)")
                         }
-                }
-                Section(header: Text("內容")) {
                     TextField("輸入內容", text: $todo.description)
                         .onChange(of: todo.description) { newValue in
                             todo.description = newValue
                             print("New description : \(todo.description)")
                         }
                 }
-                
+                Section {
+                        HStack {
+                            Image(systemName: "tag")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit) // 保持圖示的原始寬高比
+                                .foregroundColor(.white) // 圖示顏色設為白色
+                                .padding(6) // 確保有足夠的空間顯示外框和背景色
+                                .background(Color.blue) // 設定背景顏色
+                                .clipShape(RoundedRectangle(cornerRadius: 8)) // 設定方形的邊框，並稍微圓角
+                                .frame(width: 30, height: 30) // 這裡的尺寸是示例，您可以根據需要調整
+                            TextField("標籤", text: $todo.label)
+                        }
+                    }
                 Section(header: Text("提醒時間")) {
                     DatePicker("開始時間", selection: $todo.startDateTime, displayedComponents: [.date])
                         .disabled(true)

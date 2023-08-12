@@ -23,33 +23,43 @@ struct TodoListView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(taskStore.tasks.indices, id: \.self) { index in
-                    NavigationLink(destination: TaskDetailView(task: $taskStore.tasks[index])) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(taskStore.tasks[index].title)
-                                .font(.headline)
-                            Text(taskStore.tasks[index].description)
-                                .font(.subheadline)
-                            Text("Start time: \(formattedDate(taskStore.tasks[index].nextReviewDate))")
-                                .font(.caption)
+            ZStack {
+                if taskStore.tasks.isEmpty {
+                    // Display the message when there are no tasks
+                    Text("尚未新增事項")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)  // Center the message
+                } else {
+                    List {
+                        ForEach(taskStore.tasks.indices, id: \.self) { index in
+                            NavigationLink(destination: TaskDetailView(task: $taskStore.tasks[index])) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(taskStore.tasks[index].title)
+                                        .font(.headline)
+                                    Text(taskStore.tasks[index].description)
+                                        .font(.subheadline)
+                                    Text("Start time: \(formattedDate(taskStore.tasks[index].nextReviewDate))")
+                                        .font(.caption)
+                                }
+                            }
+                        }
+                        ForEach(todoStore.todos.indices, id: \.self) { index in
+                            NavigationLink(destination: TodoGeneralDetailView(todo: $todoStore.todos[index])) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(todoStore.todos[index].title)
+                                        .font(.headline)
+                                    Text(todoStore.todos[index].description)
+                                        .font(.subheadline)
+                                    Text("Start time: \(formattedDate(todoStore.todos[index].startDateTime))")
+                                        .font(.caption)
+                                }
+                            }
                         }
                     }
-                }
-                ForEach(todoStore.todos.indices, id: \.self) { index in
-                    NavigationLink(destination: TodoGeneralDetailView(todo: $todoStore.todos[index])) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(todoStore.todos[index].title)
-                                .font(.headline)
-                            Text(todoStore.todos[index].description)
-                                .font(.subheadline)
-                            Text("Start time: \(formattedDate(todoStore.todos[index].startDateTime))")
-                                .font(.caption)
-                        }
-                    }
+                    .listStyle(PlainListStyle())
                 }
             }
-            .listStyle(PlainListStyle())
             .navigationBarTitle("待辦事項", displayMode: .inline)
             .navigationBarItems(
                 leading:
@@ -85,16 +95,16 @@ struct TodoListView: View {
                     .cancel()
                 ])
             }
-            .fullScreenCover(item: $action) { item in
+            .sheet(item: $action) { item in
                 switch item {
                 case .generalLearning:
-                    AddTodoView()
+                    AddStudyView()
                 case .spacedLearning:
                     AddTaskView()
                 case .sport:
                     AddSportView()
                 default:
-                    AddTodoView()
+                    AddStudyView()
                 }
             }
         }
@@ -112,8 +122,8 @@ struct TodoListView: View {
 
 struct SpacedView_Previews: PreviewProvider {
     static var previews: some View {
-                TodoListView(ReviewChecked0: false, ReviewChecked1: false, ReviewChecked2: false, ReviewChecked3: false, switchViewAction: {})
-//        TodoListView(switchViewAction: {})
+        TodoListView(ReviewChecked0: false, ReviewChecked1: false, ReviewChecked2: false, ReviewChecked3: false, switchViewAction: {})
+        //        TodoListView(switchViewAction: {})
             .environmentObject(TaskStore())
             .environmentObject(TodoStore())
     }

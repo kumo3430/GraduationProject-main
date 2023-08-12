@@ -17,20 +17,6 @@ enum Action: Int, Identifiable {
     case diet
 }
 
-//struct UserData: Decodable {
-//    var todo_id: [String]
-//    var userId: String?
-//    var category_id: Int
-//    var todoTitle: [String]
-//    var todoIntroduction: [String]
-//    var startDateTime: [String]
-//    var reminderTime: [String]
-//    var repetition1Status: [String?]
-//    var repetition2Status: [String?]
-//    var repetition3Status: [String?]
-//    var repetition4Status: [String?]
-//    var message: String
-//}
 struct TaskData: Decodable {
     var todo_id: [String]
     var userId: String?
