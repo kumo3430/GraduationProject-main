@@ -18,12 +18,8 @@ if ( $data['label'] == "") {
 } else {
     $todoLabel= $data['label'];
 }
-if ( $data['todoStatus'] == false) {
-    $todoStatus = 0;
-} else {
-    $todoStatus= 1;
-}
 
+$todoStatus= 0;
 $startDateTime = $data['startDateTime'];
 $reminderTime = $data['reminderTime'];
 $dueDateTime = $data['dueDateTime'];

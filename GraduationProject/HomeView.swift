@@ -67,24 +67,7 @@ struct HomeView: View {
                 CardView {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("今日待辦事項")
-                            .font(.headline)
-//                        eventList()
-                        //                        ForEach(taskStore.tasks.filter { $0.isToday }, id: \.id) { task in
-                        //                            HStack {
-                        //                                Text(task.title)
-                        //                                    .font(.subheadline)
-                        //                                    .fontWeight(.medium)
-                        //
-                        //                                Spacer()
-                        //
-                        //                                Text(formattedDate(task.nextReviewDate))
-                        //                                    .font(.caption)
-                        //                            }
-                        //                            .onAppear() {
-                        //                                print("task:\(task)")
-                        //                            }
-                        //                        }
-                        
+                            .font(.headline)     
                         
                         ForEach(taskStore.tasksForDate(Date()), id: \.id) { task in
                             HStack {

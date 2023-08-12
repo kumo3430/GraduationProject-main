@@ -29,14 +29,13 @@ struct Todo: Identifiable {
     var id: Int
 //    var uid: String
     var title: String
-    var category_id: Int
+//    var category_id: Int
     var label: String
-    var todoTitle: String
     var todoIntroduction: String
     var startDateTime: Date
     var todoStatus: Bool
     var dueDateTime: Date
-    var recurring_task_id: Int?
+//    var recurring_task_id: Int?
     var reminderTime: Date
     var todoNote: String
 }

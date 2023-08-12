@@ -31,7 +31,7 @@ enum Action: Int, Identifiable {
 //    var repetition4Status: [String?]
 //    var message: String
 //}
-struct UserData: Decodable {
+struct TaskData: Decodable {
     var todo_id: [String]
     var userId: String?
     var category_id: Int
@@ -51,6 +51,21 @@ struct UserData: Decodable {
     var message: String
 }
 
+struct TodoData: Decodable {
+    var todo_id: [String]
+    var userId: String?
+    var category_id: Int
+    var todoTitle: [String]
+    var todoIntroduction: [String]
+    var todoLabel: [String]
+    var startDateTime: [String]
+    var reminderTime: [String]
+    var todoStatus: [String?]
+    var dueDateTime: [String]
+    var todoNote: [String]
+    var message: String
+}
+
 class TodoStore: ObservableObject {
     //    @Published var todos = [Todo]()
     @Published var todos: [Todo] = []
@@ -58,8 +73,6 @@ class TodoStore: ObservableObject {
     func todosForDate(_ date: Date) -> [Todo] {
         let formattedSelectedDate = formattedDate(date)
         let filteredTodos = todos.filter { todo in
-            print("123")
-            print("QQQ\(formattedDate(todo.startDateTime))")
             return formattedSelectedDate == formattedDate(todo.startDateTime)
         }
         return filteredTodos
@@ -70,7 +83,7 @@ class TodoStore: ObservableObject {
         formatter.dateFormat = "yyyy/MM/dd"
         return formatter.string(from: date)
     }
-    func clearTasks() {
+    func clearTodos() {
         todos = []
     }
 }
