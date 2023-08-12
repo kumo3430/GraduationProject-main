@@ -19,7 +19,7 @@ struct HomeView: View {
     @State var goal = ["Learn English"]
     @State var achievements = ["上個月任務完成度達100%"]
     @EnvironmentObject var taskStore: TaskStore
-    
+    @EnvironmentObject var todoStore: TodoStore
     // Helper function to format date
     func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
@@ -68,7 +68,8 @@ struct HomeView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("今日待辦事項")
                             .font(.headline)     
-                        
+                        Text("間隔學習法")
+                            .font(.caption)
                         ForEach(taskStore.tasksForDate(Date()), id: \.id) { task in
                             HStack {
                                 //                                                       HStack(alignment: .leading){
@@ -127,23 +128,21 @@ struct HomeView: View {
                                 print("task:\(task)")
                             }
                         }
-                        
-                        
-                        //                                                ForEach(taskStore.tasksForDate(Date()), id: \.id) { task in
-                        //                                                                           HStack {
-                        //                                                                               Text(task.title)
-                        //                                                                                   .font(.subheadline)
-                        //                                                                                   .fontWeight(.medium)
-                        //
-                        //                                                                               Spacer()
-                        //
-                        //                                                                               Text(formattedDate(task.nextReviewDate))
-                        //                                                                                   .font(.caption)
-                        //                                                                           }
-                        //                                                                           .onAppear() {
-                        //                                                                               print("task:\(task)")
-                        //                                                                           }
-                        //                                                                       }
+                        Text("一般學習")
+                            .font(.caption)
+                        ForEach(todoStore.todosForDate(Date()), id: \.id) { todo in
+                            HStack {
+                                if formattedDate(Date()) == formattedDate(todo.startDateTime) {
+                                    Text(todo.title)
+                                        .font(.subheadline)
+                                        .fontWeight(.medium)
+                                    Spacer()
+                                    Text("設定日期")
+                                        .font(.caption)
+                                }
+                            }
+                           
+                        }
                     }
                 }
                 
