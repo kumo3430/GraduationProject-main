@@ -37,19 +37,17 @@ struct TodoListView: View {
                     }
                 }
                 ForEach(todoStore.todos.indices, id: \.self) { index in
-                    // 還沒改這部分
-                    NavigationLink(destination: TaskDetailView(task: $taskStore.tasks[index])) {
+                    NavigationLink(destination: TodoGeneralDetailView(todo: $todoStore.todos[index])) {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(todoStore.todos[index].title)
                                 .font(.headline)
-                            Text(todoStore.todos[index].todoIntroduction)
+                            Text(todoStore.todos[index].description)
                                 .font(.subheadline)
                             Text("Start time: \(formattedDate(todoStore.todos[index].startDateTime))")
                                 .font(.caption)
                         }
                     }
                 }
-                
             }
             .listStyle(PlainListStyle())
             .navigationBarTitle("待辦事項", displayMode: .inline)
@@ -109,12 +107,13 @@ struct TodoListView: View {
         return formatter.string(from: date)
     }
     
-   
+    
 }
 
 struct SpacedView_Previews: PreviewProvider {
     static var previews: some View {
-        TodoListView(ReviewChecked0: false, ReviewChecked1: false, ReviewChecked2: false, ReviewChecked3: false, switchViewAction: {})
+                TodoListView(ReviewChecked0: false, ReviewChecked1: false, ReviewChecked2: false, ReviewChecked3: false, switchViewAction: {})
+//        TodoListView(switchViewAction: {})
             .environmentObject(TaskStore())
             .environmentObject(TodoStore())
     }

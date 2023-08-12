@@ -10,9 +10,9 @@ import Foundation
 struct Task: Identifiable {
     // 以下是他的屬性
     var id: Int
+    var label: String
     var title: String
     var description: String
-    var label: String
     var nextReviewDate: Date
     var nextReviewTime: Date
     var repetition1Count: Date
@@ -27,15 +27,12 @@ struct Task: Identifiable {
 
 struct Todo: Identifiable {
     var id: Int
-//    var uid: String
-    var title: String
-//    var category_id: Int
     var label: String
-    var todoIntroduction: String
+    var title: String
+    var description: String
     var startDateTime: Date
     var todoStatus: Bool
     var dueDateTime: Date
-//    var recurring_task_id: Int?
     var reminderTime: Date
     var todoNote: String
 }
