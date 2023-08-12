@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TodoListView: View {
     @EnvironmentObject var taskStore: TaskStore
+    @EnvironmentObject var todoStore: TodoStore
     @AppStorage("uid") private var uid: String = ""
     @State private var showingActionSheet = false
     @State private var action: Action? = nil
@@ -35,6 +36,20 @@ struct TodoListView: View {
                         }
                     }
                 }
+                ForEach(todoStore.todos.indices, id: \.self) { index in
+                    // 還沒改這部分
+                    NavigationLink(destination: TaskDetailView(task: $taskStore.tasks[index])) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(todoStore.todos[index].title)
+                                .font(.headline)
+                            Text(todoStore.todos[index].todoIntroduction)
+                                .font(.subheadline)
+                            Text("Start time: \(formattedDate(todoStore.todos[index].startDateTime))")
+                                .font(.caption)
+                        }
+                    }
+                }
+                
             }
             .listStyle(PlainListStyle())
             .navigationBarTitle("待辦事項", displayMode: .inline)
