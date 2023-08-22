@@ -100,3 +100,25 @@ class TaskStore: ObservableObject {
         tasks = []
     }
 }
+
+class TickerStore: ObservableObject {
+    //    @Published var todos = [Todo]()
+    @Published var tickers: [Ticker] = []
+    
+//    func todosForDate(_ date: Date) -> [Ticker] {
+//        let formattedSelectedDate = formattedDate(date)
+//        let filteredTodos = tickers.filter { todo in
+//            return formattedSelectedDate == formattedDate(todo.startDateTime)
+//        }
+//        return filteredTodos
+//    }
+    
+    func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        return formatter.string(from: date)
+    }
+    func clearTodos() {
+        tickers = []
+    }
+}

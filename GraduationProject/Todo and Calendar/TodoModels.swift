@@ -36,3 +36,10 @@ struct Todo: Identifiable {
     var reminderTime: Date
     var todoNote: String
 }
+
+struct Ticker: Identifiable {
+    var id: Int
+    var name: String
+    var deadline: Date
+    var exchage: Date
+}

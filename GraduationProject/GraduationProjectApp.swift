@@ -17,6 +17,7 @@ struct YourApp: App {
     
     @StateObject var taskStore = TaskStore()
     @StateObject var todoStore = TodoStore()
+    @StateObject var tickersStore = TickerStore()
     
     var body: some Scene {
         WindowGroup {
