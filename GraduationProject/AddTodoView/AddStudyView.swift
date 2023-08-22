@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddTodoView: View {
+struct AddStudyView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var todoStore: TodoStore
 
@@ -22,6 +22,11 @@ struct AddTodoView: View {
 //    @State var recurring_task_id: Int? = nil
     @State var reminderTime: Date = Date()
     @State var todoNote: String = ""
+    @State private var isRecurring = false
+    @State private var selectedFrequency = 1
+    @State private var recurringOption = 1  // 1: 持續重複, 2: 選擇結束日期
+    @State private var recurringEndDate = Date()
+    
     @State var messenge = ""
     @State var isError = false
 
@@ -42,24 +47,81 @@ struct AddTodoView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("標題").textCase(nil)) {
-                    TextField("輸入標題", text: $todoTitle)
+                Section {
+                    TextField("標題", text: $todoTitle)
+                    TextField("內容", text: $todoIntroduction)
                 }
-                Section(header: Text("內容").textCase(nil)) {
-                    TextField("輸入內容", text: $todoIntroduction)
+                Section {
+                        HStack {
+                            Image(systemName: "tag.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit) // 保持圖示的原始寬高比
+                                .foregroundColor(.white) // 圖示顏色設為白色
+                                .padding(6) // 確保有足夠的空間顯示外框和背景色
+                                .background(Color.yellow) // 設定背景顏色
+                                .clipShape(RoundedRectangle(cornerRadius: 8)) // 設定方形的邊框，並稍微圓角
+                                .frame(width: 30, height: 30) // 這裡的尺寸是示例，您可以根據需要調整
+                            TextField("標籤", text: $label)
+                        }
+                    }
+                Section {
+                    HStack {
+                        Image(systemName: "calendar")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.white)
+                            .padding(6)
+                            .background(Color.red)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .frame(width: 30, height: 30)
+                        DatePicker("選擇時間", selection: $startDateTime, displayedComponents: [.date])
+                    }
+                    HStack {
+                        Image(systemName: "bell.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.white)
+                            .padding(6)
+                            .background(Color.purple)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .frame(width: 30, height: 30)
+                        DatePicker("提醒時間", selection: $reminderTime, displayedComponents: [.hourAndMinute])
+                    }
                 }
-                Section(header: Text("標籤").textCase(nil)) {
-                    TextField("標籤", text: $label)
-                }
-                Section(header: Text("開始時間").textCase(nil)) {
-                    DatePicker("選擇時間", selection: $startDateTime, displayedComponents: [.date])
-                    DatePicker("提醒時間", selection: $reminderTime, displayedComponents: [.hourAndMinute])
+
+                Section {
+                    Toggle(isOn: $isRecurring) {
+                        HStack {
+                            Image(systemName: "arrow.clockwise")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.white)
+                                .padding(6)
+                                .background(Color.gray)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .frame(width: 30, height: 30)
+                            Text("重複")
+                        }
+                    }
+
+                    if isRecurring {
+                        Picker("重複頻率", selection: $selectedFrequency) {
+                            Text("每日").tag(1)
+                            Text("每週").tag(2)
+                            Text("每月").tag(3)
+                        }
+
+                        Picker("結束重複", selection: $recurringOption) {
+                            Text("一直重複").tag(1)
+                            Text("選擇結束日期").tag(2)
+                        }
+
+                        if recurringOption == 2 {
+                            DatePicker("結束重複日期", selection: $recurringEndDate, displayedComponents: [.date])
+                        }
+                    }
                 }
                 TextField("備註", text: $todoNote)
-                if(isError) {
-                    Text(messenge)
-                        .foregroundColor(.red)
-                }
             }
             .navigationBarTitle("一般學習")
             .navigationBarItems(leading:
@@ -178,9 +240,9 @@ struct AddTodoView: View {
     }
 }
 
-struct AddTodoView_Previews: PreviewProvider {
+struct AddStudyView_Previews: PreviewProvider {
     static var previews: some View {
-        AddTodoView()
+        AddStudyView()
             .environmentObject(TodoStore())
     }
 }

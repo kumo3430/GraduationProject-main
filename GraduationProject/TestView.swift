@@ -4,7 +4,7 @@ import FirebaseCore
 import Firebase // 添加 Firebase 模塊
 import GoogleSignIn
 
-struct test: View {
+struct TestView: View {
     
     var body: some View {
         
@@ -20,8 +20,8 @@ struct test: View {
     
 }
 
-struct test_Previews: PreviewProvider {
+struct TestView_Previews: PreviewProvider {
     static var previews: some View {
-        test()
+        TestView()
     }
 }
