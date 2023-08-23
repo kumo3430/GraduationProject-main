@@ -38,7 +38,8 @@ struct Todo: Identifiable {
 }
 
 struct Ticker: Identifiable {
-    var id: Int
+    var id: String
+//    var ticker_id: String
     var name: String
     var deadline: Date
     var exchage: Date

@@ -54,10 +54,10 @@ struct TodoData: Decodable {
 
 struct TickerData: Decodable {
     var ticker_id: [String]
-    var userId: String?
+    var userId: Int?
     var name: [String]
     var deadline: [String]
-    var exchange: [String]
+    var exchange: [String?]
     var message: String
 }
 
@@ -114,13 +114,13 @@ class TickerStore: ObservableObject {
     //    @Published var todos = [Todo]()
     @Published var tickers: [Ticker] = []
     
-//    func todosForDate(_ date: Date) -> [Ticker] {
-//        let formattedSelectedDate = formattedDate(date)
-//        let filteredTodos = tickers.filter { todo in
-//            return formattedSelectedDate == formattedDate(todo.startDateTime)
-//        }
-//        return filteredTodos
-//    }
+    func tickersForDate(_ date: Date) -> [Ticker] {
+           let formattedSelectedDate = formattedDate(date)
+           let filteredTickers = tickers.filter { ticker in
+               return formattedSelectedDate == formattedDate(ticker.deadline)
+           }
+           return filteredTickers
+       }
     
     func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()

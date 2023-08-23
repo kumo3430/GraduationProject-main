@@ -26,6 +26,7 @@ struct YourApp: App {
                     .onAppear() {
                         taskStore.clearTasks()
                         todoStore.clearTodos()
+                        tickerStore.clearTodos()
                         UserDefaults.standard.set("", forKey: "uid")
                     }
                 
@@ -35,7 +36,7 @@ struct YourApp: App {
                     .environmentObject(todoStore)
                     .onAppear() {
                         StudySpaceList()
-                       
+                        
                         print("AppView-AppStorageUid:\(uid)")
                     }
             }
@@ -146,8 +147,8 @@ struct YourApp: App {
                                 print("StudySpaceList - 日期或時間轉換失敗")
                             }
                         }
-                        StudyGeneralList()
                         print("============== StudySpaceList ==============")
+                        StudyGeneralList()
                     }
                 } catch {
                     print("StudySpaceList - 解碼失敗：\(error)")
@@ -229,7 +230,7 @@ struct YourApp: App {
                                 }
                                 let taskId = Int(userData.todo_id[index])
                                 let todo = Todo(id: taskId!,label: userData.todoLabel[index], title: userData.todoTitle[index], description: userData.todoIntroduction[index], startDateTime: startDate, todoStatus: todoStatus, dueDateTime: dueDateTime, reminderTime: reminderTime, todoNote: userData.todoNote[index])
-        
+                                
                                 
                                 DispatchQueue.main.async {
                                     todoStore.todos.append(todo)
@@ -239,8 +240,8 @@ struct YourApp: App {
                                 print("StudyGeneralList - 日期或時間轉換失敗")
                             }
                         }
-                        TickerList()
                         print("============== StudyGeneralList ==============")
+                        TickerList()
                     }
                 } catch {
                     print("StudyGeneralList - 解碼失敗：\(error)")
@@ -263,7 +264,7 @@ struct YourApp: App {
             }
         }
         
-        let url = URL(string: "http://127.0.0.1:8888/StudySpaceList.php")!
+        let url = URL(string: "http://127.0.0.1:8888/tickersList.php")!
         //        let url = URL(string: "http://10.21.1.164:8888/account/login.php")!
         //        let url = URL(string: "http://163.17.136.73:443/account/login.php")!
         var request = URLRequest(url: url)
@@ -309,18 +310,42 @@ struct YourApp: App {
                             return dateFormatter.date(from: timeString)
                         }
                         
+//                        for index in userData.ticker_id.indices {
+//                            if let deadline = convertToDate(userData.deadline[index]) {
+//                            //                               let exchange = convertToDate(userData.exchange[index]!)
+//                             //                                let taskId = Int(userData.ticker_id[index])
+//                                if (userData.exchange[index] == nil ){
+//                                    var exchange = "尚未兌換"
+//                                } else {
+//                                    var exchange = convertToDate(userData.exchange[index]!)
+//                                }
+//                                let taskId = userData.ticker_id[index]
+//                                let task = Ticker(id: taskId,name: userData.name[index], deadline: deadline, exchage: exchange)
+//                                DispatchQueue.main.async {
+//                                    tickerStore.tickers.append(task)
+//                                }
+//                            } else {
+//                                print("TickerList - 日期或時間轉換失敗")
+//                            }
+//                        }
                         for index in userData.ticker_id.indices {
-                            if let deadline = convertToDate(userData.deadline[index]),
-                               let exchange = convertToDate(userData.exchange[index]) {
-                                let taskId = Int(userData.ticker_id[index])
-                                let task = Ticker(id: taskId!,name: userData.name[index], deadline: deadline, exchage: exchange)
+                            if let deadline = convertToDate(userData.deadline[index]) {
+                                var exchange: Date?  // 聲明 exchange 變數
+                                if userData.exchange[index] == nil {
+                                    exchange = nil  // 不需要賦值，因為 exchange 變數已經初始化為 nil
+                                } else {
+                                    exchange = convertToDate(userData.exchange[index]!)
+                                }
+                                let taskId = userData.ticker_id[index]
+                                let task = Ticker(id: taskId, name: userData.name[index], deadline: deadline, exchage: exchange!)
                                 DispatchQueue.main.async {
                                     tickerStore.tickers.append(task)
                                 }
                             } else {
-                                print("TickerList - 日期或時間轉換失敗")
+                                print("TickerList - 尚未兌換")
                             }
                         }
+
                         print("============== TickerList ==============")
                     }
                 } catch {

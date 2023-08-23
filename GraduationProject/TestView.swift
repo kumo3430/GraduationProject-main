@@ -3,6 +3,7 @@ import SwiftUI
 import FirebaseCore
 import Firebase // 添加 Firebase 模塊
 import GoogleSignIn
+import SafariServices
 
 struct TestView: View {
     @EnvironmentObject var tickerStore: TickerStore

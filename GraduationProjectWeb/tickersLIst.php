@@ -32,10 +32,6 @@ if ($result->num_rows > 0) {
         $name[] = $row['name'];
         $deadline[] = $row['deadline'];
         $exchange[] = $row['exchange_time'];
-        // echo $ticker_id;
-        // echo $name;
-        // echo $deadline;
-        // echo $exchange;
     }
 } else {
     $message = "no such Todo";
