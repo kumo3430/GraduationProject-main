@@ -17,7 +17,7 @@ struct YourApp: App {
     
     @StateObject var taskStore = TaskStore()
     @StateObject var todoStore = TodoStore()
-    @StateObject var tickersStore = TickerStore()
+    @StateObject var tickerStore = TickerStore()
     
     var body: some Scene {
         WindowGroup {
@@ -229,7 +229,7 @@ struct YourApp: App {
                                 }
                                 let taskId = Int(userData.todo_id[index])
                                 let todo = Todo(id: taskId!,label: userData.todoLabel[index], title: userData.todoTitle[index], description: userData.todoIntroduction[index], startDateTime: startDate, todoStatus: todoStatus, dueDateTime: dueDateTime, reminderTime: reminderTime, todoNote: userData.todoNote[index])
-                                
+        
                                 
                                 DispatchQueue.main.async {
                                     todoStore.todos.append(todo)
@@ -239,10 +239,92 @@ struct YourApp: App {
                                 print("StudyGeneralList - 日期或時間轉換失敗")
                             }
                         }
+                        TickerList()
                         print("============== StudyGeneralList ==============")
                     }
                 } catch {
                     print("StudyGeneralList - 解碼失敗：\(error)")
+                }
+            }
+        }
+        .resume()
+    }
+    
+    private func TickerList() {
+        UserDefaults.standard.synchronize()
+        class URLSessionSingleton {
+            static let shared = URLSessionSingleton()
+            let session: URLSession
+            private init() {
+                let config = URLSessionConfiguration.default
+                config.httpCookieStorage = HTTPCookieStorage.shared
+                config.httpCookieAcceptPolicy = .always
+                session = URLSession(configuration: config)
+            }
+        }
+        
+        let url = URL(string: "http://127.0.0.1:8888/StudySpaceList.php")!
+        //        let url = URL(string: "http://10.21.1.164:8888/account/login.php")!
+        //        let url = URL(string: "http://163.17.136.73:443/account/login.php")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let body: [String] = []
+        let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
+        request.httpBody = jsonData
+        URLSessionSingleton.shared.session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("TickerList - Connection error: \(error)")
+            } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+                print("TickerList - HTTP error: \(httpResponse.statusCode)")
+            }
+            else if let data = data{
+                let decoder = JSONDecoder()
+                do {
+                    print(String(data: data, encoding: .utf8)!)
+                    let userData = try decoder.decode(TickerData.self, from: data)
+                    if userData.message == "no such account" {
+                        print("============== TickerList ==============")
+                        print("SoacedList - userDate:\(userData)")
+                        print(userData.message)
+                        print("StudySpaceList - 顯示有問題")
+                        print("============== TickerList ==============")
+                    } else {
+                        print("============== TickerList ==============")
+                        print("SoacedList - userDate:\(userData)")
+                        print("todoId為：\(userData.ticker_id)")
+                        print("tickerTitle為：\(userData.name)")
+                        print("deadline為：\(userData.deadline)")
+                        print("exchange為：\(userData.exchange)")
+                        
+                        // 先將日期和時間字串轉換成對應的 Date 物件
+                        func convertToDate(_ dateString: String) -> Date? {
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                            return dateFormatter.date(from: dateString)
+                        }
+                        
+                        func convertToTime(_ timeString: String) -> Date? {
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "HH:mm:ss"
+                            return dateFormatter.date(from: timeString)
+                        }
+                        
+                        for index in userData.ticker_id.indices {
+                            if let deadline = convertToDate(userData.deadline[index]),
+                               let exchange = convertToDate(userData.exchange[index]) {
+                                let taskId = Int(userData.ticker_id[index])
+                                let task = Ticker(id: taskId!,name: userData.name[index], deadline: deadline, exchage: exchange)
+                                DispatchQueue.main.async {
+                                    tickerStore.tickers.append(task)
+                                }
+                            } else {
+                                print("TickerList - 日期或時間轉換失敗")
+                            }
+                        }
+                        print("============== TickerList ==============")
+                    }
+                } catch {
+                    print("TickerList - 解碼失敗：\(error)")
                 }
             }
         }

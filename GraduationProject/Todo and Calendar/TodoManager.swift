@@ -52,6 +52,15 @@ struct TodoData: Decodable {
     var message: String
 }
 
+struct TickerData: Decodable {
+    var ticker_id: [String]
+    var userId: String?
+    var name: [String]
+    var deadline: [String]
+    var exchange: [String]
+    var message: String
+}
+
 class TodoStore: ObservableObject {
     //    @Published var todos = [Todo]()
     @Published var todos: [Todo] = []
