@@ -314,25 +314,7 @@ struct YourApp: App {
                             dateFormatter.dateFormat = "HH:mm:ss"
                             return dateFormatter.date(from: timeString)
                         }
-                        
-//                        for index in userData.ticker_id.indices {
-//                            if let deadline = convertToDate(userData.deadline[index]) {
-//                            //                               let exchange = convertToDate(userData.exchange[index]!)
-//                             //                                let taskId = Int(userData.ticker_id[index])
-//                                if (userData.exchange[index] == nil ){
-//                                    var exchange = "尚未兌換"
-//                                } else {
-//                                    var exchange = convertToDate(userData.exchange[index]!)
-//                                }
-//                                let taskId = userData.ticker_id[index]
-//                                let task = Ticker(id: taskId,name: userData.name[index], deadline: deadline, exchage: exchange)
-//                                DispatchQueue.main.async {
-//                                    tickerStore.tickers.append(task)
-//                                }
-//                            } else {
-//                                print("TickerList - 日期或時間轉換失敗")
-//                            }
-//                        }
+            
                         for index in userData.ticker_id.indices {
                             if let deadline = convertToDate(userData.deadline[index]) {
                                 //var exchange: Date?  // 聲明 exchange 變數

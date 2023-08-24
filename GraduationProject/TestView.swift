@@ -33,6 +33,11 @@ struct TestView: View {
     }
 }
 
+struct PostData: Encodable {
+    var userID: String
+    var Password: String
+}
+
 struct TickerRow: View {
     var ticker: Ticker
     @AppStorage("userName") private var userName:String = ""
@@ -40,9 +45,9 @@ struct TickerRow: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("Name: \(ticker.name)")
-                Text("Deadline: \(formatDate(ticker.deadline))")
-                Text("Exchange: \(ticker.exchage))")
+                Text("名稱: \(ticker.name)")
+                Text("截止日期: \(formatDate(ticker.deadline))")
+                Text("兌換時間: \(ticker.exchage)")
             }
             Spacer()
             Button(action: {
@@ -87,9 +92,15 @@ struct TickerRow: View {
         //        let url = URL(string: "http://163.17.136.73:443/account/login.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let body = ["userID": userName,"Password": password]
-        let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        let body = ["userID": userName,"Password": password]
+//        print("body:\(body)")
+//        let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
+        let body = PostData(userID: userName, Password: password)
+        let jsonData = try! JSONEncoder().encode(body)
         request.httpBody = jsonData
+        print("body:\(body)")
+        print("jsonData:\(jsonData)")
         URLSessionSingleton.shared.session.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("StudySpaceList - Connection error: \(error)")
