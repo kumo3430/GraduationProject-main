@@ -42,5 +42,6 @@ struct Ticker: Identifiable {
 //    var ticker_id: String
     var name: String
     var deadline: Date
-    var exchage: Date
+//    var exchage: Date
+    var exchage: String
 }

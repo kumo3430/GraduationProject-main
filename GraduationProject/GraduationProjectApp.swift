@@ -34,6 +34,7 @@ struct YourApp: App {
                 MainView()
                     .environmentObject(taskStore)
                     .environmentObject(todoStore)
+                    .environmentObject(tickerStore)
                     .onAppear() {
                         StudySpaceList()
                         
@@ -291,7 +292,7 @@ struct YourApp: App {
                         print("============== TickerList ==============")
                     } else {
                         print("============== TickerList ==============")
-                        print("SoacedList - userDate:\(userData)")
+                        print("TickerList-userDate:\(userData)")
                         print("todoId為：\(userData.ticker_id)")
                         print("tickerTitle為：\(userData.name)")
                         print("deadline為：\(userData.deadline)")
@@ -300,7 +301,7 @@ struct YourApp: App {
                         // 先將日期和時間字串轉換成對應的 Date 物件
                         func convertToDate(_ dateString: String) -> Date? {
                             let dateFormatter = DateFormatter()
-                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                             return dateFormatter.date(from: dateString)
                         }
                         
@@ -330,14 +331,17 @@ struct YourApp: App {
 //                        }
                         for index in userData.ticker_id.indices {
                             if let deadline = convertToDate(userData.deadline[index]) {
-                                var exchange: Date?  // 聲明 exchange 變數
+                                //var exchange: Date?  // 聲明 exchange 變數
+                                var exchange: String?
                                 if userData.exchange[index] == nil {
-                                    exchange = nil  // 不需要賦值，因為 exchange 變數已經初始化為 nil
+                                    //exchange = nil  // 不需要賦值，因為 exchange 變數已經初始化為 nil
+                                    exchange = "尚未兌換"
                                 } else {
-                                    exchange = convertToDate(userData.exchange[index]!)
+                                    exchange = (userData.exchange[index]!)
                                 }
                                 let taskId = userData.ticker_id[index]
                                 let task = Ticker(id: taskId, name: userData.name[index], deadline: deadline, exchage: exchange!)
+                                
                                 DispatchQueue.main.async {
                                     tickerStore.tickers.append(task)
                                 }
@@ -351,6 +355,8 @@ struct YourApp: App {
                 } catch {
                     print("TickerList - 解碼失敗：\(error)")
                 }
+                print("TICKER:\(tickerStore)")
+                print("TICKERstore:\(TickerStore())")
             }
         }
         .resume()
