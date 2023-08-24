@@ -217,6 +217,8 @@ struct verifyRegister: View {
                         print("message：\(userData.message)")
                         UserDefaults.standard.set(true, forKey: "signIn")
                         UserDefaults.standard.set("\(userData.userId ?? "N/A")", forKey: "uid")
+                        UserDefaults.standard.set("\(mail)", forKey: "userName")
+                        UserDefaults.standard.set("\(pass)", forKey: "password")
                         print("============== verifyView ==============")
                         
                     } else if (userData.message == "not yet filled") {

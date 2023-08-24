@@ -7,6 +7,12 @@
 
 import Foundation
 
+//class AppSettings: ObservableObject {
+//    @AppStorage("userName") var userName: String = ""
+//    @AppStorage("password") var password: String = ""
+//}
+
+
 struct Task: Identifiable {
     // 以下是他的屬性
     var id: Int

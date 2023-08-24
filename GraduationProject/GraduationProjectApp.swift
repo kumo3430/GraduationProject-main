@@ -14,11 +14,12 @@ struct YourApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @AppStorage("signIn") var isSignIn = false
     @AppStorage("uid") private var uid:String = ""
+    @AppStorage("userName") private var userName:String = ""
+    @AppStorage("password") private var password:String = ""
     
     @StateObject var taskStore = TaskStore()
     @StateObject var todoStore = TodoStore()
     @StateObject var tickerStore = TickerStore()
-    
     var body: some Scene {
         WindowGroup {
             if !isSignIn {
@@ -28,6 +29,8 @@ struct YourApp: App {
                         todoStore.clearTodos()
                         tickerStore.clearTodos()
                         UserDefaults.standard.set("", forKey: "uid")
+                        UserDefaults.standard.set("", forKey: "userName")
+                        UserDefaults.standard.set("", forKey: "password")
                     }
                 
             } else {
@@ -37,8 +40,9 @@ struct YourApp: App {
                     .environmentObject(tickerStore)
                     .onAppear() {
                         StudySpaceList()
-                        
                         print("AppView-AppStorageUid:\(uid)")
+                        print("AppView-AppStorageUserName:\(userName)")
+                        print("AppView-AppStoragePassword:\(password)")
                     }
             }
         }

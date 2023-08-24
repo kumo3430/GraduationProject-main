@@ -35,6 +35,8 @@ struct TestView: View {
 
 struct TickerRow: View {
     var ticker: Ticker
+    @AppStorage("userName") private var userName:String = ""
+    @AppStorage("password") private var password:String = ""
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -44,7 +46,7 @@ struct TickerRow: View {
             }
             Spacer()
             Button(action: {
-//                UserDefaults.standard.set(false, forKey: "signIn")
+                postTicker()
             }, label: {
                 Image(systemName: "gift.circle.fill")
                     .resizable()
@@ -62,6 +64,44 @@ struct TickerRow: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter.string(from: date)
+    }
+    
+    private func postTicker() {
+        UserDefaults.standard.synchronize()
+        class URLSessionSingleton {
+            static let shared = URLSessionSingleton()
+            let session: URLSession
+            private init() {
+                let config = URLSessionConfiguration.default
+                config.httpCookieStorage = HTTPCookieStorage.shared
+                config.httpCookieAcceptPolicy = .always
+                session = URLSession(configuration: config)
+            }
+        }
+        print("Ticker-userName2:\(userName)")
+        print("Ticker-password2:\(password)")
+//        print("Ticker-userName2:\(appSettings.userName)")
+//        print("Ticker-password2:\(appSettings.password)")
+        let url = URL(string: "http://163.17.136.73/api/values/post")!
+        //        let url = URL(string: "http://10.21.1.164:8888/account/login.php")!
+        //        let url = URL(string: "http://163.17.136.73:443/account/login.php")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let body = ["userID": userName,"Password": password]
+        let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
+        request.httpBody = jsonData
+        URLSessionSingleton.shared.session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("StudySpaceList - Connection error: \(error)")
+            } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+                print("StudySpaceList - HTTP error: \(httpResponse.statusCode)")
+            }
+            else if let data = data{
+                let decoder = JSONDecoder()
+                print(String(data: data, encoding: .utf8)!)
+            }
+        }
+        .resume()
     }
 }
 
