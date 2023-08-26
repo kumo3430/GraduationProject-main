@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1346EEBF2A99D97700A4E0A4 /* AddDietsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1346EEBE2A99D97700A4E0A4 /* AddDietsView.swift */; };
 		13AD35D42A70BB880003FF1B /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AD35D32A70BB880003FF1B /* TodoListView.swift */; };
 		13AD35D62A70BC0D0003FF1B /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AD35D52A70BC0D0003FF1B /* CalendarView.swift */; };
 		13AD35D82A70BC350003FF1B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AD35D72A70BC350003FF1B /* MainView.swift */; };
@@ -79,6 +80,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1346EEBE2A99D97700A4E0A4 /* AddDietsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDietsView.swift; sourceTree = "<group>"; };
 		13AD35D32A70BB880003FF1B /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
 		13AD35D52A70BC0D0003FF1B /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		13AD35D72A70BC350003FF1B /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				3B2EF2DF2A7FF4E800FC021A /* AddStudyView.swift */,
 				3B2EF2DD2A7FF3C200FC021A /* AddSpaceView.swift */,
 				3B0A5DB12A81D6B600283B40 /* AddSportView.swift */,
+				1346EEBE2A99D97700A4E0A4 /* AddDietsView.swift */,
 			);
 			path = AddTodoView;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				3BBBF4C62A847B5E0077B3E6 /* TodoManager.swift in Sources */,
 				3BBBF4C42A847B4A0077B3E6 /* TodoModels.swift in Sources */,
 				13AD35D42A70BB880003FF1B /* TodoListView.swift in Sources */,
+				1346EEBF2A99D97700A4E0A4 /* AddDietsView.swift in Sources */,
 				3B37A8D12A188BA6009BB504 /* GraduationProjectApp.swift in Sources */,
 				3B8647CF2A8DB83300555A9E /* QuoteView.swift in Sources */,
 				3BA700532A1CC5820096B2FF /* +View.swift in Sources */,

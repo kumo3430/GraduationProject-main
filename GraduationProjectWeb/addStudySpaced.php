@@ -45,7 +45,7 @@ $TodoSELSql = "SELECT * FROM `Todo` WHERE `uid` = '$uid' && `category_id` = '$ca
 $result = $conn->query($TodoSELSql);
 if ($result->num_rows == 0) {
 
-    $TodoSql = "INSERT INTO `Todo` (`uid`, `category_id`, `todoTitle`, `todoIntroduction`, `label`, `startDateTime`, `reminderTime`) VALUES ('$uid', '$category_id','$todoTitle','$todoIntroduction','$todoLabel','$startDateTime','$reminderTime')";
+    $TodoSql = "INSERT INTO `Todo` (`uid`, `category_id`, `todoTitle`, `todoIntroduction`, `label`, `startDateTime`, `dueDateTime`, `reminderTime`) VALUES ('$uid', '$category_id','$todoTitle','$todoIntroduction','$todoLabel','$startDateTime','$repetition4Count','$reminderTime')";
 
     if ($conn->query($TodoSql) === TRUE) {
         $message = "User New Todo successfully" . '<br>';

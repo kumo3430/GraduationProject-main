@@ -76,7 +76,7 @@ struct TodoListView: View {
                     }
             )
             .actionSheet(isPresented: $showingActionSheet) {
-                ActionSheet(title: Text("新增事件"), message: Text("選擇一個事件類型"), buttons: [
+                ActionSheet(title: Text("新增事項"), message: Text("選擇一個事件類型"), buttons: [
                     .default(Text("一般學習"), action: {
                         self.action = .generalLearning
                     }),

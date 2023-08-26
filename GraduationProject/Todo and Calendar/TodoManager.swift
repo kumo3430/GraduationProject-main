@@ -34,6 +34,7 @@ struct TaskData: Decodable {
     var repetition2Count: [String]
     var repetition3Count: [String]
     var repetition4Count: [String]
+    var todoStatus: [String]
     var message: String
 }
 
