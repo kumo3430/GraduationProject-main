@@ -49,6 +49,8 @@ struct YourApp: App {
     }
     
     private func StudySpaceList() {
+        taskStore.clearTasks()
+        todoStore.clearTodos()
         UserDefaults.standard.synchronize()
         class URLSessionSingleton {
             static let shared = URLSessionSingleton()

@@ -44,6 +44,7 @@ struct TestView: View {
     }
     
     func openSafariView() {
+        tickerStore.clearTodos()
         // 設定要開啟的網址
         guard let url = URL(string: "http://163.17.136.73/web_login.aspx") else { return }
         
