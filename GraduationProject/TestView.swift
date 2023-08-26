@@ -10,17 +10,28 @@ struct TestView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Button(action: {
-                    UserDefaults.standard.set(false, forKey: "signIn")
-                }, label: {
-                    Text("登出")
-                })
-                
-                Link(destination: URL(string: "http://163.17.136.73/web_login.aspx")!) {
-                    Image(systemName: "safari")
-                        .font(.largeTitle)
-                        .foregroundColor(.blue)
+                HStack {
+                    Button(action: {
+                        UserDefaults.standard.set(false, forKey: "signIn")
+                    }, label: {
+                        Text("登出")
+                    })
+                    Link(destination: URL(string: "http://163.17.136.73/web_login.aspx")!) {
+                        Image(systemName: "safari")
+                            .font(.largeTitle)
+                            .foregroundColor(.blue)
+                    }
+                    
+                    Button(action: {
+                        // 在此處處理按下按鈕後的動作
+                        openSafariView()
+                    }, label: {
+                        Image(systemName: "safari")
+                            .font(.largeTitle)
+                            .foregroundColor(.blue)
+                    })
                 }
+               
                 
                 List {
                     ForEach(tickerStore.tickers) { ticker in
@@ -29,6 +40,23 @@ struct TestView: View {
                 }
             }
             
+        }
+    }
+    
+    func openSafariView() {
+        // 設定要開啟的網址
+        guard let url = URL(string: "http://163.17.136.73/web_login.aspx") else { return }
+        
+        // 建立 SFSafariViewController 實例
+        let safariViewController = SFSafariViewController(url: url)
+        
+        // 取得目前的 UIWindowScene
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            // 取得目前的 UIWindow
+            if let mainWindow = windowScene.windows.first {
+                // 以全屏方式彈出 SFSafariViewController
+                mainWindow.rootViewController?.present(safariViewController, animated: true, completion: nil)
+            }
         }
     }
 }
@@ -57,9 +85,9 @@ struct TickerRow: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit) // 保持圖示的原始寬高比
                     .frame(width: 30, height: 30) // 這裡的尺寸是示例，您可以根據需要調整
-//                    .alignmentGuide(.trailing, computeValue: { dimensions in
-//
-//                    })
+                //                    .alignmentGuide(.trailing, computeValue: { dimensions in
+                //
+                //                    })
             })
         }
         
@@ -85,17 +113,15 @@ struct TickerRow: View {
         }
         print("Ticker-userName2:\(userName)")
         print("Ticker-password2:\(password)")
-//        print("Ticker-userName2:\(appSettings.userName)")
-//        print("Ticker-password2:\(appSettings.password)")
+        //        print("Ticker-userName2:\(appSettings.userName)")
+        //        print("Ticker-password2:\(appSettings.password)")
         let url = URL(string: "http://163.17.136.73/api/values/post")!
-        //        let url = URL(string: "http://10.21.1.164:8888/account/login.php")!
-        //        let url = URL(string: "http://163.17.136.73:443/account/login.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//        let body = ["userID": userName,"Password": password]
-//        print("body:\(body)")
-//        let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
+        //        let body = ["userID": userName,"Password": password]
+        //        print("body:\(body)")
+        //        let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
         let body = PostData(userID: userName, Password: password)
         let jsonData = try! JSONEncoder().encode(body)
         request.httpBody = jsonData
