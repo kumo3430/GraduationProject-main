@@ -69,12 +69,29 @@ class TodoStore: ObservableObject {
     @Published var todos: [Todo] = []
     
     func todosForDate(_ date: Date) -> [Todo] {
-        let formattedSelectedDate = formattedDate(date)
         let filteredTodos = todos.filter { todo in
-            return formattedSelectedDate == formattedDate(todo.startDateTime)
+            return isDate(date, inRangeOf: todo.startDateTime, and: todo.dueDateTime)
         }
         return filteredTodos
     }
+    
+    func isDate(_ date: Date, inRangeOf startDate: Date, and endDate: Date) -> Bool {
+        return date >= startDate && date <= endDate
+            || Calendar.current.isDate(date, inSameDayAs: startDate)
+            || Calendar.current.isDate(date, inSameDayAs: endDate)
+    }
+
+    
+//    func isDate(_ date: Date, inRangeOf startDate: Date, and endDate: Date) -> Bool {
+//        let calendar = Calendar.current
+//        let components = calendar.dateComponents([.day], from: startDate, to: endDate)
+//
+//        if let dayDifference = components.day {
+//            return dayDifference >= 0 && calendar.isDate(date, inSameDayAs: startDate)
+//        }
+//
+//        return false
+//    }
     
     func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()

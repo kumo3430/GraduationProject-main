@@ -22,6 +22,7 @@ struct CalendarView: View {
     @State private var action: Action? = nil
     @State var selectedDate = Date()
     @State var showModal = false
+    @State var frequency:Int = 0
     
     var switchViewAction: () -> Void
     
@@ -152,21 +153,32 @@ struct CalendarView: View {
                 }
             }
             Text("一般學習")
-                .font(.caption)
+//                .font(.caption)
+                .font(.subheadline)
             ForEach(filteredTodos) { todo in
                 VStack(alignment: .leading) {
-                    if formattedDate(selectedDate) == formattedDate(todo.startDateTime) {
-                        Text(todo.title)
-                            .font(.headline)
-                        Text("一般學習：設定日期")
-                            .font(.subheadline)
-                    }  else {
-                        Text("selectedDate:\(selectedDate)")
-                        Text("startDateTime:\(todo.startDateTime)")
-                    }
+                    Text(todo.title)
+                        .font(.headline)
+                        if todo.selectedFrequency == 0 {
+                            Text("週期：不重複")
+                                .font(.subheadline)
+                        } else if todo.selectedFrequency == 1 {
+                            Text("週期：每日")
+                                .font(.subheadline)
+                        } else if todo.selectedFrequency == 2 {
+                            Text("週期：每週")
+                                .font(.subheadline)
+                        } else if todo.selectedFrequency == 3 {
+                            Text("週期：每日")
+                                .font(.subheadline)
+                        }
+                    Text("開始時間:\(formattedDate(todo.startDateTime))")
+                    Text("結束時間:\(formattedDate(todo.dueDateTime))")
                 }
             }
         }
+        
+        
     }
     
 }
