@@ -37,11 +37,12 @@ function insertRecurringInstance($conn, $todo_id, $startDateTime, $RecurringEndD
     return $message;
 }
 
-$TodoSELSql = "SELECT `Todo`.frequency, `RecurringInstance`.RecurringEndDate, `Todo`.id FROM `Todo`,`RecurringInstance` WHERE `Todo`.id = `RecurringInstance`.todo_id AND `RecurringEndDate` = '$today' AND `RecurringInstance`.isOver = 0;";
+$TodoSELSql = "SELECT `Todo`.frequency, `RecurringInstance`.RecurringEndDate, `Todo`.id FROM `Todo`,`RecurringInstance` WHERE `Todo`.dueDateTime > '$today'  AND `Todo`.id = `RecurringInstance`.todo_id AND `RecurringEndDate` = '$today' AND `RecurringInstance`.isOver = 0 ;";
 
 $update = "UPDATE `RecurringInstance` SET `isOver` = '1'  WHERE `RecurringEndDate` = '$today' ";
 $result = $conn->query($TodoSELSql);
 if ($result->num_rows > 0) {
+    
     while ($row = $result->fetch_assoc()) {
         $RecurringEndDate_data = $row['RecurringEndDate'];
         $frequency = $row['frequency'];

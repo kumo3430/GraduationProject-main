@@ -10,7 +10,7 @@ import SwiftUI
 struct AddStudyView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var todoStore: TodoStore
-
+    
     @State var uid: String = ""
     @State var category_id: Int = 1
     @State var label: String = ""
@@ -27,7 +27,7 @@ struct AddStudyView: View {
     
     @State var messenge = ""
     @State var isError = false
-
+    
     struct TodoData : Decodable {
         var userId: String?
         var category_id: Int
@@ -50,18 +50,18 @@ struct AddStudyView: View {
                     TextField("內容", text: $todoIntroduction)
                 }
                 Section {
-                        HStack {
-                            Image(systemName: "tag.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit) // 保持圖示的原始寬高比
-                                .foregroundColor(.white) // 圖示顏色設為白色
-                                .padding(6) // 確保有足夠的空間顯示外框和背景色
-                                .background(Color.yellow) // 設定背景顏色
-                                .clipShape(RoundedRectangle(cornerRadius: 8)) // 設定方形的邊框，並稍微圓角
-                                .frame(width: 30, height: 30) // 這裡的尺寸是示例，您可以根據需要調整
-                            TextField("標籤", text: $label)
-                        }
+                    HStack {
+                        Image(systemName: "tag.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit) // 保持圖示的原始寬高比
+                            .foregroundColor(.white) // 圖示顏色設為白色
+                            .padding(6) // 確保有足夠的空間顯示外框和背景色
+                            .background(Color.yellow) // 設定背景顏色
+                            .clipShape(RoundedRectangle(cornerRadius: 8)) // 設定方形的邊框，並稍微圓角
+                            .frame(width: 30, height: 30) // 這裡的尺寸是示例，您可以根據需要調整
+                        TextField("標籤", text: $label)
                     }
+                }
                 Section {
                     HStack {
                         Image(systemName: "calendar")
@@ -86,7 +86,7 @@ struct AddStudyView: View {
                         DatePicker("提醒時間", selection: $reminderTime, displayedComponents: [.hourAndMinute])
                     }
                 }
-
+                
                 Section {
                     Toggle(isOn: $isRecurring) {
                         HStack {
@@ -101,19 +101,19 @@ struct AddStudyView: View {
                             Text("重複")
                         }
                     }
-
+                    
                     if isRecurring {
                         Picker("重複頻率", selection: $selectedFrequency) {
                             Text("每日").tag(1)
                             Text("每週").tag(2)
                             Text("每月").tag(3)
                         }
-
+                        
                         Picker("結束重複", selection: $recurringOption) {
                             Text("一直重複").tag(1)
                             Text("選擇結束日期").tag(2)
                         }
-
+                        
                         if recurringOption == 2 {
                             DatePicker("結束重複日期", selection: $recurringEndDate, displayedComponents: [.date])
                         }
@@ -124,15 +124,15 @@ struct AddStudyView: View {
             .navigationBarTitle("一般學習")
             .navigationBarItems(leading:
                                     Button(action: {
-                                        presentationMode.wrappedValue.dismiss()
-                                    }) {
-                                        Text("返回")
-                                            .foregroundColor(.blue)
-                                                },
-                trailing: Button("完成", action: addTodo))
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Text("返回")
+                    .foregroundColor(.blue)
+            },
+                                trailing: Button("完成", action: addTodo))
         }
     }
-
+    
     func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
@@ -160,72 +160,72 @@ struct AddStudyView: View {
         let url = URL(string: "http://127.0.0.1:8888/addStudyGeneral.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-//        if isRecurring {
-//            if recurringOption == 1 {
-//                // 如果持續重複
-//                let body = [
-//                            "label": label,
-//                            "todoTitle": todoTitle,
-//                            "todoIntroduction": todoIntroduction,
-//                            "startDateTime": formattedDate(startDateTime),
-//                            // 加入重複週期
-//                            "frequency":selectedFrequency,
-//                            "dueDateTime": recurringEndDate.addingTimeInterval(60*60*24*365*5),
-//                            "reminderTime": formattedTime(reminderTime),
-//                            "todoNote": todoNote] as [String : Any]
-//            } else {
-//                // 如果有截止日期
-//                let body = [
-//                            "label": label,
-//                            "todoTitle": todoTitle,
-//                            "todoIntroduction": todoIntroduction,
-//                            "startDateTime": formattedDate(startDateTime),
-//                            // 加入重複週期
-//                            "frequency": selectedFrequency,
-//                            // 加入結束時間
-//                            "dueDateTime": recurringEndDate,
-//                            "reminderTime": formattedTime(reminderTime),
-//                            "todoNote": todoNote] as [String : Any]
-//            }
-//        } else {
-//            // 如果有不重複
-//            let body = [
-//                        "label": label,
-//                        "todoTitle": todoTitle,
-//                        "todoIntroduction": todoIntroduction,
-//                        "startDateTime": formattedDate(startDateTime),
-//                        // 加入重複週期
-//                        "frequency": 0,
-//                        // 加入結束時間
-//                        "dueDateTime": recurringEndDate,
-//                        "reminderTime": formattedTime(reminderTime),
-//                        "todoNote": todoNote] as [String : Any]
-//        }
+        //        if isRecurring {
+        //            if recurringOption == 1 {
+        //                // 如果持續重複
+        //                let body = [
+        //                            "label": label,
+        //                            "todoTitle": todoTitle,
+        //                            "todoIntroduction": todoIntroduction,
+        //                            "startDateTime": formattedDate(startDateTime),
+        //                            // 加入重複週期
+        //                            "frequency":selectedFrequency,
+        //                            "dueDateTime": recurringEndDate.addingTimeInterval(60*60*24*365*5),
+        //                            "reminderTime": formattedTime(reminderTime),
+        //                            "todoNote": todoNote] as [String : Any]
+        //            } else {
+        //                // 如果有截止日期
+        //                let body = [
+        //                            "label": label,
+        //                            "todoTitle": todoTitle,
+        //                            "todoIntroduction": todoIntroduction,
+        //                            "startDateTime": formattedDate(startDateTime),
+        //                            // 加入重複週期
+        //                            "frequency": selectedFrequency,
+        //                            // 加入結束時間
+        //                            "dueDateTime": recurringEndDate,
+        //                            "reminderTime": formattedTime(reminderTime),
+        //                            "todoNote": todoNote] as [String : Any]
+        //            }
+        //        } else {
+        //            // 如果有不重複
+        //            let body = [
+        //                        "label": label,
+        //                        "todoTitle": todoTitle,
+        //                        "todoIntroduction": todoIntroduction,
+        //                        "startDateTime": formattedDate(startDateTime),
+        //                        // 加入重複週期
+        //                        "frequency": 0,
+        //                        // 加入結束時間
+        //                        "dueDateTime": recurringEndDate,
+        //                        "reminderTime": formattedTime(reminderTime),
+        //                        "todoNote": todoNote] as [String : Any]
+        //        }
         var body: [String: Any] = [
-                "label": label,
-                "todoTitle": todoTitle,
-                "todoIntroduction": todoIntroduction,
-                "startDateTime": formattedDate(startDateTime),
-                "dueDateTime": formattedDate(recurringEndDate),
-                "reminderTime": formattedTime(reminderTime),
-                "todoNote": todoNote
-            ]
-
-            if isRecurring {
-                body["frequency"] = selectedFrequency
-                if recurringOption == 1 {
-                    // 持續重複
-                    body["dueDateTime"] = formattedDate(recurringEndDate.addingTimeInterval(60 * 60 * 24 * 365 * 5))
-                } else {
-                    // 選擇結束日期
-                    body["dueDateTime"] = formattedDate(recurringEndDate)
-                }
+            "label": label,
+            "todoTitle": todoTitle,
+            "todoIntroduction": todoIntroduction,
+            "startDateTime": formattedDate(startDateTime),
+//            "dueDateTime": formattedDate(recurringEndDate),
+            "reminderTime": formattedTime(reminderTime),
+            "todoNote": todoNote
+        ]
+        
+        if isRecurring {
+            body["frequency"] = selectedFrequency
+            if recurringOption == 1 {
+                // 持續重複
+                body["dueDateTime"] = formattedDate(recurringEndDate.addingTimeInterval(60 * 60 * 24 * 365 * 5))
             } else {
-                // 不重複
-                body["frequency"] = 0
+                // 選擇結束日期
                 body["dueDateTime"] = formattedDate(recurringEndDate)
             }
-       
+        } else {
+            // 不重複
+            body["frequency"] = 0
+            body["dueDateTime"] = formattedDate(recurringEndDate)
+        }
+        
         print("AddTodoView - body:\(body)")
         let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
         request.httpBody = jsonData
@@ -253,45 +253,35 @@ struct AddStudyView: View {
                         print("事件狀態為：\(todoData.todoStatus)")
                         print("開始時間為：\(todoData.startDateTime)")
                         print("提醒時間為：\(todoData.reminderTime)")
-//                        print("截止日期為：\(todoData.dueDateTime)")
+                        //                        print("截止日期為：\(todoData.dueDateTime)")
                         print("事件編號為：\(todoData.todo_id)")
                         print("AddTodoView - message：\(todoData.message)")
                         isError = false
+                        //                        DispatchQueue.main.async {
+                        //                            presentationMode.wrappedValue.dismiss()
+                        //                        }
                         DispatchQueue.main.async {
-                            presentationMode.wrappedValue.dismiss()
+                            var todo: Todo?
+                            todo = Todo(id: Int(exactly: todoData.todo_id)!,
+                                        label: label,
+                                        title: todoTitle,
+                                        description: todoIntroduction,
+                                        startDateTime: startDateTime,
+//                                        isRecurring: isRecurring,
+//                                        recurringOption: recurringOption,
+//                                        selectedFrequency: selectedFrequency,
+                                        todoStatus: todoStatus,
+                                        dueDateTime: recurringEndDate,
+                                        reminderTime: reminderTime,
+                                        todoNote: todoNote)
+                            
+                            //                            todoStore.todos.append(todo)
+                            //                            presentationMode.wrappedValue.dismiss()
+                            if let unwrappedTodo = todo {  // 使用可選綁定來解封 'todo'
+                                todoStore.todos.append(unwrappedTodo)
+                                presentationMode.wrappedValue.dismiss()
+                            }
                         }
-//                        DispatchQueue.main.async {
-//                            var todo: Todo?
-//                            if recurringOption == 2 {
-//                                // 有截止日期
-//                                todo = Todo(id: Int(todoData.todo_id)!,
-//                                                label: label,
-//                                                title: todoTitle,
-//                                                description: todoIntroduction,
-//                                                startDateTime: startDateTime,
-//                                                todoStatus: todoStatus,
-//                                                dueDateTime: recurringEndDate,
-//                                                reminderTime: reminderTime,
-//                                                todoNote: todoNote)
-//                            } else {
-//                                // 沒有截止日期
-//                                todo = Todo(id: Int(todoData.todo_id)!,
-//                                                label: label,
-//                                                title: todoTitle,
-//                                                description: todoIntroduction,
-//                                                startDateTime: startDateTime,
-//                                                todoStatus: todoStatus,
-//                                                dueDateTime: recurringEndDate,
-//                                                reminderTime: reminderTime,
-//                                                todoNote: todoNote)
-//                            }
-////                            todoStore.todos.append(todo)
-////                            presentationMode.wrappedValue.dismiss()
-//                            if let unwrappedTodo = todo {  // 使用可選綁定來解封 'todo'
-//                                todoStore.todos.append(unwrappedTodo)
-//                                presentationMode.wrappedValue.dismiss()
-//                            }
-//                        }
                         print("============== AddTodoView ==============")
                     } else if (todoData.message == "The Todo is repeated") {
                         isError = true
