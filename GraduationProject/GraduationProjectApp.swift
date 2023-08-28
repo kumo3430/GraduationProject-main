@@ -208,7 +208,9 @@ struct YourApp: App {
                         print("todoId為：\(userData.todo_id)")
                         print("todoTitle為：\(userData.todoTitle)")
                         print("todoIntroduction為：\(userData.todoIntroduction)")
+                        print("todoFrequency為：\(userData.frequency)")
                         print("startDateTime為：\(userData.startDateTime)")
+                        print("dueDateTime為：\(userData.dueDateTime)")
                         print("reminderTime為：\(userData.reminderTime)")
                         
                         // 先將日期和時間字串轉換成對應的 Date 物件
@@ -226,17 +228,43 @@ struct YourApp: App {
                         
                         for index in userData.todoTitle.indices {
                             var todoStatus: Bool = false
+                            var recurringOption: Int = 0
+                            var isRecurring: Bool = false
                             if let startDate = convertToDate(userData.startDateTime[index]),
                                let dueDateTime = convertToDate(userData.dueDateTime[index]),
                                let reminderTime = convertToTime(userData.reminderTime[index]) {
+                                
+                                let calendar = Calendar.current
+                                let components = calendar.dateComponents([.year], from: startDate, to: dueDateTime)
+                                if let yearsDifference = components.year, yearsDifference >= 5 {
+                                    recurringOption = 2
+                                } else {
+                                    recurringOption = 1
+                                }
                                 
                                 if (userData.todoStatus[index] == "0" ){
                                     todoStatus = false
                                 } else {
                                     todoStatus = true
                                 }
+                                if (userData.frequency[index] == "0" ) {
+                                    isRecurring = false
+                                } else {
+                                    isRecurring = true
+                                }
                                 let taskId = Int(userData.todo_id[index])
-                                let todo = Todo(id: taskId!,label: userData.todoLabel[index], title: userData.todoTitle[index], description: userData.todoIntroduction[index], startDateTime: startDate, todoStatus: todoStatus, dueDateTime: dueDateTime, reminderTime: reminderTime, todoNote: userData.todoNote[index])
+                                let todo = Todo(id: taskId!,
+                                                label: userData.todoLabel[index],
+                                                title: userData.todoTitle[index],
+                                                description: userData.todoIntroduction[index],
+                                                startDateTime: startDate,
+                                                isRecurring: isRecurring,
+                                                recurringOption: recurringOption,
+                                                selectedFrequency: Int(userData.frequency[index])!,
+                                                todoStatus: todoStatus,
+                                                dueDateTime: dueDateTime,
+                                                reminderTime: reminderTime,
+                                                todoNote: userData.todoNote[index])
                                 
                                 
                                 DispatchQueue.main.async {

@@ -37,6 +37,9 @@ struct Todo: Identifiable {
     var title: String
     var description: String
     var startDateTime: Date
+    var isRecurring: Bool
+    var recurringOption: Int
+    var selectedFrequency: Int
     var todoStatus: Bool
     var dueDateTime: Date
     var reminderTime: Date

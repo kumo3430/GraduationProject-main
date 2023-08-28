@@ -249,16 +249,16 @@ struct AddSportView: View {
                     let todoData = try decoder.decode(TodoData.self, from: data)
                     if (todoData.message == "User New Todo successfully") {
                         DispatchQueue.main.async {
-                            let todo = Todo(id: Int(todoData.todo_id)!,
-                                            label: label,
-                                            title: todoTitle,
-                                            description: todoIntroduction,
-                                            startDateTime: startDateTime,
-                                            todoStatus: todoStatus,
-                                            dueDateTime: dueDateTime,
-                                            reminderTime: reminderTime,
-                                            todoNote: todoNote)
-                            todoStore.todos.append(todo)
+//                            let todo = Todo(id: Int(todoData.todo_id)!,
+//                                            label: label,
+//                                            title: todoTitle,
+//                                            description: todoIntroduction,
+//                                            startDateTime: startDateTime,
+//                                            todoStatus: todoStatus,
+//                                            dueDateTime: dueDateTime,
+//                                            reminderTime: reminderTime,
+//                                            todoNote: todoNote)
+//                            todoStore.todos.append(todo)
                             presentationMode.wrappedValue.dismiss()
                         }
                     } else {

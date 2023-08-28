@@ -215,7 +215,8 @@ struct AddStudyView: View {
             body["frequency"] = selectedFrequency
             if recurringOption == 1 {
                 // 持續重複
-                body["dueDateTime"] = formattedDate(recurringEndDate.addingTimeInterval(60 * 60 * 24 * 365 * 5))
+//                body["dueDateTime"] = formattedDate(recurringEndDate.addingTimeInterval(60 * 60 * 24 * 365 * 5))
+                body["dueDateTime"] = formattedDate(Calendar.current.date(byAdding: .year, value: 5, to: recurringEndDate)!)
             } else {
                 // 選擇結束日期
                 body["dueDateTime"] = formattedDate(recurringEndDate)
@@ -267,9 +268,9 @@ struct AddStudyView: View {
                                         title: todoTitle,
                                         description: todoIntroduction,
                                         startDateTime: startDateTime,
-//                                        isRecurring: isRecurring,
-//                                        recurringOption: recurringOption,
-//                                        selectedFrequency: selectedFrequency,
+                                        isRecurring: isRecurring,
+                                        recurringOption: recurringOption,
+                                        selectedFrequency: selectedFrequency,
                                         todoStatus: todoStatus,
                                         dueDateTime: recurringEndDate,
                                         reminderTime: reminderTime,

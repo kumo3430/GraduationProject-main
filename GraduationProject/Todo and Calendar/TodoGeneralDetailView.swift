@@ -151,13 +151,13 @@ struct TodoGeneralDetailView: View {
                         print("事件編號為：\(userData.todo_id)")
                         //                        print("第一次間隔重複時間為：\(userData.repetition1Count)")
                         print("reviseStudySpaced - message：\(userData.message)")
-                        DispatchQueue.main.async {
-                            isError = false
-                            // 如果沒有錯才可以關閉視窗並且把此次東西暫存起來
-                            //                            task = Task(id: task.id,title: task.title, description: task.description, nextReviewDate: task.nextReviewDate, nextReviewTime: task.nextReviewTime, isReviewChecked0: task.isReviewChecked0, isReviewChecked1:  task.isReviewChecked1, isReviewChecked2: task.isReviewChecked2, isReviewChecked3:  task.isReviewChecked3 )
-                            todo = Todo(id: todo.id, label: todo.label,title: todo.title, description: todo.description, startDateTime: todo.startDateTime, todoStatus:  todo.todoStatus, dueDateTime:  todo.dueDateTime, reminderTime:  todo.reminderTime, todoNote:  todo.todoNote )
-                            presentationMode.wrappedValue.dismiss()
-                        }
+//                        DispatchQueue.main.async {
+//                            isError = false
+//                            // 如果沒有錯才可以關閉視窗並且把此次東西暫存起來
+//                            //                            task = Task(id: task.id,title: task.title, description: task.description, nextReviewDate: task.nextReviewDate, nextReviewTime: task.nextReviewTime, isReviewChecked0: task.isReviewChecked0, isReviewChecked1:  task.isReviewChecked1, isReviewChecked2: task.isReviewChecked2, isReviewChecked3:  task.isReviewChecked3 )
+//                            todo = Todo(id: todo.id, label: todo.label,title: todo.title, description: todo.description, startDateTime: todo.startDateTime, todoStatus:  todo.todoStatus, dueDateTime:  todo.dueDateTime, reminderTime:  todo.reminderTime, todoNote:  todo.todoNote )
+//                            presentationMode.wrappedValue.dismiss()
+//                        }
                         print("============== verifyView ==============")
                     } else  {
                         isError = true
@@ -178,7 +178,17 @@ struct TodoGeneralDetailView: View {
 struct TodoGeneralDetailView_Previews: PreviewProvider {
     static var previews: some View {
         // 創建一個@State變數
-        @State var todo = Todo(id: 000, label: "我是標籤", title: "學習", description: "一般學習", startDateTime: Date(), todoStatus: false, dueDateTime: Date(), reminderTime: Date(), todoNote: "我是備註")
+        @State var todo = Todo(id: 000,
+                               label: "我是標籤",
+                               title: "學習",
+                               description: "一般學習",
+                               startDateTime: Date(),
+                               isRecurring: false,
+                               recurringOption: 0,
+                               selectedFrequency: 0,
+                               todoStatus: false,
+                               dueDateTime: Date(),
+                               reminderTime: Date(), todoNote: "我是備註")
         TodoGeneralDetailView(todo: $todo)
     }
 }
