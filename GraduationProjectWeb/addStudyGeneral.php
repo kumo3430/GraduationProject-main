@@ -68,7 +68,7 @@ function insertTodoAndStudyGeneral($conn, $uid, $category_id, $todoTitle, $todoI
             $message = "no such StudyGeneralTodo" . '<br>';
         }
     } else {
-        $message = 'New StudyGeneral Todo - Error: ' . $TodoIdSql . '<br>' . $conn->error;
+        $message = 'New StudyGeneral Todo - Error: ' . $TodoSql . '<br>' . $conn->error;
         if ($conn->connect_error) {
             $message =  die("Connection failed: " . $conn->connect_error);
         }
@@ -81,7 +81,7 @@ function insertTodoAndStudyGeneral($conn, $uid, $category_id, $todoTitle, $todoI
 function insertRecurringInstance($conn, $todo_id, $startDateTime, $RecurringEndDate) {
     $InstanceSql = "INSERT INTO `RecurringInstance` (`todo_id`, `RecurringStartDate`, `RecurringEndDate`) VALUES ('$todo_id', '$startDateTime', '$RecurringEndDate');";
 
-    if($conn->query($InstanceSql) === TURE) {
+    if($conn->query($InstanceSql) === TRUE) {
         $message = "User New first RecurringInstance successfully";
     } else {
         $message = "New first RecurringInstance successfully - Error: " . $InstanceSql . '<br>' . $conn->error; 

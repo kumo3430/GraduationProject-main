@@ -214,10 +214,10 @@ struct AddStudyView: View {
             if isRecurring {
                 body["frequency"] = selectedFrequency
                 if recurringOption == 1 {
-                    // 持續重複
+                    // 持續重複             
                     body["dueDateTime"] = formattedDate(recurringEndDate.addingTimeInterval(60 * 60 * 24 * 365 * 5))
                 } else {
-                    // 截止日期
+                    // 選擇結束日期
                     body["dueDateTime"] = formattedDate(recurringEndDate)
                 }
             } else {
