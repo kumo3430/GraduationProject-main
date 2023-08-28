@@ -95,7 +95,7 @@ struct TodoListView: View {
                     .cancel()
                 ])
             }
-            .sheet(item: $action) { item in
+            .fullScreenCover(item: $action) { item in
                 switch item {
                 case .generalLearning:
                     AddStudyView()
@@ -103,8 +103,10 @@ struct TodoListView: View {
                     AddTaskView()
                 case .sport:
                     AddSportView()
+                case .diet:
+                    AddDietView()
                 default:
-                    AddStudyView()
+                    AddDietView()
                 }
             }
         }

@@ -83,8 +83,10 @@ struct CalendarView: View {
                     AddTaskView()
                 case .sport:
                     AddSportView()
+                case .diet:
+                    AddDietView()
                 default:
-                    AddStudyView()
+                    AddDietView()
                 }
             }
             .onAppear() {
@@ -112,7 +114,7 @@ struct CalendarView: View {
     func eventList() -> some View {
         let filteredTasks = taskStore.tasksForDate(selectedDate)
         let filteredTodos = todoStore.todosForDate(selectedDate)
-
+        
         return List {
             Text("間隔學習法")
                 .font(.caption)
