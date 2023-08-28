@@ -18,8 +18,6 @@ struct AddStudyView: View {
     @State var todoIntroduction: String = ""
     @State var startDateTime: Date = Date()
     @State var todoStatus: Bool = false
-    @State var dueDateTime: Date = Date()
-//    @State var recurring_task_id: Int? = nil
     @State var reminderTime: Date = Date()
     @State var todoNote: String = ""
     @State private var isRecurring = false
@@ -40,7 +38,7 @@ struct AddStudyView: View {
         var todoStatus: Int
         var reminderTime: String
         var dueDateTime: String
-        var todo_id: String
+        var todo_id: Int
         var message: String
     }
     
@@ -162,16 +160,72 @@ struct AddStudyView: View {
         let url = URL(string: "http://127.0.0.1:8888/addStudyGeneral.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let body = [
-                    "label": label,
-                    "todoTitle": todoTitle,
-                    "todoIntroduction": todoIntroduction,
-                    "startDateTime": formattedDate(startDateTime),
-//                    "todoStatus": todoStatus,
-                    "dueDateTime": formattedDate(dueDateTime),
-//                    "recurring_task_id": recurring_task_id ?? "",
-                    "reminderTime": formattedTime(reminderTime),
-                    "todoNote": todoNote] as [String : Any]
+//        if isRecurring {
+//            if recurringOption == 1 {
+//                // 如果持續重複
+//                let body = [
+//                            "label": label,
+//                            "todoTitle": todoTitle,
+//                            "todoIntroduction": todoIntroduction,
+//                            "startDateTime": formattedDate(startDateTime),
+//                            // 加入重複週期
+//                            "frequency":selectedFrequency,
+//                            "dueDateTime": recurringEndDate.addingTimeInterval(60*60*24*365*5),
+//                            "reminderTime": formattedTime(reminderTime),
+//                            "todoNote": todoNote] as [String : Any]
+//            } else {
+//                // 如果有截止日期
+//                let body = [
+//                            "label": label,
+//                            "todoTitle": todoTitle,
+//                            "todoIntroduction": todoIntroduction,
+//                            "startDateTime": formattedDate(startDateTime),
+//                            // 加入重複週期
+//                            "frequency": selectedFrequency,
+//                            // 加入結束時間
+//                            "dueDateTime": recurringEndDate,
+//                            "reminderTime": formattedTime(reminderTime),
+//                            "todoNote": todoNote] as [String : Any]
+//            }
+//        } else {
+//            // 如果有不重複
+//            let body = [
+//                        "label": label,
+//                        "todoTitle": todoTitle,
+//                        "todoIntroduction": todoIntroduction,
+//                        "startDateTime": formattedDate(startDateTime),
+//                        // 加入重複週期
+//                        "frequency": 0,
+//                        // 加入結束時間
+//                        "dueDateTime": recurringEndDate,
+//                        "reminderTime": formattedTime(reminderTime),
+//                        "todoNote": todoNote] as [String : Any]
+//        }
+        var body: [String: Any] = [
+                "label": label,
+                "todoTitle": todoTitle,
+                "todoIntroduction": todoIntroduction,
+                "startDateTime": formattedDate(startDateTime),
+                "dueDateTime": formattedDate(recurringEndDate),
+                "reminderTime": formattedTime(reminderTime),
+                "todoNote": todoNote
+            ]
+
+            if isRecurring {
+                body["frequency"] = selectedFrequency
+                if recurringOption == 1 {
+                    // 持續重複
+                    body["dueDateTime"] = formattedDate(recurringEndDate.addingTimeInterval(60 * 60 * 24 * 365 * 5))
+                } else {
+                    // 截止日期
+                    body["dueDateTime"] = formattedDate(recurringEndDate)
+                }
+            } else {
+                // 不重複
+                body["frequency"] = 0
+                body["dueDateTime"] = formattedDate(recurringEndDate)
+            }
+       
         print("AddTodoView - body:\(body)")
         let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
         request.httpBody = jsonData
@@ -199,23 +253,45 @@ struct AddStudyView: View {
                         print("事件狀態為：\(todoData.todoStatus)")
                         print("開始時間為：\(todoData.startDateTime)")
                         print("提醒時間為：\(todoData.reminderTime)")
-                        print("截止日期為：\(todoData.dueDateTime)")
+//                        print("截止日期為：\(todoData.dueDateTime)")
                         print("事件編號為：\(todoData.todo_id)")
                         print("AddTodoView - message：\(todoData.message)")
                         isError = false
                         DispatchQueue.main.async {
-                            let todo = Todo(id: Int(todoData.todo_id)!,
-                                            label: label,
-                                            title: todoTitle,
-                                            description: todoIntroduction,
-                                            startDateTime: startDateTime,
-                                            todoStatus: todoStatus,
-                                            dueDateTime: dueDateTime,
-                                            reminderTime: reminderTime,
-                                            todoNote: todoNote)
-                            todoStore.todos.append(todo)
                             presentationMode.wrappedValue.dismiss()
                         }
+//                        DispatchQueue.main.async {
+//                            var todo: Todo?
+//                            if recurringOption == 2 {
+//                                // 有截止日期
+//                                todo = Todo(id: Int(todoData.todo_id)!,
+//                                                label: label,
+//                                                title: todoTitle,
+//                                                description: todoIntroduction,
+//                                                startDateTime: startDateTime,
+//                                                todoStatus: todoStatus,
+//                                                dueDateTime: recurringEndDate,
+//                                                reminderTime: reminderTime,
+//                                                todoNote: todoNote)
+//                            } else {
+//                                // 沒有截止日期
+//                                todo = Todo(id: Int(todoData.todo_id)!,
+//                                                label: label,
+//                                                title: todoTitle,
+//                                                description: todoIntroduction,
+//                                                startDateTime: startDateTime,
+//                                                todoStatus: todoStatus,
+//                                                dueDateTime: recurringEndDate,
+//                                                reminderTime: reminderTime,
+//                                                todoNote: todoNote)
+//                            }
+////                            todoStore.todos.append(todo)
+////                            presentationMode.wrappedValue.dismiss()
+//                            if let unwrappedTodo = todo {  // 使用可選綁定來解封 'todo'
+//                                todoStore.todos.append(unwrappedTodo)
+//                                presentationMode.wrappedValue.dismiss()
+//                            }
+//                        }
                         print("============== AddTodoView ==============")
                     } else if (todoData.message == "The Todo is repeated") {
                         isError = true

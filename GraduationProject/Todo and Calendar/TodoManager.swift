@@ -40,6 +40,7 @@ struct TaskData: Decodable {
 
 struct TodoData: Decodable {
     var todo_id: [String]
+//    var todo_id: [Int]
     var userId: String?
     var category_id: Int
     var todoTitle: [String]
