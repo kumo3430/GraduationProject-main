@@ -214,7 +214,7 @@ struct AddStudyView: View {
             if isRecurring {
                 body["frequency"] = selectedFrequency
                 if recurringOption == 1 {
-                    // 持續重複             
+                    // 持續重複
                     body["dueDateTime"] = formattedDate(recurringEndDate.addingTimeInterval(60 * 60 * 24 * 365 * 5))
                 } else {
                     // 選擇結束日期
@@ -240,7 +240,7 @@ struct AddStudyView: View {
                 do {
                     print("AddTodoView - Data : \(String(data: data, encoding: .utf8)!)")
                     let todoData = try decoder.decode(TodoData.self, from: data)
-                    if (todoData.message == "User New StudyGeneral successfully") {
+                    if (todoData.message == "User New StudyGeneral successfullyUser New first RecurringInstance successfully") {
                         print("============== AddTodoView ==============")
                         print(String(data: data, encoding: .utf8)!)
                         print("addStudySpaced - userDate:\(todoData)")

@@ -119,8 +119,7 @@ if ($result->num_rows == 0) {
         $result1 = insertTodoAndStudyGeneral($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $frequency, $reminderTime, $dueDateTime, $todoNote);
         $message1 = $result1['message'];
         $todo_id = $result1['todo_id'];
-
-        $RecurringEndDate =  strtotime("$startDateTime +6 day");
+        $RecurringEndDate = date('Y-m-d', strtotime("$startDateTime +6 day"));
         $message2 = insertRecurringInstance($conn, $todo_id, $startDateTime, $RecurringEndDate);
 
     } else if ($frequency == 3){
@@ -129,8 +128,7 @@ if ($result->num_rows == 0) {
         $result1 = insertTodoAndStudyGeneral($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $frequency, $reminderTime, $dueDateTime, $todoNote);
         $message1 = $result1['message'];
         $todo_id = $result1['todo_id'];
-
-        $RecurringEndDate =  strtotime("$startDateTime +1 month");
+        $RecurringEndDate = date('Y-m-d', strtotime("$startDateTime +1 month"));
         $message2 = insertRecurringInstance($conn, $todo_id, $startDateTime, $RecurringEndDate);
     }
 

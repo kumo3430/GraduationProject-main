@@ -37,8 +37,9 @@ function insertRecurringInstance($conn, $todo_id, $startDateTime, $RecurringEndD
     return $message;
 }
 
-$TodoSELSql = "SELECT `Todo`.frequency, `RecurringInstance`.RecurringEndDate, `Todo`.id FROM `Todo`,`RecurringInstance` WHERE `Todo`.id = `RecurringInstance`.todo_id AND `RecurringEndDate` = '2023/08/28';";
+$TodoSELSql = "SELECT `Todo`.frequency, `RecurringInstance`.RecurringEndDate, `Todo`.id FROM `Todo`,`RecurringInstance` WHERE `Todo`.id = `RecurringInstance`.todo_id AND `RecurringEndDate` = '$today' AND `RecurringInstance`.isOver = 0;";
 
+$update = "UPDATE `RecurringInstance` SET `isOver` = '1'  WHERE `RecurringEndDate` = '$today' ";
 $result = $conn->query($TodoSELSql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -46,22 +47,23 @@ if ($result->num_rows > 0) {
         $frequency = $row['frequency'];
         $todo_id = $row['id'];
         $RecurringStartDate_new = date('Y-m-d', strtotime("$RecurringEndDate_data +1 day"));
-
+        $conn->query($update); // 執行更新操作;
         if ($frequency == 1) {
             // 每天重複
             $RecurringEndDate_new = $RecurringStartDate_new;
             $message = insertRecurringInstance($conn, $todo_id, $RecurringStartDate_new, $RecurringEndDate_new);
+            $conn->query($update); // 執行更新操作
         } else if ($frequency == 2) {
             // 每週重複
-            $RecurringEndDate_new = strtotime("$RecurringStartDate_new +6 day");
+            $RecurringEndDate_new = date('Y-m-d', strtotime("$RecurringEndDate_data +6 day"));
             $message = insertRecurringInstance($conn, $todo_id, $RecurringStartDate_new, $RecurringEndDate_new);
+            $conn->query($update); // 執行更新操作
         } else if ($frequency == 3) {
             // 每月重複
-            $RecurringEndDate_new = strtotime("$RecurringStartDate_new +1 month");
+            $RecurringEndDate_new = date('Y-m-d', strtotime("$RecurringEndDate_data +1 month"));
             $message = insertRecurringInstance($conn, $todo_id, $RecurringStartDate_new, $RecurringEndDate_new);
+            $conn->query($update); // 執行更新操作
         }
-
-        echo "Inserted RecurringInstance for todo_id: $todo_id<br>";
     }
 
 } else {
