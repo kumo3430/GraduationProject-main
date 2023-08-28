@@ -68,19 +68,23 @@ struct PostData: Encodable {
 }
 
 struct TickerRow: View {
+    @EnvironmentObject var tickerStore: TickerStore
     var ticker: Ticker
     @AppStorage("userName") private var userName:String = ""
     @AppStorage("password") private var password:String = ""
+    @State var ticker_id: String = ""
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text("名稱: \(ticker.name)")
+                Text("id: \(ticker.id)")
                 Text("截止日期: \(formatDate(ticker.deadline))")
                 Text("兌換時間: \(ticker.exchage)")
             }
             Spacer()
             Button(action: {
-                postTicker()
+//                postTicker()
+                openSafariView(ticker.id)
             }, label: {
                 Image(systemName: "gift.circle.fill")
                     .resizable()
@@ -94,53 +98,71 @@ struct TickerRow: View {
         
     }
     
+    func openSafariView(_ tickerId: String) {
+        tickerStore.clearTodos()
+        // 設定要開啟的網址
+        guard let url = URL(string: "http://163.17.136.73/web_login.aspx?userID=\(userName)&Password=\(password)&TickerID=\(tickerId)") else { return }
+        
+        // 建立 SFSafariViewController 實例
+        let safariViewController = SFSafariViewController(url: url)
+        
+        // 取得目前的 UIWindowScene
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            // 取得目前的 UIWindow
+            if let mainWindow = windowScene.windows.first {
+                // 以全屏方式彈出 SFSafariViewController
+                mainWindow.rootViewController?.present(safariViewController, animated: true, completion: nil)
+            }
+        }
+    }
+    
     private func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter.string(from: date)
     }
     
-    private func postTicker() {
-        UserDefaults.standard.synchronize()
-        class URLSessionSingleton {
-            static let shared = URLSessionSingleton()
-            let session: URLSession
-            private init() {
-                let config = URLSessionConfiguration.default
-                config.httpCookieStorage = HTTPCookieStorage.shared
-                config.httpCookieAcceptPolicy = .always
-                session = URLSession(configuration: config)
-            }
-        }
-        print("Ticker-userName2:\(userName)")
-        print("Ticker-password2:\(password)")
-        //        print("Ticker-userName2:\(appSettings.userName)")
-        //        print("Ticker-password2:\(appSettings.password)")
-        let url = URL(string: "http://163.17.136.73/api/values/post")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        //        let body = ["userID": userName,"Password": password]
-        //        print("body:\(body)")
-        //        let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
-        let body = PostData(userID: userName, Password: password)
-        let jsonData = try! JSONEncoder().encode(body)
-        request.httpBody = jsonData
-        print("body:\(body)")
-        print("jsonData:\(jsonData)")
-        URLSessionSingleton.shared.session.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("StudySpaceList - Connection error: \(error)")
-            } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                print("StudySpaceList - HTTP error: \(httpResponse.statusCode)")
-            }
-            else if let data = data{
-                let decoder = JSONDecoder()
-                print(String(data: data, encoding: .utf8)!)
-            }
-        }
-        .resume()
-    }
+//    private func postTicker() {
+//        UserDefaults.standard.synchronize()
+//        class URLSessionSingleton {
+//            static let shared = URLSessionSingleton()
+//            let session: URLSession
+//            private init() {
+//                let config = URLSessionConfiguration.default
+//                config.httpCookieStorage = HTTPCookieStorage.shared
+//                config.httpCookieAcceptPolicy = .always
+//                session = URLSession(configuration: config)
+//            }
+//        }
+//        print("Ticker-userName2:\(userName)")
+//        print("Ticker-password2:\(password)")
+//        //        print("Ticker-userName2:\(appSettings.userName)")
+//        //        print("Ticker-password2:\(appSettings.password)")
+//        let url = URL(string: "http://163.17.136.73/api/values/post")!
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        //        let body = ["userID": userName,"Password": password]
+//        //        print("body:\(body)")
+//        //        let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
+//        let body = PostData(userID: userName, Password: password)
+//        let jsonData = try! JSONEncoder().encode(body)
+//        request.httpBody = jsonData
+//        print("body:\(body)")
+//        print("jsonData:\(jsonData)")
+//        URLSessionSingleton.shared.session.dataTask(with: request) { data, response, error in
+//            if let error = error {
+//                print("StudySpaceList - Connection error: \(error)")
+//            } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+//                print("StudySpaceList - HTTP error: \(httpResponse.statusCode)")
+//            }
+//            else if let data = data{
+//                let decoder = JSONDecoder()
+//                print(String(data: data, encoding: .utf8)!)
+//            }
+//        }
+//        .resume()
+//    }
 }
 
 struct TestView_Previews: PreviewProvider {
