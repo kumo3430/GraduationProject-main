@@ -160,47 +160,6 @@ struct AddStudyView: View {
         let url = URL(string: "http://127.0.0.1:8888/addTask/addStudyGeneral.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        //        if isRecurring {
-        //            if recurringOption == 1 {
-        //                // 如果持續重複
-        //                let body = [
-        //                            "label": label,
-        //                            "todoTitle": todoTitle,
-        //                            "todoIntroduction": todoIntroduction,
-        //                            "startDateTime": formattedDate(startDateTime),
-        //                            // 加入重複週期
-        //                            "frequency":selectedFrequency,
-        //                            "dueDateTime": recurringEndDate.addingTimeInterval(60*60*24*365*5),
-        //                            "reminderTime": formattedTime(reminderTime),
-        //                            "todoNote": todoNote] as [String : Any]
-        //            } else {
-        //                // 如果有截止日期
-        //                let body = [
-        //                            "label": label,
-        //                            "todoTitle": todoTitle,
-        //                            "todoIntroduction": todoIntroduction,
-        //                            "startDateTime": formattedDate(startDateTime),
-        //                            // 加入重複週期
-        //                            "frequency": selectedFrequency,
-        //                            // 加入結束時間
-        //                            "dueDateTime": recurringEndDate,
-        //                            "reminderTime": formattedTime(reminderTime),
-        //                            "todoNote": todoNote] as [String : Any]
-        //            }
-        //        } else {
-        //            // 如果有不重複
-        //            let body = [
-        //                        "label": label,
-        //                        "todoTitle": todoTitle,
-        //                        "todoIntroduction": todoIntroduction,
-        //                        "startDateTime": formattedDate(startDateTime),
-        //                        // 加入重複週期
-        //                        "frequency": 0,
-        //                        // 加入結束時間
-        //                        "dueDateTime": recurringEndDate,
-        //                        "reminderTime": formattedTime(reminderTime),
-        //                        "todoNote": todoNote] as [String : Any]
-        //        }
         var body: [String: Any] = [
             "label": label,
             "todoTitle": todoTitle,
@@ -215,7 +174,6 @@ struct AddStudyView: View {
             body["frequency"] = selectedFrequency
             if recurringOption == 1 {
                 // 持續重複
-//                body["dueDateTime"] = formattedDate(recurringEndDate.addingTimeInterval(60 * 60 * 24 * 365 * 5))
                 body["dueDateTime"] = formattedDate(Calendar.current.date(byAdding: .year, value: 5, to: recurringEndDate)!)
             } else {
                 // 選擇結束日期
@@ -254,13 +212,10 @@ struct AddStudyView: View {
                         print("事件狀態為：\(todoData.todoStatus)")
                         print("開始時間為：\(todoData.startDateTime)")
                         print("提醒時間為：\(todoData.reminderTime)")
-                        //                        print("截止日期為：\(todoData.dueDateTime)")
+                        print("截止日期為：\(todoData.dueDateTime)")
                         print("事件編號為：\(todoData.todo_id)")
                         print("AddTodoView - message：\(todoData.message)")
                         isError = false
-                        //                        DispatchQueue.main.async {
-                        //                            presentationMode.wrappedValue.dismiss()
-                        //                        }
                         DispatchQueue.main.async {
                             var todo: Todo?
                             todo = Todo(id: Int(exactly: todoData.todo_id)!,
@@ -275,24 +230,13 @@ struct AddStudyView: View {
                                         dueDateTime: recurringEndDate,
                                         reminderTime: reminderTime,
                                         todoNote: todoNote)
-                            
-                            //                            todoStore.todos.append(todo)
-                            //                            presentationMode.wrappedValue.dismiss()
                             if let unwrappedTodo = todo {  // 使用可選綁定來解封 'todo'
                                 todoStore.todos.append(unwrappedTodo)
                                 presentationMode.wrappedValue.dismiss()
                             }
                         }
                         print("============== AddTodoView ==============")
-                    } else if (todoData.message == "The Todo is repeated") {
-                        isError = true
-                        print("AddSpacedView - message：\(todoData.message)")
-                        messenge = "已建立過，請重新建立"
-                    } else if (todoData.message == "New Todo - Error: <br>Incorrect integer value: '' for column 'uid' at row 1") {
-                        isError = true
-                        print("AddSpacedView - message：\(todoData.message)")
-                        messenge = "登入出錯 請重新登入"
-                    } else {
+                    }  else {
                         isError = true
                         print("AddTodoView - message：\(todoData.message)")
                         messenge = "建立失敗，請重新建立"                    }

@@ -7,12 +7,6 @@
 
 import Foundation
 
-//class AppSettings: ObservableObject {
-//    @AppStorage("userName") var userName: String = ""
-//    @AppStorage("password") var password: String = ""
-//}
-
-
 struct Task: Identifiable {
     // 以下是他的屬性
     var id: Int
@@ -31,12 +25,33 @@ struct Task: Identifiable {
     var isReviewChecked3: Bool
 }
 
+
 struct Todo: Identifiable {
     var id: Int
     var label: String
     var title: String
     var description: String
     var startDateTime: Date
+    var isRecurring: Bool
+    var recurringOption: Int
+    var selectedFrequency: Int
+    var todoStatus: Bool
+    var dueDateTime: Date
+    var reminderTime: Date
+    var todoNote: String
+}
+
+struct Sport: Identifiable {
+    var id: Int
+    var label: String
+    var title: String
+    var description: String
+    var startDateTime: Date
+    
+    var selectedSport: String
+    var sportValue: Float
+    var sportUnits: String
+    
     var isRecurring: Bool
     var recurringOption: Int
     var selectedFrequency: Int

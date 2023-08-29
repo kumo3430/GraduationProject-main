@@ -19,6 +19,7 @@ struct YourApp: App {
     
     @StateObject var taskStore = TaskStore()
     @StateObject var todoStore = TodoStore()
+    @StateObject var sportStore = SportStore()
     @StateObject var tickerStore = TickerStore()
     var body: some Scene {
         WindowGroup {
@@ -27,6 +28,7 @@ struct YourApp: App {
                     .onAppear() {
                         taskStore.clearTasks()
                         todoStore.clearTodos()
+                        sportStore.clearTodos()
                         tickerStore.clearTodos()
                         UserDefaults.standard.set("", forKey: "uid")
                         UserDefaults.standard.set("", forKey: "userName")
@@ -37,6 +39,7 @@ struct YourApp: App {
                 MainView()
                     .environmentObject(taskStore)
                     .environmentObject(todoStore)
+                    .environmentObject(sportStore)
                     .environmentObject(tickerStore)
                     .onAppear() {
                         StudySpaceList()

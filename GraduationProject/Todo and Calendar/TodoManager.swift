@@ -80,18 +80,6 @@ class TodoStore: ObservableObject {
             || Calendar.current.isDate(date, inSameDayAs: startDate)
             || Calendar.current.isDate(date, inSameDayAs: endDate)
     }
-
-    
-//    func isDate(_ date: Date, inRangeOf startDate: Date, and endDate: Date) -> Bool {
-//        let calendar = Calendar.current
-//        let components = calendar.dateComponents([.day], from: startDate, to: endDate)
-//
-//        if let dayDifference = components.day {
-//            return dayDifference >= 0 && calendar.isDate(date, inSameDayAs: startDate)
-//        }
-//
-//        return false
-//    }
     
     func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
@@ -129,6 +117,34 @@ class TaskStore: ObservableObject {
         tasks = []
     }
 }
+
+class SportStore: ObservableObject {
+    //    @Published var todos = [Todo]()
+    @Published var sports: [Sport] = []
+    
+    func todosForDate(_ date: Date) -> [Sport] {
+        let filteredTodos = sports.filter { todo in
+            return isDate(date, inRangeOf: todo.startDateTime, and: todo.dueDateTime)
+        }
+        return filteredTodos
+    }
+    
+    func isDate(_ date: Date, inRangeOf startDate: Date, and endDate: Date) -> Bool {
+        return date >= startDate && date <= endDate
+            || Calendar.current.isDate(date, inSameDayAs: startDate)
+            || Calendar.current.isDate(date, inSameDayAs: endDate)
+    }
+    
+    func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        return formatter.string(from: date)
+    }
+    func clearTodos() {
+        sports = []
+    }
+}
+
 
 class TickerStore: ObservableObject {
     //    @Published var todos = [Todo]()

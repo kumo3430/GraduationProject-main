@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddSportView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var todoStore: TodoStore
+    @EnvironmentObject var sportStore: SportStore
 
     @State var uid: String = ""
     @State var category_id: Int = 1
@@ -25,6 +25,7 @@ struct AddSportView: View {
     @State var sportType: String = ""
     @State private var sportValue: Float = 0.0
     @State private var sportUnit: String = "次"
+    @State private var SportUnit: Int = 0
     @State private var showSportPicker = false
     @State private var selectedSport = "跑步" // 預設值
 
@@ -40,17 +41,28 @@ struct AddSportView: View {
     @State private var selectedFrequency = 1
     @State private var recurringOption = 1
     @State private var recurringEndDate = Date()
+    
+    @State var messenge = ""
+    @State var isError = false
 
     let sportUnits = ["小時", "次", "卡路里"]
 
-    struct TodoData: Decodable {
+    struct TodoData : Decodable {
         var userId: String?
         var category_id: Int
+        var label: String
         var todoTitle: String
         var todoIntroduction: String
         var startDateTime: String
+        
+        var sportType: String
+        var sportValue: Float
+        var sportUnit: Int
+        
+        var todoStatus: Int
         var reminderTime: String
-        var todo_id: String
+        var dueDateTime: String
+        var todo_id: Int
         var message: String
     }
 
@@ -194,7 +206,7 @@ struct AddSportView: View {
                                         Text("返回")
                                             .foregroundColor(.blue)
                                                 },
-                trailing: Button("完成", action: addTodo))
+                trailing: Button("完成", action: addSport))
         }
     }
 
@@ -210,7 +222,14 @@ struct AddSportView: View {
         return formatter.string(from: date)
     }
     
-    func addTodo() {
+    func addSport() {
+        if sportUnit == "小時" {
+            SportUnit = 0
+        } else if sportUnit == "次" {
+            SportUnit = 1
+        } else if sportUnit == "卡路里" {
+            SportUnit = 2
+        }
         class URLSessionSingleton {
             static let shared = URLSessionSingleton()
             let session: URLSession
@@ -222,51 +241,101 @@ struct AddSportView: View {
             }
         }
         
-        let url = URL(string: "http://localhost:8888/addTask/addTodo.php")!
+        let url = URL(string: "http://127.0.0.1:8888/addTask/addSport.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let body = ["category_id": category_id,
-                    "label": label,
-                    "todoTitle": todoTitle,
-                    "todoIntroduction": todoIntroduction,
-                    "startDateTime": formattedDate(startDateTime),
-                    "todoStatus": todoStatus,
-                    "dueDateTime": formattedDate(dueDateTime),
-                    "recurring_task_id": recurring_task_id ?? "",
-                    "reminderTime": formattedTime(reminderTime),
-                    "todoNote": todoNote] as [String : Any]
+        var body: [String: Any] = [
+            "label": label,
+            "todoTitle": todoTitle,
+            "todoIntroduction": todoIntroduction,
+            "startDateTime": formattedDate(startDateTime),
+            "sportType": selectedSport,
+            "sportValue": sportValue,
+            "SportUnit": SportUnit,
+            "reminderTime": formattedTime(reminderTime),
+            "todoNote": todoNote
+        ]
+        
+        if isRecurring {
+            body["frequency"] = selectedFrequency
+            if recurringOption == 1 {
+                // 持續重複
+                body["dueDateTime"] = formattedDate(Calendar.current.date(byAdding: .year, value: 5, to: recurringEndDate)!)
+            } else {
+                // 選擇結束日期
+                body["dueDateTime"] = formattedDate(recurringEndDate)
+            }
+        } else {
+            // 不重複
+            body["frequency"] = 0
+            body["dueDateTime"] = formattedDate(recurringEndDate)
+        }
+        
+        print("AddTodoView - body:\(body)")
         let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
         request.httpBody = jsonData
         URLSessionSingleton.shared.session.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("addTodo - Connection error: \(error)")
+                print("addSport - Connection error: \(error)")
             } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                print("addTodo - HTTP error: \(httpResponse.statusCode)")
+                print("addSport - HTTP error: \(httpResponse.statusCode)")
             }
             else if let data = data{
                 let decoder = JSONDecoder()
                 do {
+                    print("addSport - Data : \(String(data: data, encoding: .utf8)!)")
                     let todoData = try decoder.decode(TodoData.self, from: data)
-                    if (todoData.message == "User New Todo successfully") {
+                    if (todoData.message == "User New Sport successfullyUser New first RecurringInstance successfully") {
+                        print("============== addSport ==============")
+                        print(String(data: data, encoding: .utf8)!)
+                        print("addSport - userDate:\(todoData)")
+                        print("使用者ID為：\(todoData.userId ?? "N/A")")
+                        print("事件id為：\(todoData.todo_id)")
+                        print("事件種類為：\(todoData.category_id)")
+                        print("事件名稱為：\(todoData.todoTitle)")
+                        print("事件簡介為：\(todoData.todoIntroduction)")
+                        print("事件種類為：\(todoData.label)")
+                        print("事件狀態為：\(todoData.todoStatus)")
+                        print("開始時間為：\(todoData.startDateTime)")
+                        print("運動種類為：\(todoData.sportType)")
+                        print("運動目標量為：\(todoData.sportValue)")
+                        print("運動目標單位為：\(todoData.sportUnit)")
+                        print("提醒時間為：\(todoData.reminderTime)")
+                        print("截止日期為：\(todoData.dueDateTime)")
+                        print("事件編號為：\(todoData.todo_id)")
+                        print("addSport - message：\(todoData.message)")
+                        isError = false
                         DispatchQueue.main.async {
-//                            let todo = Todo(id: Int(todoData.todo_id)!,
-//                                            label: label,
-//                                            title: todoTitle,
-//                                            description: todoIntroduction,
-//                                            startDateTime: startDateTime,
-//                                            todoStatus: todoStatus,
-//                                            dueDateTime: dueDateTime,
-//                                            reminderTime: reminderTime,
-//                                            todoNote: todoNote)
-//                            todoStore.todos.append(todo)
-                            presentationMode.wrappedValue.dismiss()
+                            var sport: Sport?
+                            sport = Sport(id: Int(exactly: todoData.todo_id)!,
+                                        label: label,
+                                        title: todoTitle,
+                                        description: todoIntroduction,
+                                        startDateTime: startDateTime,
+                                        selectedSport: selectedSport,
+                                        sportValue: sportValue,
+                                        sportUnits: sportUnit,
+                                        isRecurring: isRecurring,
+                                        recurringOption: recurringOption,
+                                        selectedFrequency: selectedFrequency,
+                                        todoStatus: todoStatus,
+                                        dueDateTime: recurringEndDate,
+                                        reminderTime: reminderTime,
+                                        todoNote: todoNote)
+                            if let unwrappedTodo = sport {  // 使用可選綁定來解封 'todo'
+                                sportStore.sports.append(unwrappedTodo)
+                                presentationMode.wrappedValue.dismiss()
+                            }
                         }
+                        print("============== addSport ==============")
                     } else {
-                        print("addTodo - message：\(todoData.message)")
-                        // handle other messages from the server
-                    }
+                        isError = true
+                        print("addSport - message：\(todoData.message)")
+                        messenge = "建立失敗，請重新建立"                    }
                 } catch {
-                    print("addTodo - 解碼失敗：\(error)")
+                    isError = true
+                    print("addSport - 解碼失敗：\(error)")
+                    messenge = "建立失敗，請重新建立"
                 }
             }
         }
