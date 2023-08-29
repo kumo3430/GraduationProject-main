@@ -116,7 +116,7 @@ struct TodoGeneralDetailView: View {
             }
         }
         
-        let url = URL(string: "http://localhost:8888/reviseStudySpaced.php")!
+        let url = URL(string: "http://localhost:8888/reviseTask/reviseStudySpaced.php")!
         //        let url = URL(string: "http://10.21.1.164:8888/account/register.php")!
         var request = URLRequest(url: url)
         //        request.cachePolicy = .reloadIgnoringLocalCacheData

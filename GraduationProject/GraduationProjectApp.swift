@@ -63,7 +63,7 @@ struct YourApp: App {
             }
         }
         
-        let url = URL(string: "http://127.0.0.1:8888/StudySpaceList.php")!
+        let url = URL(string: "http://127.0.0.1:8888/list/StudySpaceList.php")!
         //        let url = URL(string: "http://10.21.1.164:8888/account/login.php")!
         //        let url = URL(string: "http://163.17.136.73:443/account/login.php")!
         var request = URLRequest(url: url)
@@ -177,7 +177,7 @@ struct YourApp: App {
             }
         }
         
-        let url = URL(string: "http://127.0.0.1:8888/StudyGeneralList.php")!
+        let url = URL(string: "http://127.0.0.1:8888/list/StudyGeneralList.php")!
         //        let url = URL(string: "http://10.21.1.164:8888/account/login.php")!
         //        let url = URL(string: "http://163.17.136.73:443/account/login.php")!
         var request = URLRequest(url: url)
@@ -299,7 +299,7 @@ struct YourApp: App {
             }
         }
         
-        let url = URL(string: "http://127.0.0.1:8888/tickersList.php")!
+        let url = URL(string: "http://127.0.0.1:8888/list/tickersList.php")!
         //        let url = URL(string: "http://10.21.1.164:8888/account/login.php")!
         //        let url = URL(string: "http://163.17.136.73:443/account/ickersList.php")!
         var request = URLRequest(url: url)

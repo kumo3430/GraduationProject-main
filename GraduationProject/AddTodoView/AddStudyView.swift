@@ -157,7 +157,7 @@ struct AddStudyView: View {
             }
         }
         
-        let url = URL(string: "http://127.0.0.1:8888/addStudyGeneral.php")!
+        let url = URL(string: "http://127.0.0.1:8888/addTask/addStudyGeneral.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         //        if isRecurring {

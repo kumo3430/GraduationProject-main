@@ -222,7 +222,7 @@ struct AddSportView: View {
             }
         }
         
-        let url = URL(string: "http://localhost:8888/addTodo.php")!
+        let url = URL(string: "http://localhost:8888/addTask/addTodo.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         let body = ["category_id": category_id,
