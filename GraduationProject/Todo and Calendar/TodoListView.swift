@@ -33,6 +33,7 @@ struct TodoListView: View {
                 } else {
                     List {
                         ForEach(taskStore.tasks.indices, id: \.self) { index in
+                            
                             NavigationLink(destination: TaskDetailView(task: $taskStore.tasks[index])) {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(taskStore.tasks[index].title)
@@ -45,7 +46,9 @@ struct TodoListView: View {
                             }
                         }
                         ForEach(todoStore.todos.indices, id: \.self) { index in
-                            NavigationLink(destination: TodoGeneralDetailView(todo: $todoStore.todos[index])) {
+                            
+//                            NavigationLink(destination: TodoGeneralDetailView(todo: $todoStore.todos[index])) {
+                            NavigationLink(destination: DetailStudyView(todo: $todoStore.todos[index])) {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(todoStore.todos[index].title)
                                         .font(.headline)

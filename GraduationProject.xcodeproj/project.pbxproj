@@ -11,6 +11,9 @@
 		13AD35D42A70BB880003FF1B /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AD35D32A70BB880003FF1B /* TodoListView.swift */; };
 		13AD35D62A70BC0D0003FF1B /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AD35D52A70BC0D0003FF1B /* CalendarView.swift */; };
 		13AD35D82A70BC350003FF1B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AD35D72A70BC350003FF1B /* MainView.swift */; };
+		13B1A1332AA7177D00E2A6FA /* DetailStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1A1322AA7177D00E2A6FA /* DetailStudyView.swift */; };
+		13B1A1352AA717A200E2A6FA /* DetailSportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1A1342AA717A200E2A6FA /* DetailSportView.swift */; };
+		13B1A1372AA717C500E2A6FA /* DetailSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1A1362AA717C500E2A6FA /* DetailSpaceView.swift */; };
 		13D6E1E62A710D480049E5A5 /* verifyRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D6E1E52A710D480049E5A5 /* verifyRegister.swift */; };
 		13D6E1E92A710DA50049E5A5 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 13D6E1E82A710DA50049E5A5 /* SwiftSMTP */; };
 		3B0A5DB22A81D6B700283B40 /* AddSportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A5DB12A81D6B600283B40 /* AddSportView.swift */; };
@@ -84,6 +87,9 @@
 		13AD35D32A70BB880003FF1B /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
 		13AD35D52A70BC0D0003FF1B /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		13AD35D72A70BC350003FF1B /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		13B1A1322AA7177D00E2A6FA /* DetailStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyView.swift; sourceTree = "<group>"; };
+		13B1A1342AA717A200E2A6FA /* DetailSportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSportView.swift; sourceTree = "<group>"; };
+		13B1A1362AA717C500E2A6FA /* DetailSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSpaceView.swift; sourceTree = "<group>"; };
 		13D6E1E52A710D480049E5A5 /* verifyRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verifyRegister.swift; sourceTree = "<group>"; };
 		3B0A5DB12A81D6B600283B40 /* AddSportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSportView.swift; sourceTree = "<group>"; };
 		3B0A5DB32A81DED900283B40 /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
@@ -165,6 +171,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13B1A1312AA7174800E2A6FA /* DetailTodoView */ = {
+			isa = PBXGroup;
+			children = (
+				13B1A1362AA717C500E2A6FA /* DetailSpaceView.swift */,
+				13B1A1322AA7177D00E2A6FA /* DetailStudyView.swift */,
+				13B1A1342AA717A200E2A6FA /* DetailSportView.swift */,
+			);
+			path = DetailTodoView;
+			sourceTree = "<group>";
+		};
 		3B37A8C42A188BA5009BB504 = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +218,7 @@
 				3BBBF4C12A8479F40077B3E6 /* Firebase */,
 				3BBBF4C22A8479FA0077B3E6 /* Login */,
 				3BBBF4C02A8479F10077B3E6 /* Todo and Calendar */,
+				13B1A1312AA7174800E2A6FA /* DetailTodoView */,
 				3BBBF4BF2A8479EF0077B3E6 /* AddTodoView */,
 				3B8647CB2A8DAE1100555A9E /* Community */,
 				3BFDFD612A1C4E780071798F /* GoogleService-Info.plist */,
@@ -267,8 +284,8 @@
 		3BBBF4BF2A8479EF0077B3E6 /* AddTodoView */ = {
 			isa = PBXGroup;
 			children = (
-				3B2EF2DF2A7FF4E800FC021A /* AddStudyView.swift */,
 				3B2EF2DD2A7FF3C200FC021A /* AddSpaceView.swift */,
+				3B2EF2DF2A7FF4E800FC021A /* AddStudyView.swift */,
 				3B0A5DB12A81D6B600283B40 /* AddSportView.swift */,
 				1346EEBE2A99D97700A4E0A4 /* AddDietsView.swift */,
 			);
@@ -491,12 +508,14 @@
 				3BFDFD6A2A1C6E3D0071798F /* AppDelegate.swift in Sources */,
 				13AD35D82A70BC350003FF1B /* MainView.swift in Sources */,
 				3BA700552A1CCB940096B2FF /* FireAuth.swift in Sources */,
+				13B1A1332AA7177D00E2A6FA /* DetailStudyView.swift in Sources */,
 				3B8647D32A8DD87200555A9E /* ImagePicker.swift in Sources */,
 				3BBBF4C82A8483C10077B3E6 /* LoadingView.swift in Sources */,
 				3B5A47EB2A889C520022D796 /* TodoGeneralDetailView.swift in Sources */,
 				3B2EF2E02A7FF4E800FC021A /* AddStudyView.swift in Sources */,
 				3B6975C92A7B7D1E00513302 /* HomeView.swift in Sources */,
 				3B8647D52A8DE31700555A9E /* TodayTodoView.swift in Sources */,
+				13B1A1372AA717C500E2A6FA /* DetailSpaceView.swift in Sources */,
 				13AD35D62A70BC0D0003FF1B /* CalendarView.swift in Sources */,
 				3B8647CD2A8DAE6000555A9E /* PostView.swift in Sources */,
 				3BA700592A1F3B870096B2FF /* FirebaseManager.swift in Sources */,
@@ -507,6 +526,7 @@
 				3BFDFD662A1C69150071798F /* GoogleSigninBtn.swift in Sources */,
 				3B8647CA2A8DADD400555A9E /* CommunityProfileView.swift in Sources */,
 				3B0A5DB42A81DED900283B40 /* TodoDetailView.swift in Sources */,
+				13B1A1352AA717A200E2A6FA /* DetailSportView.swift in Sources */,
 				3BBBF4C62A847B5E0077B3E6 /* TodoManager.swift in Sources */,
 				3BBBF4C42A847B4A0077B3E6 /* TodoModels.swift in Sources */,
 				13AD35D42A70BB880003FF1B /* TodoListView.swift in Sources */,

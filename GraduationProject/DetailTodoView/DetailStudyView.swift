@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct AddStudyView: View {
+struct DetailStudyView: View {
     @Environment(\.presentationMode) var presentationMode
+    @Binding var todo: Todo
     @EnvironmentObject var todoStore: TodoStore
-    
     @State var uid: String = ""
     @State var category_id: Int = 1
     @State var label: String = ""
@@ -20,7 +20,7 @@ struct AddStudyView: View {
     @State var todoStatus: Bool = false
     @State var reminderTime: Date = Date()
     @State var todoNote: String = ""
-    @State private var isRecurring = false
+    @State private var isRecurring = true
     @State private var selectedFrequency = 1
     @State private var recurringOption = 1  // 1: 持續重複, 2: 選擇結束日期
     @State private var recurringEndDate = Date()
@@ -29,16 +29,10 @@ struct AddStudyView: View {
     @State var isError = false
     
     struct TodoData : Decodable {
-        var userId: String?
-        var category_id: Int
-        var label: String
-        var todoTitle: String
-        var todoIntroduction: String
-        var startDateTime: String
-        var todoStatus: Int
-        var reminderTime: String
-        var dueDateTime: String
         var todo_id: Int
+        var label: String
+        var reminderTime: String
+        var todoNote: String
         var message: String
     }
     
@@ -46,8 +40,8 @@ struct AddStudyView: View {
         NavigationView {
             Form {
                 Section {
-                    TextField("標題", text: $todoTitle)
-                    TextField("內容", text: $todoIntroduction)
+                    Text(todo.title)
+                    Text(todo.description)
                 }
                 Section {
                     HStack {
@@ -59,7 +53,11 @@ struct AddStudyView: View {
                             .background(Color.yellow) // 設定背景顏色
                             .clipShape(RoundedRectangle(cornerRadius: 8)) // 設定方形的邊框，並稍微圓角
                             .frame(width: 30, height: 30) // 這裡的尺寸是示例，您可以根據需要調整
-                        TextField("標籤", text: $label)
+                        Spacer()
+                        TextField("標籤", text: $todo.label)
+                            .onChange(of: todo.label) { newValue in
+                                todo.label = newValue
+                            }
                     }
                 }
                 Section {
@@ -72,7 +70,10 @@ struct AddStudyView: View {
                             .background(Color.red)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .frame(width: 30, height: 30)
-                        DatePicker("選擇時間", selection: $startDateTime, displayedComponents: [.date])
+                        Text("選擇時間")
+                        //                        DatePicker("選擇時間", selection: $startDateTime, displayedComponents: [.date])
+                        Spacer()
+                        Text(formattedDate(todo.startDateTime))
                     }
                     HStack {
                         Image(systemName: "bell.fill")
@@ -83,12 +84,16 @@ struct AddStudyView: View {
                             .background(Color.purple)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .frame(width: 30, height: 30)
-                        DatePicker("提醒時間", selection: $reminderTime, displayedComponents: [.hourAndMinute])
+                        DatePicker("提醒時間", selection: $todo.reminderTime, displayedComponents: [.hourAndMinute])
+                            .onChange(of: todo.reminderTime) { newValue in
+                                todo.reminderTime = newValue
+                            }
+                        
                     }
                 }
                 
                 Section {
-                    Toggle(isOn: $isRecurring) {
+                    if isRecurring {
                         HStack {
                             Image(systemName: "arrow.clockwise")
                                 .resizable()
@@ -98,30 +103,54 @@ struct AddStudyView: View {
                                 .background(Color.gray)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .frame(width: 30, height: 30)
-                            Text("重複")
+                            Text("重複頻率")
+                            Spacer()
+                            if (todo.selectedFrequency == 1){
+                                Text("每日")
+                            } else if (todo.selectedFrequency == 2) {
+                                Text("每週")
+                            } else if (todo.selectedFrequency == 3) {
+                                Text("每月")
+                            }
                         }
-                    }
-                    
-                    if isRecurring {
-                        Picker("重複頻率", selection: $selectedFrequency) {
-                            Text("每日").tag(1)
-                            Text("每週").tag(2)
-                            Text("每月").tag(3)
+                        HStack {
+                            Image(systemName: "arrow.clockwise")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.white)
+                                .padding(6)
+                                .background(Color.gray)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .frame(width: 30, height: 30)
+                            Text("結束重複")
+                            Spacer()
+                            if (todo.recurringOption == 1){
+                                Text("一直重複")
+                            } else if (todo.recurringOption == 2) {
+                                Text(formattedDate(todo.dueDateTime))
+                            }
                         }
-                        
-                        Picker("結束重複", selection: $recurringOption) {
-                            Text("一直重複").tag(1)
-                            Text("選擇結束日期").tag(2)
-                        }
-                        
-                        if recurringOption == 2 {
-                            DatePicker("結束重複日期", selection: $recurringEndDate, displayedComponents: [.date])
+                    } else {
+                        HStack {
+                            Image(systemName: "arrow.clockwise")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.white)
+                                .padding(6)
+                                .background(Color.gray)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .frame(width: 30, height: 30)
+                            Spacer()
+                            Text("不重複")
                         }
                     }
                 }
-                TextField("備註", text: $todoNote)
+                TextField("備註", text: $todo.todoNote)
+                    .onChange(of: todo.todoNote) { newValue in
+                        todo.todoNote = newValue
+                    }
             }
-            .navigationBarTitle("一般學習")
+            .navigationBarTitle("一般學習修改")
             .navigationBarItems(leading:
                                     Button(action: {
                 presentationMode.wrappedValue.dismiss()
@@ -129,7 +158,7 @@ struct AddStudyView: View {
                 Text("返回")
                     .foregroundColor(.blue)
             },
-                                trailing: Button("完成", action: addTodo))
+                                trailing: Button("完成", action: reviseTodo))
         }
     }
     
@@ -145,7 +174,7 @@ struct AddStudyView: View {
         return formatter.string(from: date)
     }
     
-    func addTodo() {
+    func reviseTodo() {
         class URLSessionSingleton {
             static let shared = URLSessionSingleton()
             let session: URLSession
@@ -157,92 +186,58 @@ struct AddStudyView: View {
             }
         }
         
-        let url = URL(string: "http://127.0.0.1:8888/addTask/addStudyGeneral.php")!
+        let url = URL(string: "http://127.0.0.1:8888/reviseTask/reviseStudy.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         var body: [String: Any] = [
-            "label": label,
-            "todoTitle": todoTitle,
-            "todoIntroduction": todoIntroduction,
-            "startDateTime": formattedDate(startDateTime),
-//            "dueDateTime": formattedDate(recurringEndDate),
-            "reminderTime": formattedTime(reminderTime),
-            "todoNote": todoNote
+//            "label": todo.label,
+//            "todoTitle": todo.wrappedValue.todoTitle,
+//            "todoIntroduction": todo.todoIntroduction.wrappedValue,
+//            "startDateTime": formattedDate(todo.startDateTime),
+            //            "dueDateTime": formattedDate(recurringEndDate),
+            "id": todo.id,
+            "label": todo.label,
+            "reminderTime": formattedTime(todo.reminderTime),
+            "todoNote": todo.todoNote
         ]
         
-        if isRecurring {
-            body["frequency"] = selectedFrequency
-            if recurringOption == 1 {
-                // 持續重複
-                body["dueDateTime"] = formattedDate(Calendar.current.date(byAdding: .year, value: 5, to: recurringEndDate)!)
-            } else {
-                // 選擇結束日期
-                body["dueDateTime"] = formattedDate(recurringEndDate)
-            }
-        } else {
-            // 不重複
-            body["frequency"] = 0
-            body["dueDateTime"] = formattedDate(recurringEndDate)
-        }
-        
-        print("AddTodoView - body:\(body)")
+        print("reviseTodo - body:\(body)")
         let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
         request.httpBody = jsonData
         URLSessionSingleton.shared.session.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("AddTodoView - Connection error: \(error)")
+                print("reviseTodo - Connection error: \(error)")
             } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                print("AddTodoView - HTTP error: \(httpResponse.statusCode)")
+                print("reviseTodo - HTTP error: \(httpResponse.statusCode)")
             }
             else if let data = data{
                 let decoder = JSONDecoder()
+                print("我是備註啊啊啊：\(todo.todoNote)")
                 do {
-                    print("AddTodoView - Data : \(String(data: data, encoding: .utf8)!)")
+                    print("reviseTodo - Data : \(String(data: data, encoding: .utf8)!)")
                     let todoData = try decoder.decode(TodoData.self, from: data)
-                    if (todoData.message == "User New StudyGeneral successfullyUser New first RecurringInstance successfully" && todoData.message == "User New StudyGeneral successfullyUser New first RecurringInstance successfully") {
-                        print("============== AddTodoView ==============")
+                    if (todoData.message == "User revise Study successfully") {
+                        print("============== reviseTodo ==============")
                         print(String(data: data, encoding: .utf8)!)
-                        print("addStudySpaced - userDate:\(todoData)")
-                        print("使用者ID為：\(todoData.userId ?? "N/A")")
+                        print("reviseTodo - userDate:\(todoData)")
                         print("事件id為：\(todoData.todo_id)")
-                        print("事件種類為：\(todoData.category_id)")
-                        print("事件名稱為：\(todoData.todoTitle)")
-                        print("事件簡介為：\(todoData.todoIntroduction)")
                         print("事件種類為：\(todoData.label)")
-                        print("事件狀態為：\(todoData.todoStatus)")
-                        print("開始時間為：\(todoData.startDateTime)")
                         print("提醒時間為：\(todoData.reminderTime)")
-                        print("截止日期為：\(todoData.dueDateTime)")
-                        print("事件編號為：\(todoData.todo_id)")
-                        print("AddTodoView - message：\(todoData.message)")
+                        print("事件備註為：\(todoData.todoNote)")
+                        print("reviseTodo - message：\(todoData.message)")
                         isError = false
                         DispatchQueue.main.async {
-                            var todo: Todo?
-                            todo = Todo(id: Int(exactly: todoData.todo_id)!,
-                                        label: label,
-                                        title: todoTitle,
-                                        description: todoIntroduction,
-                                        startDateTime: startDateTime,
-                                        isRecurring: isRecurring,
-                                        recurringOption: recurringOption,
-                                        selectedFrequency: selectedFrequency,
-                                        todoStatus: todoStatus,
-                                        dueDateTime: recurringEndDate,
-                                        reminderTime: reminderTime,
-                                        todoNote: todoNote)
-                            if let unwrappedTodo = todo {  // 使用可選綁定來解封 'todo'
-                                todoStore.todos.append(unwrappedTodo)
-                                presentationMode.wrappedValue.dismiss()
-                            }
+                            presentationMode.wrappedValue.dismiss()
                         }
-                        print("============== AddTodoView ==============")
+                       
+                        print("============== reviseTodo ==============")
                     }  else {
                         isError = true
-                        print("AddTodoView - message：\(todoData.message)")
+                        print("reviseTodo - message：\(todoData.message)")
                         messenge = "建立失敗，請重新建立"                    }
                 } catch {
                     isError = true
-                    print("AddTodoView - 解碼失敗：\(error)")
+                    print("reviseTodo - 解碼失敗：\(error)")
                     messenge = "建立失敗，請重新建立"
                 }
             }
@@ -251,9 +246,20 @@ struct AddStudyView: View {
     }
 }
 
-struct AddStudyView_Previews: PreviewProvider {
+struct DetailStudyView_Previews: PreviewProvider {
     static var previews: some View {
-        AddStudyView()
-            .environmentObject(TodoStore())
+        @State var todo = Todo(id: 001,
+                               label:"我是標籤",
+                               title: "英文",
+                               description: "背L2單字",
+                               startDateTime: Date(),
+                               isRecurring: true,
+                               recurringOption:2,
+                               selectedFrequency: 1,
+                               todoStatus: false,
+                               dueDateTime: Date(),
+                               reminderTime: Date(),
+                               todoNote: "我是備註")
+        DetailStudyView(todo: $todo)
     }
 }
