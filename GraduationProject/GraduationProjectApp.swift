@@ -279,10 +279,150 @@ struct YourApp: App {
                             }
                         }
                         print("============== StudyGeneralList ==============")
-                        TickerList()
+                        SportList()
                     }
                 } catch {
                     print("StudyGeneralList - 解碼失敗：\(error)")
+                }
+            }
+        }
+        .resume()
+    }
+    
+    private func SportList() {
+        UserDefaults.standard.synchronize()
+        class URLSessionSingleton {
+            static let shared = URLSessionSingleton()
+            let session: URLSession
+            private init() {
+                let config = URLSessionConfiguration.default
+                config.httpCookieStorage = HTTPCookieStorage.shared
+                config.httpCookieAcceptPolicy = .always
+                session = URLSession(configuration: config)
+            }
+        }
+        
+        let url = URL(string: "http://127.0.0.1:8888/list/SportList.php")!
+        //        let url = URL(string: "http://10.21.1.164:8888/account/login.php")!
+        //        let url = URL(string: "http://163.17.136.73:443/account/login.php")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let body = ["uid": uid]
+        let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
+        request.httpBody = jsonData
+        URLSessionSingleton.shared.session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("SportList - Connection error: \(error)")
+            } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+                print("SportList - HTTP error: \(httpResponse.statusCode)")
+            }
+            else if let data = data{
+                let decoder = JSONDecoder()
+                do {
+                    print(String(data: data, encoding: .utf8)!)
+                    let userData = try decoder.decode(SportData.self, from: data)
+                    if userData.message == "no such account" {
+                        print("============== SportList ==============")
+                        print("SportList - userDate:\(userData)")
+                        print(userData.message)
+                        print("SportList顯示有問題")
+                        print("============== SportList ==============")
+                    } else {
+                        print("============== SportList ==============")
+                        print("SportList - userDate:\(userData)")
+                        print("todoId為：\(userData.todo_id)")
+                        print("todoTitle為：\(userData.todoTitle)")
+                        print("todoIntroduction為：\(userData.todoIntroduction)")
+                        print("運動種類為：\(userData.sportType)")
+                        print("運動目標量為：\(userData.sportValue)")
+                        print("運動目標單位為：\(userData.sportUnit)")
+                        print("todoFrequency為：\(userData.frequency)")
+                        print("startDateTime為：\(userData.startDateTime)")
+                        print("dueDateTime為：\(userData.dueDateTime)")
+                        print("reminderTime為：\(userData.reminderTime)")
+                        
+                        // 先將日期和時間字串轉換成對應的 Date 物件
+                        func convertToDate(_ dateString: String) -> Date? {
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                            return dateFormatter.date(from: dateString)
+                        }
+                        
+                        func convertToTime(_ timeString: String) -> Date? {
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "HH:mm:ss"
+                            return dateFormatter.date(from: timeString)
+                        }
+                        
+                        for index in userData.todoTitle.indices {
+                            var todoStatus: Bool = false
+                            var recurringOption: Int = 0
+                            var isRecurring: Bool = false
+//                            var sportValue: Float = 0.0
+                            var sportUnit: String = ""
+                            if let startDate = convertToDate(userData.startDateTime[index]),
+                               let dueDateTime = convertToDate(userData.dueDateTime[index]),
+                               let reminderTime = convertToTime(userData.reminderTime[index]) {
+                                
+                                let calendar = Calendar.current
+                                let components = calendar.dateComponents([.year], from: startDate, to: dueDateTime)
+                                if let yearsDifference = components.year, yearsDifference >= 5 {
+                                    recurringOption = 2
+                                } else {
+                                    recurringOption = 1
+                                }
+                                
+                                if (userData.sportUnit[index] == "0" ){
+                                    sportUnit = "小時"
+                                } else  if (userData.sportUnit[index] == "1" ) {
+                                    sportUnit = "次"
+                                } else  if (userData.sportUnit[index] == "2" ) {
+                                    sportUnit = "卡路里"
+                                }
+                                
+                                
+                                
+                                if (userData.todoStatus[index] == "0" ){
+                                    todoStatus = false
+                                } else {
+                                    todoStatus = true
+                                }
+                                if (userData.frequency[index] == "0" ) {
+                                    isRecurring = false
+                                } else {
+                                    isRecurring = true
+                                }
+                                let taskId = Int(userData.todo_id[index])
+                                let sport = Sport(id: taskId!,
+                                                label: userData.todoLabel[index],
+                                                title: userData.todoTitle[index],
+                                                description: userData.todoIntroduction[index],
+                                                startDateTime: startDate,
+                                                selectedSport: userData.sportType[index],
+                                                  sportValue:  Float(userData.sportValue[index])!,
+                                                sportUnits: sportUnit,
+                                                isRecurring: isRecurring,
+                                                recurringOption: recurringOption,
+                                                selectedFrequency: Int(userData.frequency[index])!,
+                                                todoStatus: todoStatus,
+                                                dueDateTime: dueDateTime,
+                                                reminderTime: reminderTime,
+                                                todoNote: userData.todoNote[index])
+                                
+                                
+                                DispatchQueue.main.async {
+                                    sportStore.sports.append(sport)
+                                    
+                                }
+                            } else {
+                                print("SportList - 日期或時間轉換失敗")
+                            }
+                        }
+                        print("============== SportList ==============")
+                        TickerList()
+                    }
+                } catch {
+                    print("SportList - 解碼失敗：\(error)")
                 }
             }
         }

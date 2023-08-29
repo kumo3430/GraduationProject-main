@@ -55,6 +55,28 @@ struct TodoData: Decodable {
     var message: String
 }
 
+struct SportData: Decodable {
+    var todo_id: [String]
+//    var todo_id: [Int]
+    var userId: String?
+    var category_id: Int
+    var todoTitle: [String]
+    var todoIntroduction: [String]
+    var todoLabel: [String]
+    var startDateTime: [String]
+    
+    var sportType: [String]
+    var sportValue: [String]
+    var sportUnit: [String]
+    
+    var frequency: [String]
+    var reminderTime: [String]
+    var todoStatus: [String?]
+    var dueDateTime: [String]
+    var todoNote: [String]
+    var message: String
+}
+
 struct TickerData: Decodable {
     var ticker_id: [String]
     var userId: Int?
@@ -122,7 +144,7 @@ class SportStore: ObservableObject {
     //    @Published var todos = [Todo]()
     @Published var sports: [Sport] = []
     
-    func todosForDate(_ date: Date) -> [Sport] {
+    func sportsForDate(_ date: Date) -> [Sport] {
         let filteredTodos = sports.filter { todo in
             return isDate(date, inRangeOf: todo.startDateTime, and: todo.dueDateTime)
         }

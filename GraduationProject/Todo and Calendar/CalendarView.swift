@@ -18,6 +18,7 @@ struct CalendarView: View {
     //    @ObservedObject var taskStore = TaskStore()
     @EnvironmentObject var taskStore: TaskStore
     @EnvironmentObject var todoStore: TodoStore
+    @EnvironmentObject var sportStore: SportStore
     @State private var showingActionSheet = false
     @State private var action: Action? = nil
     @State var selectedDate = Date()
@@ -115,6 +116,7 @@ struct CalendarView: View {
     func eventList() -> some View {
         let filteredTasks = taskStore.tasksForDate(selectedDate)
         let filteredTodos = todoStore.todosForDate(selectedDate)
+        let filteredSports = sportStore.sportsForDate(selectedDate)
         
         return List {
             Text("間隔學習法")
@@ -174,6 +176,31 @@ struct CalendarView: View {
                         }
                     Text("開始時間:\(formattedDate(todo.startDateTime))")
                     Text("結束時間:\(formattedDate(todo.dueDateTime))")
+                }
+            }
+            
+            Text("運動")
+//                .font(.caption)
+                .font(.subheadline)
+            ForEach(filteredSports) { sport in
+                VStack(alignment: .leading) {
+                    Text(sport.title)
+                        .font(.headline)
+                        if sport.selectedFrequency == 0 {
+                            Text("週期：不重複")
+                                .font(.subheadline)
+                        } else if sport.selectedFrequency == 1 {
+                            Text("週期：每日")
+                                .font(.subheadline)
+                        } else if sport.selectedFrequency == 2 {
+                            Text("週期：每週")
+                                .font(.subheadline)
+                        } else if sport.selectedFrequency == 3 {
+                            Text("週期：每日")
+                                .font(.subheadline)
+                        }
+                    Text("開始時間:\(formattedDate(sport.startDateTime))")
+                    Text("結束時間:\(formattedDate(sport.dueDateTime))")
                 }
             }
         }
