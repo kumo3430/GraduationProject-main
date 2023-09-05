@@ -36,7 +36,7 @@ struct TodoListView: View {
                         Text("間隔學習法")
                         ForEach(taskStore.tasks.indices, id: \.self) { index in
                             
-                            NavigationLink(destination: TaskDetailView(task: $taskStore.tasks[index])) {
+                            NavigationLink(destination: DetailSpaceView(task: $taskStore.tasks[index])) {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(taskStore.tasks[index].title)
                                         .font(.headline)
