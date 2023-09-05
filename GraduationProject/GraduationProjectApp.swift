@@ -380,13 +380,12 @@ struct YourApp: App {
                                     sportUnit = "卡路里"
                                 }
                                 
-                                
-                                
                                 if (userData.todoStatus[index] == "0" ){
                                     todoStatus = false
                                 } else {
                                     todoStatus = true
                                 }
+                                
                                 if (userData.frequency[index] == "0" ) {
                                     isRecurring = false
                                 } else {

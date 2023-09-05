@@ -199,7 +199,7 @@ struct AddStudyView: View {
                 do {
                     print("AddTodoView - Data : \(String(data: data, encoding: .utf8)!)")
                     let todoData = try decoder.decode(TodoData.self, from: data)
-                    if (todoData.message == "User New StudyGeneral successfullyUser New first RecurringInstance successfully" && todoData.message == "User New StudyGeneral successfullyUser New first RecurringInstance successfully") {
+                    if (todoData.message == "User New StudyGeneral successfullyUser New first RecurringInstance successfully" || todoData.message == "User New StudyGeneral successfullyUser New first RecurringInstance successfully") {
                         print("============== AddTodoView ==============")
                         print(String(data: data, encoding: .utf8)!)
                         print("addStudySpaced - userDate:\(todoData)")

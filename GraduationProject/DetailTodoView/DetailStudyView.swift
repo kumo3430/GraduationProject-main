@@ -11,19 +11,7 @@ struct DetailStudyView: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var todo: Todo
     @EnvironmentObject var todoStore: TodoStore
-    @State var uid: String = ""
-    @State var category_id: Int = 1
-    @State var label: String = ""
-    @State var todoTitle: String = ""
-    @State var todoIntroduction: String = ""
-    @State var startDateTime: Date = Date()
-    @State var todoStatus: Bool = false
-    @State var reminderTime: Date = Date()
-    @State var todoNote: String = ""
-    @State private var isRecurring = true
-    @State private var selectedFrequency = 1
-    @State private var recurringOption = 1  // 1: 持續重複, 2: 選擇結束日期
-    @State private var recurringEndDate = Date()
+   
     
     @State var messenge = ""
     @State var isError = false
@@ -71,7 +59,6 @@ struct DetailStudyView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .frame(width: 30, height: 30)
                         Text("選擇時間")
-                        //                        DatePicker("選擇時間", selection: $startDateTime, displayedComponents: [.date])
                         Spacer()
                         Text(formattedDate(todo.startDateTime))
                     }
@@ -93,7 +80,7 @@ struct DetailStudyView: View {
                 }
                 
                 Section {
-                    if isRecurring {
+                    if todo.isRecurring {
                         HStack {
                             Image(systemName: "arrow.clockwise")
                                 .resizable()
@@ -158,7 +145,15 @@ struct DetailStudyView: View {
                 Text("返回")
                     .foregroundColor(.blue)
             },
-                                trailing: Button("完成", action: reviseTodo))
+                                trailing: Button(action: {
+                reviseTodo()
+                if todo.label == "" {
+                    todo.label = "notSet"
+                }
+            }) {
+                Text("完成")
+                    .foregroundColor(.blue)
+                        })
         }
     }
     
@@ -189,7 +184,7 @@ struct DetailStudyView: View {
         let url = URL(string: "http://127.0.0.1:8888/reviseTask/reviseStudy.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        var body: [String: Any] = [
+        let body: [String: Any] = [
 //            "label": todo.label,
 //            "todoTitle": todo.wrappedValue.todoTitle,
 //            "todoIntroduction": todo.todoIntroduction.wrappedValue,

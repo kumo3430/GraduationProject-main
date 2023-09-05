@@ -285,7 +285,7 @@ struct AddSportView: View {
                 do {
                     print("addSport - Data : \(String(data: data, encoding: .utf8)!)")
                     let todoData = try decoder.decode(TodoData.self, from: data)
-                    if (todoData.message == "User New Sport successfullyUser New first RecurringInstance successfully" && todoData.message == "User New Sport successfully") {
+                    if (todoData.message == "User New Sport successfullyUser New first RecurringInstance successfully" || todoData.message == "User New Sport successfully") {
                         print("============== addSport ==============")
                         print(String(data: data, encoding: .utf8)!)
                         print("addSport - userDate:\(todoData)")
