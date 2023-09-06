@@ -84,7 +84,6 @@ if ($result->num_rows == 0) {
 
 
 
-
 $userData = array(
     'userId' => $uid,
     'category_id' => $category_id,
@@ -93,7 +92,7 @@ $userData = array(
     'label' => $todoLabel,
     'startDateTime' => $startDateTime,
     'reminderTime' => $reminderTime,
-    'todo_id' => $todo_id,
+    'todo_id' =>  intval($todo_id),
     'repetition1Count' => $repetition1Count,
     'repetition2Count' => $repetition2Count,
     'repetition3Count' => $repetition3Count,
