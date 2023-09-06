@@ -146,7 +146,7 @@ struct YourApp: App {
                                     ReviewChecked3 = true
                                 }
                                 let taskId = Int(userData.todo_id[index])
-                                let task = Task(id: taskId!,label: userData.todoLabel[index], title: userData.todoTitle[index], description: userData.todoIntroduction[index], nextReviewDate: startDate, nextReviewTime: reminderTime, repetition1Count: repetition1Count, repetition2Count: repetition2Count, repetition3Count: repetition3Count, repetition4Count: repetition4Count, isReviewChecked0: ReviewChecked0, isReviewChecked1: ReviewChecked1, isReviewChecked2: ReviewChecked2, isReviewChecked3: ReviewChecked3)
+                                let task = Task(id: taskId!,label: userData.todoLabel[index]!, title: userData.todoTitle[index], description: userData.todoIntroduction[index], nextReviewDate: startDate, nextReviewTime: reminderTime, repetition1Count: repetition1Count, repetition2Count: repetition2Count, repetition3Count: repetition3Count, repetition4Count: repetition4Count, isReviewChecked0: ReviewChecked0, isReviewChecked1: ReviewChecked1, isReviewChecked2: ReviewChecked2, isReviewChecked3: ReviewChecked3)
                                 
                                 
                                 DispatchQueue.main.async {
@@ -257,7 +257,7 @@ struct YourApp: App {
                                 }
                                 let taskId = Int(userData.todo_id[index])
                                 let todo = Todo(id: taskId!,
-                                                label: userData.todoLabel[index],
+                                                label: userData.todoLabel[index]!,
                                                 title: userData.todoTitle[index],
                                                 description: userData.todoIntroduction[index],
                                                 startDateTime: startDate,
@@ -393,7 +393,7 @@ struct YourApp: App {
                                 }
                                 let taskId = Int(userData.todo_id[index])
                                 let sport = Sport(id: taskId!,
-                                                label: userData.todoLabel[index],
+                                                label: userData.todoLabel[index]!,
                                                 title: userData.todoTitle[index],
                                                 description: userData.todoIntroduction[index],
                                                 startDateTime: startDate,

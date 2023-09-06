@@ -23,7 +23,7 @@ struct TaskData: Decodable {
     var category_id: Int
     var todoTitle: [String]
     var todoIntroduction: [String]
-    var todoLabel: [String]
+    var todoLabel: [String?]
     var startDateTime: [String]
     var reminderTime: [String]
     var repetition1Status: [String?]
@@ -45,7 +45,7 @@ struct TodoData: Decodable {
     var category_id: Int
     var todoTitle: [String]
     var todoIntroduction: [String]
-    var todoLabel: [String]
+    var todoLabel: [String?]
     var startDateTime: [String]
     var frequency: [String]
     var reminderTime: [String]
@@ -62,7 +62,7 @@ struct SportData: Decodable {
     var category_id: Int
     var todoTitle: [String]
     var todoIntroduction: [String]
-    var todoLabel: [String]
+    var todoLabel: [String?]
     var startDateTime: [String]
     
     var sportType: [String]

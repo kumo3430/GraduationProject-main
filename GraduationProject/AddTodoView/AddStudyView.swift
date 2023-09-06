@@ -31,7 +31,7 @@ struct AddStudyView: View {
     struct TodoData : Decodable {
         var userId: String?
         var category_id: Int
-        var label: String
+        var label: String?
         var todoTitle: String
         var todoIntroduction: String
         var startDateTime: String
@@ -39,6 +39,7 @@ struct AddStudyView: View {
         var reminderTime: String
         var dueDateTime: String
         var todo_id: Int
+        var todoNote: String?
         var message: String
     }
     
@@ -129,7 +130,9 @@ struct AddStudyView: View {
                 Text("返回")
                     .foregroundColor(.blue)
             },
-                                trailing: Button("完成", action: addTodo))
+                                trailing: Button("完成", action: addTodo)
+                .disabled(todoTitle.isEmpty && todoIntroduction.isEmpty)
+            )
         }
     }
     
@@ -199,7 +202,7 @@ struct AddStudyView: View {
                 do {
                     print("AddTodoView - Data : \(String(data: data, encoding: .utf8)!)")
                     let todoData = try decoder.decode(TodoData.self, from: data)
-                    if (todoData.message == "User New StudyGeneral successfullyUser New first RecurringInstance successfully" || todoData.message == "User New StudyGeneral successfullyUser New first RecurringInstance successfully") {
+                    if (todoData.message == "User New StudyGeneral successfullyUser New first RecurringInstance successfully" || todoData.message == "User New StudyGeneral successfully") {
                         print("============== AddTodoView ==============")
                         print(String(data: data, encoding: .utf8)!)
                         print("addStudySpaced - userDate:\(todoData)")
@@ -208,11 +211,12 @@ struct AddStudyView: View {
                         print("事件種類為：\(todoData.category_id)")
                         print("事件名稱為：\(todoData.todoTitle)")
                         print("事件簡介為：\(todoData.todoIntroduction)")
-                        print("事件種類為：\(todoData.label)")
+                        print("事件種類為：\(todoData.label ?? "N/A")")
                         print("事件狀態為：\(todoData.todoStatus)")
                         print("開始時間為：\(todoData.startDateTime)")
                         print("提醒時間為：\(todoData.reminderTime)")
                         print("截止日期為：\(todoData.dueDateTime)")
+                        print("事件備註：\(todoData.todoNote ?? "N/A")")
                         print("事件編號為：\(todoData.todo_id)")
                         print("AddTodoView - message：\(todoData.message)")
                         isError = false

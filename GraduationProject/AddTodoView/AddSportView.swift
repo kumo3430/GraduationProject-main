@@ -50,7 +50,7 @@ struct AddSportView: View {
     struct TodoData : Decodable {
         var userId: String?
         var category_id: Int
-        var label: String
+        var label: String?
         var todoTitle: String
         var todoIntroduction: String
         var startDateTime: String
@@ -63,6 +63,7 @@ struct AddSportView: View {
         var reminderTime: String
         var dueDateTime: String
         var todo_id: Int
+        var todoNote: String?
         var message: String
     }
 
@@ -206,7 +207,8 @@ struct AddSportView: View {
                                         Text("返回")
                                             .foregroundColor(.blue)
                                                 },
-                trailing: Button("完成", action: addSport))
+                trailing: Button("完成", action: addSport)
+                .disabled(todoTitle.isEmpty && todoIntroduction.isEmpty))
         }
     }
 
@@ -294,7 +296,7 @@ struct AddSportView: View {
                         print("事件種類為：\(todoData.category_id)")
                         print("事件名稱為：\(todoData.todoTitle)")
                         print("事件簡介為：\(todoData.todoIntroduction)")
-                        print("事件種類為：\(todoData.label)")
+                        print("事件種類為：\(todoData.label ?? "N/A")")
                         print("事件狀態為：\(todoData.todoStatus)")
                         print("開始時間為：\(todoData.startDateTime)")
                         print("運動種類為：\(todoData.sportType)")
@@ -302,6 +304,7 @@ struct AddSportView: View {
                         print("運動目標單位為：\(todoData.sportUnit)")
                         print("提醒時間為：\(todoData.reminderTime)")
                         print("截止日期為：\(todoData.dueDateTime)")
+                        print("事件備註：\(todoData.todoNote ?? "N/A")")
                         print("事件編號為：\(todoData.todo_id)")
                         print("addSport - message：\(todoData.message)")
                         isError = false

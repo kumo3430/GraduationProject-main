@@ -30,7 +30,7 @@ struct AddTaskView: View {
         var userId: String?
         //        var id: Int
         var category_id: Int
-        var label: String
+        var label: String?
         var todoTitle: String
         var todoIntroduction: String
         var startDateTime: String
@@ -40,6 +40,7 @@ struct AddTaskView: View {
         var repetition2Count: String
         var repetition3Count: String
         var repetition4Count: String
+        
         var message: String
     }
     
@@ -119,7 +120,7 @@ struct AddTaskView: View {
             },
                                 trailing: Button("完成") { addStudySpaced() }
                                 // 如果 title 為空，按鈕會被禁用，即無法點擊。
-                .disabled(title.isEmpty)
+                .disabled(title.isEmpty && description.isEmpty)
                 .onDisappear() {
                     repetition1Count = nextReviewDates[0]
                     repetition2Count = nextReviewDates[1]
@@ -187,7 +188,7 @@ struct AddTaskView: View {
                         print("事件種類為：\(userData.category_id)")
                         print("事件名稱為：\(userData.todoTitle)")
                         print("事件簡介為：\(userData.todoIntroduction)")
-                        print("事件種類為：\(userData.label)")
+                        print("事件種類為：\(userData.label ?? "N/A")")
                         print("開始時間為：\(userData.startDateTime)")
                         print("提醒時間為：\(userData.reminderTime)")
                         print("事件編號為：\(userData.todo_id)")

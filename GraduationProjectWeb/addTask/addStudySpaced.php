@@ -13,11 +13,11 @@ $todoTitle = $data['title'];
 $todoIntroduction = $data['description'];
 
 
-if ( $data['label'] == "") {
-    $todoLabel = "notSet";
-} else {
-    $todoLabel= $data['label'];
-}
+// if ( $data['label'] == "") {
+//     $todoLabel = "notSet";
+// } else {
+//     $todoLabel= $data['label'];
+// }
 
 $startDateTime = $data['nextReviewDate'];
 $reminderTime = $data['nextReviewTime'];
