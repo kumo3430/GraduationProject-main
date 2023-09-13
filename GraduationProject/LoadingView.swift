@@ -14,8 +14,6 @@ struct LoadingView: View {
                 .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                 .scaleEffect(2)
             Text("載入中...")
-                .font(.title)
-                .padding(.top)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.opacity(0.9).edgesIgnoringSafeArea(.all))

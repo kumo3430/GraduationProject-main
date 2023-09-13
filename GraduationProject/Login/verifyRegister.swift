@@ -37,54 +37,85 @@ struct verifyRegister: View {
     
     
     var body: some View {
-        VStack {
-            VStack {
-                Text("剩餘時間：\(timeRemaining / 60)分 \(timeRemaining % 60)秒")
-                    .onReceive(timer) { _ in
-                        if timeRemaining > 0 {
-                            timeRemaining -= 1
+            ZStack {
+                // Background Gradient
+                LinearGradient(gradient: .init(colors: [Color("Color"),Color("Color1"),Color("Color2")]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all)
+                
+                VStack(spacing: 25) {
+                    Image("logo")
+                        .resizable()
+                        .frame(width: 200, height: 180)
+                    
+                    Text("驗證帳號")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding(.bottom, 30)
+                    
+                    // Remaining Time
+                    Text("剩餘時間：\(timeRemaining / 60)分 \(timeRemaining % 60)秒")
+                        .font(.subheadline)
+                        .padding(.all, 15)
+                        .background(Color.white.opacity(0.5))
+                        .cornerRadius(15)
+                    
+                    // Verification Code Input Field
+                    VStack(alignment: .leading) {
+                        Text("您的驗證碼：")
+                            .font(.caption)
+                            .foregroundColor(.white)
+                        TextField("驗證碼", text: $Verify)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .keyboardType(.numberPad)
+                            .padding(.horizontal, 10)
+                    }
+                    .padding(.horizontal, 30)
+                    
+                    // Verification Button
+                    Button {
+                        print("verify - 進行驗證中")
+                        doVerify()
+                    } label: {
+                        Text("進行驗證")
+                            .font(.headline)
+                            .padding(.horizontal, 80)
+                            .padding(.vertical, 15)
+                            .background(Color.blue.opacity(0.8))
+                            .foregroundColor(.white)
+                            .cornerRadius(15)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
+                    }
+                    .padding(.top, 15)
+                    
+                    // Resend Verification Code Button
+                    Button {
+                        print("verify - 再次發送驗證碼")
+                        timeRemaining = 40
+                        DispatchQueue.global().async {
+                            verificationCode = random()
+                            sendMail(verificationCode)
                         }
+                    } label: {
+                        Text("重新發送驗證碼")
+                            .font(.callout)
+                            .underline()
+                            .foregroundColor(Color.blue)
                     }
-                    .padding(10)
-                    .frame(width: 400)
-                
-                Button {
-                    print("verify - 再次發送驗證碼")
-                    timeRemaining = 40
-//                    Task {
-//                        //                        verify = 0
-//                        let verificationCode = await random()
-//                        await sendMail(verificationCode)
-//                    }
-                    DispatchQueue.global().async {
-                        verificationCode =  random()
-                        sendMail(verificationCode)
-                    }
-                    //                    aViewInstance.mix()
-                } label: {
-                    Text("重新發送驗證碼")
+                    .padding(.top, 10)
+                    
+                    // Error Message
+                    Text(messenge)
+                        .foregroundColor(.red)
+                        .font(.caption)
+                        .padding(.top, 10)
+                    
+                    Spacer()
                 }
-                .padding(10)
-                
+                .padding(.top, 50)
             }
-            HStack {
-                Text("您的驗證碼：")
-                TextField("驗證碼", text: $Verify)
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.numberPad)
-                    .padding(10)
-            }
-            Button {
-                print("verify - 進行驗證中")
-                doVerify()
-            } label: {
-                Text("進行驗證")
-            }
-            Text(messenge)
-                .foregroundColor(Color.red)
         }
-        .navigationTitle("驗證帳號")
-    }
+
+
     
     func doVerify() {
         // 如果上個畫面的驗證碼還存在的話使用上個畫面的驗證碼去判斷使用者是否輸入錯誤
@@ -217,8 +248,6 @@ struct verifyRegister: View {
                         print("message：\(userData.message)")
                         UserDefaults.standard.set(true, forKey: "signIn")
                         UserDefaults.standard.set("\(userData.userId ?? "N/A")", forKey: "uid")
-                        UserDefaults.standard.set("\(mail)", forKey: "userName")
-                        UserDefaults.standard.set("\(pass)", forKey: "password")
                         print("============== verifyView ==============")
                         
                     } else if (userData.message == "not yet filled") {

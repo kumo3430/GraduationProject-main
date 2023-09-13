@@ -77,6 +77,27 @@ struct SportData: Decodable {
     var message: String
 }
 
+struct DietData: Decodable {
+    var todo_id: [String]
+    var userId: String?
+    var category_id: Int
+    var todoTitle: [String]
+    var todoIntroduction: [String]
+    var todoLabel: [String?]
+    var startDateTime: [String]
+    
+    var dietsType: [String]
+    var dietsValue: [String]
+    var dietsUnit: [String]
+    
+    var frequency: [String]
+    var reminderTime: [String]
+    var todoStatus: [String?]
+    var dueDateTime: [String]
+    var todoNote: [String]
+    var message: String
+}
+
 struct TickerData: Decodable {
     var ticker_id: [String]
     var userId: Int?
@@ -167,6 +188,58 @@ class SportStore: ObservableObject {
     }
 }
 
+//class DietStore: ObservableObject {
+//    @Published var diet: [Diet] = []
+//    
+//    func dietForDate(_ date: Date) -> [Diet] {
+//        let filteredDiets = diet.filter { diet in
+//            return isDate(date, inRangeOf: diet.startDateTime, and: diet.dueDateTime)
+//        }
+//        return filteredDiets
+//    }
+//    
+//    func isDate(_ date: Date, inRangeOf startDate: Date, and endDate: Date) -> Bool {
+//        return date >= startDate && date <= endDate
+//            || Calendar.current.isDate(date, inSameDayAs: startDate)
+//            || Calendar.current.isDate(date, inSameDayAs: endDate)
+//    }
+//    
+//    func formattedDate(_ date: Date) -> String {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy/MM/dd"
+//        return formatter.string(from: date)
+//    }
+//    func clearDiets() {
+//        diets = []
+//    }
+//}
+
+class SleepStore: ObservableObject {
+    @Published var sleeps: [Sleep] = []
+    
+    func sleepsForDate(_ date: Date) -> [Sleep] {
+        let filteredSleeps = sleeps.filter { sleep in
+            return isDate(date, inRangeOf: sleep.bedtime, and: sleep.wakeTime)
+        }
+        return filteredSleeps
+    }
+    
+    func isDate(_ date: Date, inRangeOf startDate: Date, and endDate: Date) -> Bool {
+        return date >= startDate && date <= endDate
+            || Calendar.current.isDate(date, inSameDayAs: startDate)
+            || Calendar.current.isDate(date, inSameDayAs: endDate)
+    }
+    
+    func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        return formatter.string(from: date)
+    }
+    
+    func clearSleeps() {
+        sleeps = []
+    }
+}
 
 class TickerStore: ObservableObject {
     //    @Published var todos = [Todo]()

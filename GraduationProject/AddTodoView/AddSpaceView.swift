@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct AddTaskView: View {
+struct AddSpaceView: View {
     @Environment(\.presentationMode) var presentationMode
     //    @ObservedObject var taskStore: TaskStore
     //    @StateObject var taskStore: TaskStore
@@ -237,9 +237,9 @@ struct AddTaskView: View {
     }
 }
 
-struct AddTaskView_Previews: PreviewProvider {
+struct AddSpaceView_Previews: PreviewProvider {
     static var previews: some View {
-        AddTaskView()
+        AddSpaceView()
             .environmentObject(TaskStore())
     }
 }

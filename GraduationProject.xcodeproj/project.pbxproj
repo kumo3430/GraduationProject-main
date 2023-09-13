@@ -7,17 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1346EEBF2A99D97700A4E0A4 /* AddDietsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1346EEBE2A99D97700A4E0A4 /* AddDietsView.swift */; };
 		13AD35D42A70BB880003FF1B /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AD35D32A70BB880003FF1B /* TodoListView.swift */; };
 		13AD35D62A70BC0D0003FF1B /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AD35D52A70BC0D0003FF1B /* CalendarView.swift */; };
-		13AD35D82A70BC350003FF1B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AD35D72A70BC350003FF1B /* MainView.swift */; };
-		13B1A1332AA7177D00E2A6FA /* DetailStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1A1322AA7177D00E2A6FA /* DetailStudyView.swift */; };
-		13B1A1352AA717A200E2A6FA /* DetailSportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1A1342AA717A200E2A6FA /* DetailSportView.swift */; };
-		13B1A1372AA717C500E2A6FA /* DetailSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B1A1362AA717C500E2A6FA /* DetailSpaceView.swift */; };
 		13D6E1E62A710D480049E5A5 /* verifyRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D6E1E52A710D480049E5A5 /* verifyRegister.swift */; };
 		13D6E1E92A710DA50049E5A5 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 13D6E1E82A710DA50049E5A5 /* SwiftSMTP */; };
+		3B05FB172A949EFB00540463 /* AddDietView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B05FB162A949EFB00540463 /* AddDietView.swift */; };
 		3B0A5DB22A81D6B700283B40 /* AddSportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A5DB12A81D6B600283B40 /* AddSportView.swift */; };
-		3B0A5DB42A81DED900283B40 /* TodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A5DB32A81DED900283B40 /* TodoDetailView.swift */; };
+		3B0A5DB42A81DED900283B40 /* SpaceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0A5DB32A81DED900283B40 /* SpaceDetailView.swift */; };
 		3B2EF2DE2A7FF3C200FC021A /* AddSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2EF2DD2A7FF3C200FC021A /* AddSpaceView.swift */; };
 		3B2EF2E02A7FF4E800FC021A /* AddStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2EF2DF2A7FF4E800FC021A /* AddStudyView.swift */; };
 		3B37A8D12A188BA6009BB504 /* GraduationProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B37A8D02A188BA6009BB504 /* GraduationProjectApp.swift */; };
@@ -27,13 +23,23 @@
 		3B37A8E32A188BA6009BB504 /* GraduationProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B37A8E22A188BA6009BB504 /* GraduationProjectTests.swift */; };
 		3B37A8ED2A188BA6009BB504 /* GraduationProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B37A8EC2A188BA6009BB504 /* GraduationProjectUITests.swift */; };
 		3B37A8EF2A188BA6009BB504 /* GraduationProjectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B37A8EE2A188BA6009BB504 /* GraduationProjectUITestsLaunchTests.swift */; };
-		3B5A47EB2A889C520022D796 /* TodoGeneralDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5A47EA2A889C520022D796 /* TodoGeneralDetailView.swift */; };
+		3B421BDF2AAEB8B4000255BA /* RedesignedTaskCompletionIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B421BDE2AAEB8B4000255BA /* RedesignedTaskCompletionIndicatorView.swift */; };
+		3B421BE12AAEB8F5000255BA /* RedesignedTaskCompletionIndicatorCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B421BE02AAEB8F5000255BA /* RedesignedTaskCompletionIndicatorCardView.swift */; };
+		3B421BE32AAFF730000255BA /* AddSleepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B421BE22AAFF730000255BA /* AddSleepView.swift */; };
+		3B4A8FD42AA6D8A100C4E0AF /* AchievementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4A8FD32AA6D8A100C4E0AF /* AchievementView.swift */; };
+		3B4A8FD62AA6DC3D00C4E0AF /* AchievementCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4A8FD52AA6DC3D00C4E0AF /* AchievementCardView.swift */; };
+		3B4A8FD82AA6E78B00C4E0AF /* SportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4A8FD72AA6E78B00C4E0AF /* SportDetailView.swift */; };
+		3B4A8FDC2AA7213100C4E0AF /* CommunityCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4A8FDB2AA7213100C4E0AF /* CommunityCardView.swift */; };
+		3B5A47EB2A889C520022D796 /* StudyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5A47EA2A889C520022D796 /* StudyDetailView.swift */; };
 		3B6975C92A7B7D1E00513302 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6975C82A7B7D1E00513302 /* HomeView.swift */; };
 		3B8647CA2A8DADD400555A9E /* CommunityProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8647C92A8DADD400555A9E /* CommunityProfileView.swift */; };
 		3B8647CD2A8DAE6000555A9E /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8647CC2A8DAE6000555A9E /* PostView.swift */; };
 		3B8647CF2A8DB83300555A9E /* QuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8647CE2A8DB83300555A9E /* QuoteView.swift */; };
 		3B8647D32A8DD87200555A9E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8647D22A8DD87200555A9E /* ImagePicker.swift */; };
 		3B8647D52A8DE31700555A9E /* TodayTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8647D42A8DE31700555A9E /* TodayTodoView.swift */; };
+		3B9497932A9C3F7E00BD885F /* TaskCompletionIndicatorCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9497922A9C3F7E00BD885F /* TaskCompletionIndicatorCardView.swift */; };
+		3B9497952A9C410000BD885F /* QuoteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9497942A9C410000BD885F /* QuoteCardView.swift */; };
+		3B9655F12AAD82390064CE63 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9655F02AAD82390064CE63 /* TabBarView.swift */; };
 		3BA700532A1CC5820096B2FF /* +View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA700522A1CC5820096B2FF /* +View.swift */; };
 		3BA700552A1CCB940096B2FF /* FireAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA700542A1CCB940096B2FF /* FireAuth.swift */; };
 		3BA700572A1F3A860096B2FF /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA700562A1F3A860096B2FF /* ChatUser.swift */; };
@@ -44,6 +50,9 @@
 		3BBBF4C62A847B5E0077B3E6 /* TodoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBBF4C52A847B5E0077B3E6 /* TodoManager.swift */; };
 		3BBBF4C82A8483C10077B3E6 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBBF4C72A8483C10077B3E6 /* LoadingView.swift */; };
 		3BBBF4CA2A8488060077B3E6 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BBBF4C92A8488060077B3E6 /* Launch Screen.storyboard */; };
+		3BDA96F52AA86834009FA88F /* DietDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDA96F42AA86834009FA88F /* DietDetailView.swift */; };
+		3BDCD7E02A96F8BE00E077DE /* TaskCompletionIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDCD7DF2A96F8BE00E077DE /* TaskCompletionIndicatorView.swift */; };
+		3BDF98932AAAF2D70060A90C /* CardTabBar in Frameworks */ = {isa = PBXBuildFile; productRef = 3BDF98922AAAF2D70060A90C /* CardTabBar */; };
 		3BFDFD432A1B443A0071798F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 3BFDFD422A1B443A0071798F /* GoogleSignIn */; };
 		3BFDFD452A1B443A0071798F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3BFDFD442A1B443A0071798F /* GoogleSignInSwift */; };
 		3BFDFD482A1B47620071798F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3BFDFD472A1B47620071798F /* FirebaseAnalytics */; };
@@ -83,16 +92,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1346EEBE2A99D97700A4E0A4 /* AddDietsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDietsView.swift; sourceTree = "<group>"; };
 		13AD35D32A70BB880003FF1B /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
 		13AD35D52A70BC0D0003FF1B /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		13AD35D72A70BC350003FF1B /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		13B1A1322AA7177D00E2A6FA /* DetailStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStudyView.swift; sourceTree = "<group>"; };
-		13B1A1342AA717A200E2A6FA /* DetailSportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSportView.swift; sourceTree = "<group>"; };
-		13B1A1362AA717C500E2A6FA /* DetailSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSpaceView.swift; sourceTree = "<group>"; };
 		13D6E1E52A710D480049E5A5 /* verifyRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verifyRegister.swift; sourceTree = "<group>"; };
+		3B05FB162A949EFB00540463 /* AddDietView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDietView.swift; sourceTree = "<group>"; };
 		3B0A5DB12A81D6B600283B40 /* AddSportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSportView.swift; sourceTree = "<group>"; };
-		3B0A5DB32A81DED900283B40 /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
+		3B0A5DB32A81DED900283B40 /* SpaceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceDetailView.swift; sourceTree = "<group>"; };
 		3B2EF2DD2A7FF3C200FC021A /* AddSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSpaceView.swift; sourceTree = "<group>"; };
 		3B2EF2DF2A7FF4E800FC021A /* AddStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudyView.swift; sourceTree = "<group>"; };
 		3B37A8CD2A188BA5009BB504 /* GraduationProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraduationProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,13 +111,23 @@
 		3B37A8E82A188BA6009BB504 /* GraduationProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraduationProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B37A8EC2A188BA6009BB504 /* GraduationProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraduationProjectUITests.swift; sourceTree = "<group>"; };
 		3B37A8EE2A188BA6009BB504 /* GraduationProjectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraduationProjectUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		3B5A47EA2A889C520022D796 /* TodoGeneralDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoGeneralDetailView.swift; sourceTree = "<group>"; };
+		3B421BDE2AAEB8B4000255BA /* RedesignedTaskCompletionIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedesignedTaskCompletionIndicatorView.swift; sourceTree = "<group>"; };
+		3B421BE02AAEB8F5000255BA /* RedesignedTaskCompletionIndicatorCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedesignedTaskCompletionIndicatorCardView.swift; sourceTree = "<group>"; };
+		3B421BE22AAFF730000255BA /* AddSleepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSleepView.swift; sourceTree = "<group>"; };
+		3B4A8FD32AA6D8A100C4E0AF /* AchievementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementView.swift; sourceTree = "<group>"; };
+		3B4A8FD52AA6DC3D00C4E0AF /* AchievementCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementCardView.swift; sourceTree = "<group>"; };
+		3B4A8FD72AA6E78B00C4E0AF /* SportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportDetailView.swift; sourceTree = "<group>"; };
+		3B4A8FDB2AA7213100C4E0AF /* CommunityCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCardView.swift; sourceTree = "<group>"; };
+		3B5A47EA2A889C520022D796 /* StudyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyDetailView.swift; sourceTree = "<group>"; };
 		3B6975C82A7B7D1E00513302 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3B8647C92A8DADD400555A9E /* CommunityProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityProfileView.swift; sourceTree = "<group>"; };
 		3B8647CC2A8DAE6000555A9E /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		3B8647CE2A8DB83300555A9E /* QuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteView.swift; sourceTree = "<group>"; };
 		3B8647D22A8DD87200555A9E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		3B8647D42A8DE31700555A9E /* TodayTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTodoView.swift; sourceTree = "<group>"; };
+		3B9497922A9C3F7E00BD885F /* TaskCompletionIndicatorCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletionIndicatorCardView.swift; sourceTree = "<group>"; };
+		3B9497942A9C410000BD885F /* QuoteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCardView.swift; sourceTree = "<group>"; };
+		3B9655F02AAD82390064CE63 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		3BA700522A1CC5820096B2FF /* +View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+View.swift"; sourceTree = "<group>"; };
 		3BA700542A1CCB940096B2FF /* FireAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireAuth.swift; sourceTree = "<group>"; };
 		3BA700562A1F3A860096B2FF /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
@@ -122,6 +137,8 @@
 		3BBBF4C52A847B5E0077B3E6 /* TodoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoManager.swift; sourceTree = "<group>"; };
 		3BBBF4C72A8483C10077B3E6 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		3BBBF4C92A8488060077B3E6 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		3BDA96F42AA86834009FA88F /* DietDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietDetailView.swift; sourceTree = "<group>"; };
+		3BDCD7DF2A96F8BE00E077DE /* TaskCompletionIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletionIndicatorView.swift; sourceTree = "<group>"; };
 		3BFDFD612A1C4E780071798F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3BFDFD632A1C655C0071798F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3BFDFD652A1C69150071798F /* GoogleSigninBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSigninBtn.swift; sourceTree = "<group>"; };
@@ -140,6 +157,7 @@
 				13D6E1E92A710DA50049E5A5 /* SwiftSMTP in Frameworks */,
 				3BFDFD432A1B443A0071798F /* GoogleSignIn in Frameworks */,
 				3BA700682A1F3EEF0096B2FF /* SDWebImageSwiftUI in Frameworks */,
+				3BDF98932AAAF2D70060A90C /* CardTabBar in Frameworks */,
 				3BFDFD542A1B47620071798F /* FirebaseDatabaseSwift in Frameworks */,
 				3BFDFD502A1B47620071798F /* FirebaseCrashlytics in Frameworks */,
 				3BFDFD452A1B443A0071798F /* GoogleSignInSwift in Frameworks */,
@@ -171,16 +189,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13B1A1312AA7174800E2A6FA /* DetailTodoView */ = {
-			isa = PBXGroup;
-			children = (
-				13B1A1362AA717C500E2A6FA /* DetailSpaceView.swift */,
-				13B1A1322AA7177D00E2A6FA /* DetailStudyView.swift */,
-				13B1A1342AA717A200E2A6FA /* DetailSportView.swift */,
-			);
-			path = DetailTodoView;
-			sourceTree = "<group>";
-		};
 		3B37A8C42A188BA5009BB504 = {
 			isa = PBXGroup;
 			children = (
@@ -211,14 +219,14 @@
 				3BFDFD692A1C6E3D0071798F /* AppDelegate.swift */,
 				3BA700522A1CC5820096B2FF /* +View.swift */,
 				3B37A8D22A188BA6009BB504 /* ContentView.swift */,
-				13AD35D72A70BC350003FF1B /* MainView.swift */,
 				3BB30CB52A5FF26800036987 /* TestView.swift */,
+				3B9655F02AAD82390064CE63 /* TabBarView.swift */,
 				3B8647D12A8DC20000555A9E /* Image Data */,
 				3B8647D02A8DB84A00555A9E /* Home */,
 				3BBBF4C12A8479F40077B3E6 /* Firebase */,
 				3BBBF4C22A8479FA0077B3E6 /* Login */,
 				3BBBF4C02A8479F10077B3E6 /* Todo and Calendar */,
-				13B1A1312AA7174800E2A6FA /* DetailTodoView */,
+				3BDA96F32AA867F4009FA88F /* TodoDetalView */,
 				3BBBF4BF2A8479EF0077B3E6 /* AddTodoView */,
 				3B8647CB2A8DAE1100555A9E /* Community */,
 				3BFDFD612A1C4E780071798F /* GoogleService-Info.plist */,
@@ -267,8 +275,11 @@
 			isa = PBXGroup;
 			children = (
 				3B6975C82A7B7D1E00513302 /* HomeView.swift */,
-				3B8647D42A8DE31700555A9E /* TodayTodoView.swift */,
+				3B4A8FD32AA6D8A100C4E0AF /* AchievementView.swift */,
 				3B8647CE2A8DB83300555A9E /* QuoteView.swift */,
+				3BDCD7DF2A96F8BE00E077DE /* TaskCompletionIndicatorView.swift */,
+				3B421BDE2AAEB8B4000255BA /* RedesignedTaskCompletionIndicatorView.swift */,
+				3B9497962A9C41D200BD885F /* CardView */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -281,13 +292,27 @@
 			path = "Image Data";
 			sourceTree = "<group>";
 		};
+		3B9497962A9C41D200BD885F /* CardView */ = {
+			isa = PBXGroup;
+			children = (
+				3B8647D42A8DE31700555A9E /* TodayTodoView.swift */,
+				3B9497942A9C410000BD885F /* QuoteCardView.swift */,
+				3B9497922A9C3F7E00BD885F /* TaskCompletionIndicatorCardView.swift */,
+				3B421BE02AAEB8F5000255BA /* RedesignedTaskCompletionIndicatorCardView.swift */,
+				3B4A8FD52AA6DC3D00C4E0AF /* AchievementCardView.swift */,
+				3B4A8FDB2AA7213100C4E0AF /* CommunityCardView.swift */,
+			);
+			path = CardView;
+			sourceTree = "<group>";
+		};
 		3BBBF4BF2A8479EF0077B3E6 /* AddTodoView */ = {
 			isa = PBXGroup;
 			children = (
-				3B2EF2DD2A7FF3C200FC021A /* AddSpaceView.swift */,
 				3B2EF2DF2A7FF4E800FC021A /* AddStudyView.swift */,
+				3B2EF2DD2A7FF3C200FC021A /* AddSpaceView.swift */,
 				3B0A5DB12A81D6B600283B40 /* AddSportView.swift */,
-				1346EEBE2A99D97700A4E0A4 /* AddDietsView.swift */,
+				3B05FB162A949EFB00540463 /* AddDietView.swift */,
+				3B421BE22AAFF730000255BA /* AddSleepView.swift */,
 			);
 			path = AddTodoView;
 			sourceTree = "<group>";
@@ -299,8 +324,6 @@
 				3BBBF4C52A847B5E0077B3E6 /* TodoManager.swift */,
 				13AD35D32A70BB880003FF1B /* TodoListView.swift */,
 				13AD35D52A70BC0D0003FF1B /* CalendarView.swift */,
-				3B5A47EA2A889C520022D796 /* TodoGeneralDetailView.swift */,
-				3B0A5DB32A81DED900283B40 /* TodoDetailView.swift */,
 			);
 			path = "Todo and Calendar";
 			sourceTree = "<group>";
@@ -323,6 +346,17 @@
 				13D6E1E52A710D480049E5A5 /* verifyRegister.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		3BDA96F32AA867F4009FA88F /* TodoDetalView */ = {
+			isa = PBXGroup;
+			children = (
+				3B5A47EA2A889C520022D796 /* StudyDetailView.swift */,
+				3B0A5DB32A81DED900283B40 /* SpaceDetailView.swift */,
+				3B4A8FD72AA6E78B00C4E0AF /* SportDetailView.swift */,
+				3BDA96F42AA86834009FA88F /* DietDetailView.swift */,
+			);
+			path = TodoDetalView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,6 +394,7 @@
 				3BFDFD5F2A1B47620071798F /* FirebaseStorage */,
 				3BA700672A1F3EEF0096B2FF /* SDWebImageSwiftUI */,
 				13D6E1E82A710DA50049E5A5 /* SwiftSMTP */,
+				3BDF98922AAAF2D70060A90C /* CardTabBar */,
 			);
 			productName = GraduationProject;
 			productReference = 3B37A8CD2A188BA5009BB504 /* GraduationProject.app */;
@@ -438,6 +473,7 @@
 				3BFDFD462A1B47620071798F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				3BA700662A1F3EEF0096B2FF /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				13D6E1E72A710DA40049E5A5 /* XCRemoteSwiftPackageReference "Swift-SMTP" */,
+				3BDF98912AAAF2D70060A90C /* XCRemoteSwiftPackageReference "CardTabBar" */,
 			);
 			productRefGroup = 3B37A8CE2A188BA5009BB504 /* Products */;
 			projectDirPath = "";
@@ -505,32 +541,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B4A8FD62AA6DC3D00C4E0AF /* AchievementCardView.swift in Sources */,
 				3BFDFD6A2A1C6E3D0071798F /* AppDelegate.swift in Sources */,
-				13AD35D82A70BC350003FF1B /* MainView.swift in Sources */,
+				3B421BE32AAFF730000255BA /* AddSleepView.swift in Sources */,
+				3B4A8FD42AA6D8A100C4E0AF /* AchievementView.swift in Sources */,
 				3BA700552A1CCB940096B2FF /* FireAuth.swift in Sources */,
-				13B1A1332AA7177D00E2A6FA /* DetailStudyView.swift in Sources */,
 				3B8647D32A8DD87200555A9E /* ImagePicker.swift in Sources */,
+				3B4A8FD82AA6E78B00C4E0AF /* SportDetailView.swift in Sources */,
 				3BBBF4C82A8483C10077B3E6 /* LoadingView.swift in Sources */,
-				3B5A47EB2A889C520022D796 /* TodoGeneralDetailView.swift in Sources */,
+				3B5A47EB2A889C520022D796 /* StudyDetailView.swift in Sources */,
 				3B2EF2E02A7FF4E800FC021A /* AddStudyView.swift in Sources */,
 				3B6975C92A7B7D1E00513302 /* HomeView.swift in Sources */,
 				3B8647D52A8DE31700555A9E /* TodayTodoView.swift in Sources */,
-				13B1A1372AA717C500E2A6FA /* DetailSpaceView.swift in Sources */,
 				13AD35D62A70BC0D0003FF1B /* CalendarView.swift in Sources */,
 				3B8647CD2A8DAE6000555A9E /* PostView.swift in Sources */,
+				3BDCD7E02A96F8BE00E077DE /* TaskCompletionIndicatorView.swift in Sources */,
 				3BA700592A1F3B870096B2FF /* FirebaseManager.swift in Sources */,
 				3B0A5DB22A81D6B700283B40 /* AddSportView.swift in Sources */,
+				3B05FB172A949EFB00540463 /* AddDietView.swift in Sources */,
+				3B9497932A9C3F7E00BD885F /* TaskCompletionIndicatorCardView.swift in Sources */,
+				3B4A8FDC2AA7213100C4E0AF /* CommunityCardView.swift in Sources */,
 				3BB30CB62A5FF26800036987 /* TestView.swift in Sources */,
+				3B9497952A9C410000BD885F /* QuoteCardView.swift in Sources */,
 				3B37A8D32A188BA6009BB504 /* ContentView.swift in Sources */,
 				3BA700572A1F3A860096B2FF /* ChatUser.swift in Sources */,
 				3BFDFD662A1C69150071798F /* GoogleSigninBtn.swift in Sources */,
 				3B8647CA2A8DADD400555A9E /* CommunityProfileView.swift in Sources */,
-				3B0A5DB42A81DED900283B40 /* TodoDetailView.swift in Sources */,
-				13B1A1352AA717A200E2A6FA /* DetailSportView.swift in Sources */,
+				3B0A5DB42A81DED900283B40 /* SpaceDetailView.swift in Sources */,
+				3B9655F12AAD82390064CE63 /* TabBarView.swift in Sources */,
+				3B421BE12AAEB8F5000255BA /* RedesignedTaskCompletionIndicatorCardView.swift in Sources */,
 				3BBBF4C62A847B5E0077B3E6 /* TodoManager.swift in Sources */,
+				3BDA96F52AA86834009FA88F /* DietDetailView.swift in Sources */,
+				3B421BDF2AAEB8B4000255BA /* RedesignedTaskCompletionIndicatorView.swift in Sources */,
 				3BBBF4C42A847B4A0077B3E6 /* TodoModels.swift in Sources */,
 				13AD35D42A70BB880003FF1B /* TodoListView.swift in Sources */,
-				1346EEBF2A99D97700A4E0A4 /* AddDietsView.swift in Sources */,
 				3B37A8D12A188BA6009BB504 /* GraduationProjectApp.swift in Sources */,
 				3B8647CF2A8DB83300555A9E /* QuoteView.swift in Sources */,
 				3BA700532A1CC5820096B2FF /* +View.swift in Sources */,
@@ -911,6 +955,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		3BDF98912AAAF2D70060A90C /* XCRemoteSwiftPackageReference "CardTabBar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yusadogru/CardTabBar?ref=iosexample.com";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		3BFDFD412A1B443A0071798F /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -939,6 +991,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3BA700662A1F3EEF0096B2FF /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		3BDF98922AAAF2D70060A90C /* CardTabBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3BDF98912AAAF2D70060A90C /* XCRemoteSwiftPackageReference "CardTabBar" */;
+			productName = CardTabBar;
 		};
 		3BFDFD422A1B443A0071798F /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -36,7 +36,7 @@ struct YourApp: App {
                     }
                 
             } else {
-                MainView()
+                TabBarView()
                     .environmentObject(taskStore)
                     .environmentObject(todoStore)
                     .environmentObject(sportStore)
