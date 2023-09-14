@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		138E16D92AB19819003471DA /* RedesignedTaskCompletionIndicatorCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138E16D82AB19819003471DA /* RedesignedTaskCompletionIndicatorCardView.swift */; };
 		13AD35D42A70BB880003FF1B /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AD35D32A70BB880003FF1B /* TodoListView.swift */; };
 		13AD35D62A70BC0D0003FF1B /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AD35D52A70BC0D0003FF1B /* CalendarView.swift */; };
 		13D6E1E62A710D480049E5A5 /* verifyRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D6E1E52A710D480049E5A5 /* verifyRegister.swift */; };
@@ -23,9 +24,6 @@
 		3B37A8E32A188BA6009BB504 /* GraduationProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B37A8E22A188BA6009BB504 /* GraduationProjectTests.swift */; };
 		3B37A8ED2A188BA6009BB504 /* GraduationProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B37A8EC2A188BA6009BB504 /* GraduationProjectUITests.swift */; };
 		3B37A8EF2A188BA6009BB504 /* GraduationProjectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B37A8EE2A188BA6009BB504 /* GraduationProjectUITestsLaunchTests.swift */; };
-		3B421BDF2AAEB8B4000255BA /* RedesignedTaskCompletionIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B421BDE2AAEB8B4000255BA /* RedesignedTaskCompletionIndicatorView.swift */; };
-		3B421BE12AAEB8F5000255BA /* RedesignedTaskCompletionIndicatorCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B421BE02AAEB8F5000255BA /* RedesignedTaskCompletionIndicatorCardView.swift */; };
-		3B421BE32AAFF730000255BA /* AddSleepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B421BE22AAFF730000255BA /* AddSleepView.swift */; };
 		3B4A8FD42AA6D8A100C4E0AF /* AchievementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4A8FD32AA6D8A100C4E0AF /* AchievementView.swift */; };
 		3B4A8FD62AA6DC3D00C4E0AF /* AchievementCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4A8FD52AA6DC3D00C4E0AF /* AchievementCardView.swift */; };
 		3B4A8FD82AA6E78B00C4E0AF /* SportDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4A8FD72AA6E78B00C4E0AF /* SportDetailView.swift */; };
@@ -92,6 +90,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		138E16D82AB19819003471DA /* RedesignedTaskCompletionIndicatorCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedesignedTaskCompletionIndicatorCardView.swift; sourceTree = "<group>"; };
 		13AD35D32A70BB880003FF1B /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
 		13AD35D52A70BC0D0003FF1B /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		13D6E1E52A710D480049E5A5 /* verifyRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verifyRegister.swift; sourceTree = "<group>"; };
@@ -111,9 +110,7 @@
 		3B37A8E82A188BA6009BB504 /* GraduationProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraduationProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B37A8EC2A188BA6009BB504 /* GraduationProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraduationProjectUITests.swift; sourceTree = "<group>"; };
 		3B37A8EE2A188BA6009BB504 /* GraduationProjectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraduationProjectUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		3B421BDE2AAEB8B4000255BA /* RedesignedTaskCompletionIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedesignedTaskCompletionIndicatorView.swift; sourceTree = "<group>"; };
 		3B421BE02AAEB8F5000255BA /* RedesignedTaskCompletionIndicatorCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedesignedTaskCompletionIndicatorCardView.swift; sourceTree = "<group>"; };
-		3B421BE22AAFF730000255BA /* AddSleepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSleepView.swift; sourceTree = "<group>"; };
 		3B4A8FD32AA6D8A100C4E0AF /* AchievementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementView.swift; sourceTree = "<group>"; };
 		3B4A8FD52AA6DC3D00C4E0AF /* AchievementCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementCardView.swift; sourceTree = "<group>"; };
 		3B4A8FD72AA6E78B00C4E0AF /* SportDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportDetailView.swift; sourceTree = "<group>"; };
@@ -275,10 +272,10 @@
 			isa = PBXGroup;
 			children = (
 				3B6975C82A7B7D1E00513302 /* HomeView.swift */,
-				3B4A8FD32AA6D8A100C4E0AF /* AchievementView.swift */,
+				138E16D82AB19819003471DA /* RedesignedTaskCompletionIndicatorCardView.swift */,
 				3B8647CE2A8DB83300555A9E /* QuoteView.swift */,
+				3B4A8FD32AA6D8A100C4E0AF /* AchievementView.swift */,
 				3BDCD7DF2A96F8BE00E077DE /* TaskCompletionIndicatorView.swift */,
-				3B421BDE2AAEB8B4000255BA /* RedesignedTaskCompletionIndicatorView.swift */,
 				3B9497962A9C41D200BD885F /* CardView */,
 			);
 			path = Home;
@@ -312,7 +309,6 @@
 				3B2EF2DD2A7FF3C200FC021A /* AddSpaceView.swift */,
 				3B0A5DB12A81D6B600283B40 /* AddSportView.swift */,
 				3B05FB162A949EFB00540463 /* AddDietView.swift */,
-				3B421BE22AAFF730000255BA /* AddSleepView.swift */,
 			);
 			path = AddTodoView;
 			sourceTree = "<group>";
@@ -543,7 +539,6 @@
 			files = (
 				3B4A8FD62AA6DC3D00C4E0AF /* AchievementCardView.swift in Sources */,
 				3BFDFD6A2A1C6E3D0071798F /* AppDelegate.swift in Sources */,
-				3B421BE32AAFF730000255BA /* AddSleepView.swift in Sources */,
 				3B4A8FD42AA6D8A100C4E0AF /* AchievementView.swift in Sources */,
 				3BA700552A1CCB940096B2FF /* FireAuth.swift in Sources */,
 				3B8647D32A8DD87200555A9E /* ImagePicker.swift in Sources */,
@@ -569,10 +564,8 @@
 				3B8647CA2A8DADD400555A9E /* CommunityProfileView.swift in Sources */,
 				3B0A5DB42A81DED900283B40 /* SpaceDetailView.swift in Sources */,
 				3B9655F12AAD82390064CE63 /* TabBarView.swift in Sources */,
-				3B421BE12AAEB8F5000255BA /* RedesignedTaskCompletionIndicatorCardView.swift in Sources */,
 				3BBBF4C62A847B5E0077B3E6 /* TodoManager.swift in Sources */,
 				3BDA96F52AA86834009FA88F /* DietDetailView.swift in Sources */,
-				3B421BDF2AAEB8B4000255BA /* RedesignedTaskCompletionIndicatorView.swift in Sources */,
 				3BBBF4C42A847B4A0077B3E6 /* TodoModels.swift in Sources */,
 				13AD35D42A70BB880003FF1B /* TodoListView.swift in Sources */,
 				3B37A8D12A188BA6009BB504 /* GraduationProjectApp.swift in Sources */,
@@ -580,6 +573,7 @@
 				3BA700532A1CC5820096B2FF /* +View.swift in Sources */,
 				3B2EF2DE2A7FF3C200FC021A /* AddSpaceView.swift in Sources */,
 				3BFDFD642A1C655C0071798F /* LoginView.swift in Sources */,
+				138E16D92AB19819003471DA /* RedesignedTaskCompletionIndicatorCardView.swift in Sources */,
 				13D6E1E62A710D480049E5A5 /* verifyRegister.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

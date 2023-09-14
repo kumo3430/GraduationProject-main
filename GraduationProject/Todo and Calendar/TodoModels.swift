@@ -70,9 +70,9 @@ struct Diet: Identifiable {
     var startDateTime: Date
     
     var selectedDiets: String
-//    var dietsType: String
+    var dietsType: String
     var dietsValue: Float
-    var dietsUnits: String
+//    var dietsUnits: String
     
     var isRecurring: Bool
     var recurringOption: Int

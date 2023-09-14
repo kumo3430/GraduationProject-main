@@ -9,15 +9,15 @@ import SwiftUI
 
 struct AddDietView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var todoStore: TodoStore
+    @EnvironmentObject var dietStore: DietStore
 
-    @State var uid: String = ""
-    @State var category_id: Int = 1
+//    @State var uid: String = ""
+//    @State var category_id: Int = 1
     @State var label: String = ""
     @State var todoTitle: String = ""
     @State var todoIntroduction: String = ""
     @State var startDateTime: Date = Date()
-    @State var todoStatus: Bool = false
+//    @State var todoStatus: Bool = false
     @State var dueDateTime: Date = Date()
     @State var recurring_task_id: Int? = nil
     @State var reminderTime: Date = Date()
@@ -57,11 +57,19 @@ struct AddDietView: View {
     struct TodoData: Decodable {
         var userId: String?
         var category_id: Int
+        var label: String?
         var todoTitle: String
         var todoIntroduction: String
         var startDateTime: String
+        
+        var dietType: String
+        var dietValue: Float
+        
+        var todoStatus: Int
         var reminderTime: String
-        var todo_id: String
+        var dueDateTime: String
+        var todo_id: Int
+        var todoNote: String?
         var message: String
     }
 
@@ -76,12 +84,12 @@ struct AddDietView: View {
                         HStack {
                             Image(systemName: "tag.fill")
                                 .resizable()
-                                .aspectRatio(contentMode: .fit) // 保持圖示的原始寬高比
-                                .foregroundColor(.white) // 圖示顏色設為白色
-                                .padding(6) // 確保有足夠的空間顯示外框和背景色
-                                .background(Color.yellow) // 設定背景顏色
-                                .clipShape(RoundedRectangle(cornerRadius: 8)) // 設定方形的邊框，並稍微圓角
-                                .frame(width: 30, height: 30) // 這裡的尺寸是示例，您可以根據需要調整
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.white)
+                                .padding(6)
+                                .background(Color.yellow)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .frame(width: 30, height: 30)
                             TextField("標籤", text: $label)
                         }
                     }
@@ -111,7 +119,7 @@ struct AddDietView: View {
                 }
                 Section {
                     HStack {
-                        Image(systemName: "figure.walk.circle.fill")
+                        Image(systemName: "fork.knife.circle.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .foregroundColor(.white)
@@ -119,6 +127,7 @@ struct AddDietView: View {
                             .background(Color.blue)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                             .frame(width: 30, height: 30)
+                            .padding(.trailing, 8)
 
                         Text("飲食類型")
 
@@ -130,94 +139,70 @@ struct AddDietView: View {
                             HStack {
                                 Text(selectedDiets)
                                     .foregroundColor(.black)
-
                             }
                         }
                         .buttonStyle(.bordered)
                     }
-
+                    
                     if showDietsPicker {
                         Picker("飲食類型", selection: $selectedDiets) {
-                            ForEach(diets, id: \.self) { diets in
-                                Text(diets).tag(diets)
+                            ForEach(diets, id: \.self) { diet in
+                                Text(diet).tag(diet)
                             }
                         }
                         .pickerStyle(WheelPickerStyle())
                     }
 
-
-                    HStack {
-                        // Pre-text based on the diet type
+                    HStack(spacing: 10) {
                         if let preText = dietsPreTextByType[selectedDiets] {
                             Text(preText)
-                                .font(.subheadline) // Reduce font size if necessary
+                                .font(.subheadline)
+                        } else {
+                            Text("少於")
+                                .font(.subheadline)
                         }
-
-                        // Numeric Input
                         TextField("數值", value: $dietsValue, formatter: NumberFormatter())
                             .keyboardType(.decimalPad)
-                            .frame(width: 60, alignment: .leading) // Adjust width
-                        
-                        // Primary Unit (e.g., 毫升, 次, 份)
+                            .frame(width: 60, alignment: .leading)
                         if let primaryUnits = dietsUnitsByType[selectedDiets] {
                             Text(primaryUnits.first!)
-                                .font(.subheadline) // Reduce font size if necessary
+                                .font(.subheadline)
+                        } else {
+                            Text("次")
+                                .font(.subheadline)
                         }
-
-                        Spacer() // Pushes the remaining elements to the right
-                        
-                        // "/" Symbol
-                        Text("/")
-                            .padding(.horizontal, 2)
-
-                        // Time Unit (e.g., 日、週、月)
-                        Picker("選擇時間單位", selection: $dietsUnit) {
+                        Spacer()
+                        Picker("", selection: $dietsUnit) {
                             ForEach(timeUnits, id: \.self) {
                                 Text($0)
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
-                        .frame(width: 120, alignment: .trailing) // Adjust width
+                        .frame(width: 120, alignment: .trailing)
                     }
-
-
                     .padding(.horizontal)
-
-
-
                 }
 
 
                 Section {
-                    Toggle(isOn: $isRecurring) {
-                        HStack {
-                            Image(systemName: "arrow.clockwise")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(.white)
-                                .padding(6)
-                                .background(Color.gray)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .frame(width: 30, height: 30)
-                            Text("重複")
-                        }
-                    }
-
-                    if isRecurring {
-                        Picker("重複頻率", selection: $selectedFrequency) {
-                            Text("每日").tag(1)
-                            Text("每週").tag(2)
-                            Text("每月").tag(3)
-                        }
-
+                    HStack {
+                        Image(systemName: "arrow.clockwise")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.white)
+                            .padding(6)
+                            .background(Color.gray)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .frame(width: 30, height: 30)
+                        
                         Picker("結束重複", selection: $recurringOption) {
                             Text("一直重複").tag(1)
                             Text("選擇結束日期").tag(2)
                         }
-
-                        if recurringOption == 2 {
-                            DatePicker("結束重複日期", selection: $recurringEndDate, displayedComponents: [.date])
-                        }
+                    }
+                    
+                    if recurringOption == 2 {
+                        DatePicker("結束重複日期", selection: $recurringEndDate, displayedComponents: [.date])
                     }
                 }
                 TextField("備註", text: $todoNote)
@@ -261,19 +246,37 @@ struct AddDietView: View {
             }
         }
 
-        let url = URL(string: "http://localhost:8888/addTodo.php")!
+        let url = URL(string: "http://localhost:8888/addTask/addDiet.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let body = ["category_id": category_id,
-                    "label": label,
+        var body = ["label": label,
                     "todoTitle": todoTitle,
                     "todoIntroduction": todoIntroduction,
                     "startDateTime": formattedDate(startDateTime),
-                    "todoStatus": todoStatus,
-                    "dueDateTime": formattedDate(dueDateTime),
-                    "recurring_task_id": recurring_task_id ?? "",
+                    "dietType": selectedDiets,
+                    "dietValue": dietsValue,
+//                    "dueDateTime": formattedDate(dueDateTime),
+//                    "recurring_task_id": recurring_task_id ?? "",
                     "reminderTime": formattedTime(reminderTime),
                     "todoNote": todoNote] as [String : Any]
+        
+        if isRecurring {
+            body["frequency"] = selectedFrequency
+            if recurringOption == 1 {
+                // 持續重複
+                body["dueDateTime"] = formattedDate(Calendar.current.date(byAdding: .year, value: 5, to: recurringEndDate)!)
+            } else {
+                // 選擇結束日期
+                body["dueDateTime"] = formattedDate(recurringEndDate)
+            }
+        } else {
+            // 不重複
+            body["frequency"] = 0
+            body["dueDateTime"] = formattedDate(recurringEndDate)
+        }
+        
+        
+        
         let jsonData = try! JSONSerialization.data(withJSONObject: body, options: [])
         request.httpBody = jsonData
         URLSessionSingleton.shared.session.dataTask(with: request) { data, response, error in
@@ -285,21 +288,22 @@ struct AddDietView: View {
             else if let data = data{
                 let decoder = JSONDecoder()
                 do {
+                    print("AddDietView - Data : \(String(data: data, encoding: .utf8)!)")
                     let todoData = try decoder.decode(TodoData.self, from: data)
                     if (todoData.message == "User New Todo successfully") {
-                        DispatchQueue.main.async {
-//                            let todo = Todo(id: Int(todoData.todo_id)!,
-//                                            label: label,
-//                                            title: todoTitle,
-//                                            description: todoIntroduction,
-//                                            startDateTime: startDateTime,
-//                                            todoStatus: todoStatus,
-//                                            dueDateTime: dueDateTime,
-//                                            reminderTime: reminderTime,
-//                                            todoNote: todoNote)
-//                            todoStore.todos.append(todo)
-                            presentationMode.wrappedValue.dismiss()
-                        }
+//                        DispatchQueue.main.async {
+////                            let todo = Todo(id: Int(todoData.todo_id)!,
+////                                            label: label,
+////                                            title: todoTitle,
+////                                            description: todoIntroduction,
+////                                            startDateTime: startDateTime,
+////                                            todoStatus: todoStatus,
+////                                            dueDateTime: dueDateTime,
+////                                            reminderTime: reminderTime,
+////                                            todoNote: todoNote)
+////                            todoStore.todos.append(todo)
+//                            presentationMode.wrappedValue.dismiss()
+//                        }
                     } else {
                         print("addTodo - message：\(todoData.message)")
                         // handle other messages from the server

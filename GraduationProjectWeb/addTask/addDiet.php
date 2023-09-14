@@ -8,7 +8,7 @@ $data = json_decode($input_data, true);
 // $userName = $data['userName'];
 $uid = $_SESSION['uid'];
 // $uuid = $data['uuid'];
-$category_id = 2;
+$category_id = 5;
 $todoTitle = $data['todoTitle'];
 $todoIntroduction = $data['todoIntroduction'];
 
@@ -22,9 +22,8 @@ $todoIntroduction = $data['todoIntroduction'];
 $todoStatus= 0;
 $startDateTime = $data['startDateTime'];
 
-$sportType = $data['sportType'];
-$sportValue = $data['sportValue'];
-$sportUnit = $data['SportUnit'];
+$dietType = $data['dietType'];
+$dietValue = $data['dietValue'];
 
 $reminderTime = $data['reminderTime'];
 $frequency = $data['frequency'];
@@ -49,7 +48,7 @@ if ($conn->connect_error) {
 
 $TodoSELSql = "SELECT * FROM `Todo` WHERE `uid` = '$uid' && `category_id` = '$category_id' && `todoTitle` = '$todoTitle' && `todoIntroduction` = '$todoIntroduction' && `label` = '$todoLabel'&& `todoNote` = '$todoNote';";
 
-function insertTodoAndSport($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime,$sportType, $sportValue, $sportUnit ,$frequency, $reminderTime, $dueDateTime, $todoNote) {
+function insertTodoAndDiet($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime,$dietType, $dietValue ,$frequency, $reminderTime, $dueDateTime, $todoNote) {
     $TodoSql = "INSERT INTO `Todo` (`uid`, `category_id`, `todoTitle`, `todoIntroduction`, `label`, `startDateTime`, `frequency`, `reminderTime`, `todoStatus`, `dueDateTime`, `todoNote`) VALUES ('$uid', '$category_id','$todoTitle','$todoIntroduction','$todoLabel','$startDateTime','$frequency','$reminderTime','0','$dueDateTime','$todoNote')";
     
     if ($conn->query($TodoSql) === TRUE) {
@@ -61,12 +60,12 @@ function insertTodoAndSport($conn, $uid, $category_id, $todoTitle, $todoIntroduc
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $todo_id = $row['id'];
-                $SpacedSql = "INSERT INTO `Sport` (`todo_id`, `category_id`, `sportType`, `sportValue`, `sportUnit`) VALUES ('$todo_id', '$category_id','$sportType','$sportValue','$sportUnit')";
+                $SpacedSql = "INSERT INTO `Diet` (`todo_id`, `category_id`, `dietType`, `dietValue`) VALUES ('$todo_id', '$category_id','$dietType','$dietValue')";
 
                 if ($conn->query($SpacedSql) === TRUE) {
-                    $message = "User New Sport successfully";
+                    $message = "User New diet successfully";
                 } else {
-                    $message = 'New Sport - Error: ' . $SpacedSql . '<br>' . $conn->error;
+                    $message = 'New diet - Error: ' . $SpacedSql . '<br>' . $conn->error;
                 }
             }
         } else {
@@ -103,15 +102,15 @@ $result = $conn->query($TodoSELSql);
 if ($result->num_rows == 0) {
     if ($frequency == 0) {
           // 不重複 只新增todo!
-        //   $message1 = insertTodoAndSport($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $frequency, $reminderTime, $dueDateTime, $todoNote);
-        $result1 = insertTodoAndSport($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $sportType, $sportValue, $sportUnit, $frequency, $reminderTime, $dueDateTime, $todoNote);
+        //   $message1 = insertTodoAndDiet($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $frequency, $reminderTime, $dueDateTime, $todoNote);
+        $result1 = insertTodoAndDiet($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $dietType, $dietValue, $frequency, $reminderTime, $dueDateTime, $todoNote);
         $message1 = $result1['message'];
         $todo_id = $result1['todo_id'];
     
     } else if ($frequency == 1){
         // 每天重複
-        // $message1 = insertTodoAndSport($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $frequency, $reminderTime, $dueDateTime, $todoNote);
-        $result1 = insertTodoAndSport($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $sportType, $sportValue, $sportUnit, $frequency, $reminderTime, $dueDateTime, $todoNote);
+        // $message1 = insertTodoAndDiet($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $frequency, $reminderTime, $dueDateTime, $todoNote);
+        $result1 = insertTodoAndDiet($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $dietType, $dietValue, $frequency, $reminderTime, $dueDateTime, $todoNote);
         $message1 = $result1['message'];
         $todo_id = $result1['todo_id'];
 
@@ -120,8 +119,8 @@ if ($result->num_rows == 0) {
 
     } else if ($frequency == 2){
         // 每週重複
-        // $message1 = insertTodoAndSport($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $frequency, $reminderTime, $dueDateTime, $todoNote);
-        $result1 = insertTodoAndSport($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $sportType, $sportValue, $sportUnit, $frequency, $reminderTime, $dueDateTime, $todoNote);
+        // $message1 = insertTodoAndDiet($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $frequency, $reminderTime, $dueDateTime, $todoNote);
+        $result1 = insertTodoAndDiet($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $dietType, $dietValue, $frequency, $reminderTime, $dueDateTime, $todoNote);
         $message1 = $result1['message'];
         $todo_id = $result1['todo_id'];
         $RecurringEndDate = date('Y-m-d', strtotime("$startDateTime +6 day"));
@@ -130,8 +129,8 @@ if ($result->num_rows == 0) {
 
     } else if ($frequency == 3){
         // 每月重複
-        // $message1 = insertTodoAndSport($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $frequency, $reminderTime, $dueDateTime, $todoNote);
-        $result1 = insertTodoAndSport($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $sportType, $sportValue, $sportUnit, $frequency, $reminderTime, $dueDateTime, $todoNote);
+        // $message1 = insertTodoAndDiet($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $frequency, $reminderTime, $dueDateTime, $todoNote);
+        $result1 = insertTodoAndDiet($conn, $uid, $category_id, $todoTitle, $todoIntroduction, $todoLabel, $startDateTime, $dietType, $dietValue, $frequency, $reminderTime, $dueDateTime, $todoNote);
         $message1 = $result1['message'];
         $todo_id = $result1['todo_id'];
         $RecurringEndDate = date('Y-m-d', strtotime("$startDateTime +1 month"));
@@ -151,9 +150,8 @@ $userData = array(
     'todoTitle' => $todoTitle,
     'todoIntroduction' => $todoIntroduction,
     'startDateTime' => $startDateTime,
-    'sportType' => $sportType,
-    'sportValue' => $sportValue,
-    'sportUnit' => $sportUnit,
+    'dietType' => $dietType,
+    'dietValue' => intval($dietValue),
     'todoStatus' => $todoStatus,
     'dueDateTime' => $dueDateTime,
     'reminderTime' => $reminderTime,
